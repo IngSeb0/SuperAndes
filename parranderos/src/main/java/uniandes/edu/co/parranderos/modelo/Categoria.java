@@ -12,25 +12,25 @@ import jakarta.persistence.Table;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String codigo;
+    private Long codigo;
     private String nombre;
     private String descripcion;
     private String caracteristicaAlmacenamiento;
 
     public Categoria() {}
 
-    public Categoria(String codigo, String nombre, String descripcion, String caracteristicaAlmacenamiento) {
+    public Categoria(Long codigo, String nombre, String descripcion, String caracteristicaAlmacenamiento) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.caracteristicaAlmacenamiento = caracteristicaAlmacenamiento;
     }
 
-    public String getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 

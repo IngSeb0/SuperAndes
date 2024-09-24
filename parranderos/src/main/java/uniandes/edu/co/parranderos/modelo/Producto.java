@@ -1,15 +1,15 @@
 package uniandes.edu.co.parranderos.modelo;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="Productos")
+@Table(name="productos")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;  // Cambiado de String a Long para ser clave primaria
+
     private String codigoBarras;
     private String nombre;
     private Float precioUnitarioVenta;
@@ -28,6 +28,16 @@ public class Producto {
         this.cantidadPresentacion = cantidadPresentacion;
         this.unidadMedida = unidadMedida;
         this.fechaExpiracion = fechaExpiracion;
+    }
+
+    // Getters y setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCodigoBarras() {
