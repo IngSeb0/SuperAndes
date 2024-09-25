@@ -11,21 +11,21 @@ public class Ciudad {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     
-    private String codigo;
+    private Long codigo;
     private String nombre;
 
     public Ciudad() {}
 
-    public Ciudad(String codigo, String nombre) {
+    public Ciudad(Long codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
     }
 
-    public String getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 
@@ -44,4 +44,5 @@ public class Ciudad {
                 ", nombre='" + nombre + '\'' +
                 '}';
     }
+
 }

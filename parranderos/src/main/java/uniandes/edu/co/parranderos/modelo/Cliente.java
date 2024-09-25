@@ -5,26 +5,29 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "Clientes")
 public class Cliente {
-        @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String cedula;
+    private Long cedula; 
+
     private String nombre;
 
     public Cliente() {}
 
-    public Cliente(String cedula, String nombre) {
+    public Cliente(Long cedula, String nombre) {
         this.cedula = cedula;
         this.nombre = nombre;
     }
 
-    public String getCedula() {
+    public Long getCedula() {
         return cedula;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(Long cedula) {
         this.cedula = cedula;
     }
 
@@ -39,7 +42,7 @@ public class Cliente {
     @Override
     public String toString() {
         return "Cliente{" +
-                "cedula='" + cedula + '\'' +
+                "cedula=" + cedula +
                 ", nombre='" + nombre + '\'' +
                 '}';
     }

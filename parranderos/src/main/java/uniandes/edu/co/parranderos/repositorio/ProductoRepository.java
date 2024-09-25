@@ -15,11 +15,12 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Query(value = "SELECT * FROM productos", nativeQuery = true)
     Collection<Producto> obtenerTodosLosProductos();
 
-    // Consultar un producto por su ID
-    @Query(value = "SELECT * FROM productos WHERE codigo_barras = :id", nativeQuery = true)
-    Producto obtenerProductoPorId(@Param("id") String id);
+    // Consultar un producto por su código de barras
+    @Query(value = "SELECT * FROM productos WHERE codigo_barras = :codigoBarras", nativeQuery = true)
+    Producto obtenerProductoPorCodigoBarras(@Param("codigoBarras") String codigoBarras);
 
-    // Insertar un nuevo producto    @Modifying
+    // Insertar un nuevo producto
+    @Modifying
     @Transactional
     @Query(value = "INSERT INTO productos (codigo_barras, nombre, precio_unitario_venta, presentacion, cantidad_presentacion, unidad_medida, fecha_expiracion) " +
             "VALUES (:codigoBarras, :nombre, :precioUnitarioVenta, :presentacion, :cantidadPresentacion, :unidadMedida, :fechaExpiracion)", nativeQuery = true)
@@ -31,7 +32,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
                           @Param("unidadMedida") String unidadMedida,
                           @Param("fechaExpiracion") String fechaExpiracion);
 
-    // Actualizar un producto por su ID
+    // Actualizar un producto por su código de barras
     @Modifying
     @Transactional
     @Query(value = "UPDATE productos SET nombre = :nombre, precio_unitario_venta = :precioUnitarioVenta WHERE codigo_barras = :codigoBarras", nativeQuery = true)
@@ -39,7 +40,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
                             @Param("nombre") String nombre,
                             @Param("precioUnitarioVenta") Float precioUnitarioVenta);
 
-    // Eliminar un producto por su ID
+    // Eliminar un producto por su código de barras
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM productos WHERE codigo_barras = :codigoBarras", nativeQuery = true)

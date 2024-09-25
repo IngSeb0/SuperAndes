@@ -26,7 +26,7 @@ public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Long> 
     @Transactional
     @Query(value = "INSERT INTO ordenes_compra (fecha_creacion, estado, fecha_entrega) " +
             "VALUES (:fechaCreacion, :estado, :fechaEntrega)", nativeQuery = true)
-    void insertarOrdenCompra(@Param("fechaCreacion") String fechaCreacion,
+    void insertarOrdenCompra(@Param("fechaCreacion") Long long1,
                              @Param("estado") String estado,
                              @Param("fechaEntrega") String fechaEntrega);
 

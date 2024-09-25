@@ -19,17 +19,23 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     @Query("SELECT c FROM Categoria c WHERE c.id = :id")
     Categoria obtenerCategoriaPorId(@Param("id") Long id);
 
-    // Insertar una nueva categoría
+    // Insertar una nueva categoría (CORREGIDO)
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO categoria (nombre, descripcion) VALUES (:nombre, :descripcion)", nativeQuery = true)
-    void insertarCategoria(@Param("nombre") String nombre, @Param("descripcion") String descripcion);
+    @Query(value = "INSERT INTO categoria (codigo, nombre, descripcion, caracteristica) VALUES (:codigo, :nombre, :descripcion, :caracteristica)", nativeQuery = true)
+    void insertarCategoria(@Param("codigo") Long codigo, 
+                           @Param("nombre") String nombre, 
+                           @Param("descripcion") String descripcion, 
+                           @Param("caracteristica") String caracteristica);
 
-    // Actualizar una categoría por ID
+    // Actualizar una categoría por ID (CORREGIDO)
     @Modifying
     @Transactional
-    @Query(value = "UPDATE categoria SET nombre = :nombre, descripcion = :descripcion WHERE id = :id", nativeQuery = true)
-    void actualizarCategoria(@Param("id") Long id, @Param("nombre") String nombre, @Param("descripcion") String descripcion);
+    @Query(value = "UPDATE categoria SET nombre = :nombre, descripcion = :descripcion, caracteristica = :caracteristica WHERE id = :codigo", nativeQuery = true)
+    void actualizarCategoria(@Param("codigo") Long codigo, 
+                             @Param("nombre") String nombre, 
+                             @Param("descripcion") String descripcion, 
+                             @Param("caracteristica") String caracteristica);
 
     // Eliminar una categoría por ID
     @Modifying

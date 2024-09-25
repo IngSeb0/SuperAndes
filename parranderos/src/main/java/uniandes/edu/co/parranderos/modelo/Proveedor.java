@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public class Proveedor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String nit;
+    private Long nit;
     private String nombre;
     private String direccion;
     private String nombreContacto;
@@ -18,7 +18,7 @@ public class Proveedor {
 
     public Proveedor() {}
 
-    public Proveedor(String nit, String nombre, String direccion, String nombreContacto, String telefonoContacto) {
+    public Proveedor(Long nit, String nombre, String direccion, String nombreContacto, String telefonoContacto) {
         this.nit = nit;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -26,11 +26,11 @@ public class Proveedor {
         this.telefonoContacto = telefonoContacto;
     }
 
-    public String getNit() {
+    public Long getNit() {
         return nit;
     }
 
-    public void setNit(String nit) {
+    public void setNit(Long nit) {
         this.nit = nit;
     }
 

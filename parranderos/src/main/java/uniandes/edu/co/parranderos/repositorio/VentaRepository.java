@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Venta;
 
 import java.util.Collection;
+import java.util.Date;
 
 public interface VentaRepository extends JpaRepository<Venta, Long> {
 
@@ -23,13 +24,13 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO venta (id, fecha, cliente_id) VALUES (:id, :fecha, :clienteId)", nativeQuery = true)
-    void insertarVenta(@Param("id") Long id, @Param("fecha") String fecha, @Param("clienteId") Long clienteId);
+    void insertarVenta(@Param("id") Long id, @Param("fecha") Date fecha, @Param("clienteId") Long clienteId);
 
     // Actualizar una venta por su ID
     @Modifying
     @Transactional
     @Query(value = "UPDATE venta SET fecha = :fecha, cliente_id = :clienteId WHERE id = :id", nativeQuery = true)
-    void actualizarVenta(@Param("id") Long id, @Param("fecha") String fecha, @Param("clienteId") Long clienteId);
+    void actualizarVenta(@Param("id") Long id, @Param("fecha") Date fecha, @Param("clienteId") Long clienteId);
 
     // Eliminar una venta por su ID
     @Modifying

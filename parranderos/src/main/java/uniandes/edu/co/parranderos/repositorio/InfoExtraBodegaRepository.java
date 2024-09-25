@@ -19,17 +19,24 @@ public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega
     @Query("SELECT i FROM InfoExtraBodega i WHERE i.id = :id")
     InfoExtraBodega obtenerInfoExtraBodegaPorId(@Param("id") Long id);
 
-    // Insertar nueva información extra
+    // Insertar nueva información extra incluyendo el nivel mínimo de reorden
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO info_extra_bodega (total_existencia, costo_promedio, capacidad_almacenamiento) VALUES (:totalExistencia, :costoPromedio, :capacidadAlmacenamiento)", nativeQuery = true)
-    void insertarInfoExtraBodega(@Param("totalExistencia") Integer totalExistencia, @Param("costoPromedio") Float costoPromedio, @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento);
+    @Query(value = "INSERT INTO info_extra_bodega (total_existencia, costo_promedio, capacidad_almacenamiento, nivel_minimo_reorden) VALUES (:totalExistencia, :costoPromedio, :capacidadAlmacenamiento, :nivelMinimoReorden)", nativeQuery = true)
+    void insertarInfoExtraBodega(@Param("totalExistencia") Integer totalExistencia, 
+                                 @Param("costoPromedio") Float costoPromedio, 
+                                 @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento,
+                                 @Param("nivelMinimoReorden") Integer nivelMinimoReorden);
 
-    // Actualizar información extra por ID
+    // Actualizar información extra por ID incluyendo el nivel mínimo de reorden
     @Modifying
     @Transactional
-    @Query(value = "UPDATE info_extra_bodega SET total_existencia = :totalExistencia, costo_promedio = :costoPromedio, capacidad_almacenamiento = :capacidadAlmacenamiento WHERE id = :id", nativeQuery = true)
-    void actualizarInfoExtraBodega(@Param("id") Long id, @Param("totalExistencia") Integer totalExistencia, @Param("costoPromedio") Float costoPromedio, @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento);
+    @Query(value = "UPDATE info_extra_bodega SET total_existencia = :totalExistencia, costo_promedio = :costoPromedio, capacidad_almacenamiento = :capacidadAlmacenamiento, nivel_minimo_reorden = :nivelMinimoReorden WHERE id = :id", nativeQuery = true)
+    void actualizarInfoExtraBodega(@Param("id") Long id, 
+                                   @Param("totalExistencia") Integer totalExistencia, 
+                                   @Param("costoPromedio") Float costoPromedio, 
+                                   @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento, 
+                                   @Param("nivelMinimoReorden") Integer nivelMinimoReorden);
 
     // Eliminar una información extra por ID
     @Modifying

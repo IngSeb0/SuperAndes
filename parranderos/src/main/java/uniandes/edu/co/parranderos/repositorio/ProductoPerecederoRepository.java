@@ -19,7 +19,7 @@ public interface ProductoPerecederoRepository extends JpaRepository<ProductoPere
 
     // Consultar un producto perecedero por su ID
     @Query(value = "SELECT * FROM productos WHERE codigo_barras = :id AND tipo_producto = 'PERECEDERO'", nativeQuery = true)
-    ProductoPerecedero obtenerProductoPerecederoPorId(@Param("id") Long id);
+    ProductoPerecedero obtenerProductoPerecederoPorCodigoDeBarras(@Param("id") Long id);
 
     // Insertar un nuevo producto perecedero
     @Modifying
@@ -40,9 +40,13 @@ public interface ProductoPerecederoRepository extends JpaRepository<ProductoPere
     @Transactional
     @Query(value = "UPDATE productos SET nombre = :nombre, precio_unitario_venta = :precioUnitarioVenta, fecha_vencimiento = :fechaVencimiento WHERE codigo_barras = :codigoBarras", nativeQuery = true)
     void actualizarProductoPerecedero(@Param("codigoBarras") String codigoBarras,
-                                      @Param("nombre") String nombre,
-                                      @Param("precioUnitarioVenta") Float precioUnitarioVenta,
-                                      @Param("fechaVencimiento") String fechaVencimiento);
+    @Param("nombre") String nombre,
+    @Param("precioUnitarioVenta") Float precioUnitarioVenta,
+    @Param("presentacion") String presentacion,
+    @Param("cantidadPresentacion") Integer cantidadPresentacion,
+    @Param("unidadMedida") String unidadMedida,
+    @Param("fechaExpiracion") String fechaExpiracion,
+    @Param("fechaVencimiento") String fechaVencimiento);
 
     // Eliminar un producto perecedero por su ID
     @Modifying

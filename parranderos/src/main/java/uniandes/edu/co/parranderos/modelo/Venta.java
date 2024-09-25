@@ -1,23 +1,28 @@
 package uniandes.edu.co.parranderos.modelo;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name="Ventas")
+@Table(name = "ventas")
 public class Venta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String fecha;
+
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+
+    @ManyToOne
+    @JoinColumn(name = "cedula_cliente")
+    private Cliente cliente;
 
     public Venta() {}
 
-    public Venta(Long id, String fecha) {
-        this.id = id;
+    public Venta(Date fecha, Cliente cliente) {
         this.fecha = fecha;
+        this.cliente = cliente;
     }
 
     public Long getId() {
@@ -28,19 +33,28 @@ public class Venta {
         this.id = id;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @Override
     public String toString() {
         return "Venta{" +
                 "id=" + id +
-                ", fecha='" + fecha + '\'' +
+                ", fecha=" + fecha +
+                ", cliente=" + cliente.getNombre() +
                 '}';
     }
 }

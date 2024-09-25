@@ -6,26 +6,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name="Categorias")
 
+
+
+
+@Entity
+@Table(name = "categoria")
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long codigo;
+    
     private String nombre;
     private String descripcion;
-    private String caracteristicaAlmacenamiento;
+    private String caracteristica;  // Asegúrate de que este campo esté presente y mapeado
 
-    public Categoria() {}
-
-    public Categoria(Long codigo, String nombre, String descripcion, String caracteristicaAlmacenamiento) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.caracteristicaAlmacenamiento = caracteristicaAlmacenamiento;
-    }
-
+    // Getters y Setters
     public Long getCodigo() {
         return codigo;
     }
@@ -50,13 +46,15 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    public String getCaracteristicaAlmacenamiento() {
-        return caracteristicaAlmacenamiento;
+    public String getCaracteristica() {
+        return caracteristica;
     }
 
-    public void setCaracteristicaAlmacenamiento(String caracteristicaAlmacenamiento) {
-        this.caracteristicaAlmacenamiento = caracteristicaAlmacenamiento;
+    public void setCaracteristica(String caracteristica) {
+        this.caracteristica = caracteristica;
     }
+
+
 
     @Override
     public String toString() {
@@ -64,7 +62,7 @@ public class Categoria {
                 "codigo='" + codigo + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", caracteristicaAlmacenamiento='" + caracteristicaAlmacenamiento + '\'' +
+                ", caracteristica='" + caracteristica+ '\'' +
                 '}';
     }
 }

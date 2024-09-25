@@ -22,14 +22,14 @@ public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCosto
     // Insertar un nuevo detalle
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO detalle_costo_bodega (costo, bodega_id) VALUES (:costo, :bodegaId)", nativeQuery = true)
-    void insertarDetalle(@Param("costo") Float costo, @Param("bodegaId") Long bodegaId);
+    @Query(value = "INSERT INTO detalle_costo_bodega (costo, cantidad) VALUES (:costo, :cantidad)", nativeQuery = true)
+    void insertarDetalle(@Param("costo") Float costo, @Param("cantidad") Integer cantidad);
 
     // Actualizar un detalle por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE detalle_costo_bodega SET costo = :costo WHERE id = :id", nativeQuery = true)
-    void actualizarDetalle(@Param("id") Long id, @Param("costo") Float costo);
+    @Query(value = "UPDATE detalle_costo_bodega SET costo = :costo, cantidad = :cantidad WHERE id = :id", nativeQuery = true)
+    void actualizarDetalle(@Param("id") Long id, @Param("costo") Float costo, @Param("cantidad") Integer cantidad);
 
     // Eliminar un detalle por ID
     @Modifying
