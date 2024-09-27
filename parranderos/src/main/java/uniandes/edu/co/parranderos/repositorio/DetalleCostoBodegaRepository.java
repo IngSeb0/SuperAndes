@@ -11,29 +11,36 @@ import java.util.List;
 
 public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCostoBodega, Long> {
 
-    // Obtener todos los detalles de costo de bodegas
+    // Obtener todos los detalles de costos de bodega
     @Query("SELECT d FROM DetalleCostoBodega d")
-    List<DetalleCostoBodega> obtenerTodosLosDetallesCosto();
+    List<DetalleCostoBodega> obtenerTodosLosDetallesCostoBodega();
 
-    // Obtener un detalle por ID
-    @Query("SELECT d FROM DetalleCostoBodega d WHERE d.id = :id")
-    DetalleCostoBodega obtenerDetallePorId(@Param("id") Long id);
+    // Obtener un detalle de costo por ID
+    @Query("SELECT d FROM DetalleCostoBodega d WHERE d.idDetalleCosto = :idDetalleCosto")
+    DetalleCostoBodega obtenerDetalleCostoBodegaPorId(@Param("idDetalleCosto") Long idDetalleCosto);
 
-    // Insertar un nuevo detalle
+    // Insertar un nuevo detalle de costo de bodega
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO detalle_costo_bodega (costo, cantidad) VALUES (:costo, :cantidad)", nativeQuery = true)
-    void insertarDetalle(@Param("costo") Float costo, @Param("cantidad") Integer cantidad);
+    @Query(value = "INSERT INTO DETALLECOSTOBODEGA (COSTOUNITARIOBODEGA, CANTIDADEXISTENCIA, INFOEXTRABODEGA_INFOEXTRABODEGA_ID) " +
+                   "VALUES (:costoUnitarioBodega, :cantidadExistencia, :infoExtraBodegaId)", nativeQuery = true)
+    void insertarDetalleCostoBodega(@Param("costoUnitarioBodega") Float costoUnitarioBodega, 
+                                    @Param("cantidadExistencia") Integer cantidadExistencia, 
+                                    @Param("infoExtraBodegaId") Long infoExtraBodegaId);
 
-    // Actualizar un detalle por ID
+    // Actualizar un detalle de costo por su ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE detalle_costo_bodega SET costo = :costo, cantidad = :cantidad WHERE id = :id", nativeQuery = true)
-    void actualizarDetalle(@Param("id") Long id, @Param("costo") Float costo, @Param("cantidad") Integer cantidad);
+    @Query(value = "UPDATE DETALLECOSTOBODEGA SET COSTOUNITARIOBODEGA = :costoUnitarioBodega, CANTIDADEXISTENCIA = :cantidadExistencia, " +
+                   "INFOEXTRABODEGA_INFOEXTRABODEGA_ID = :infoExtraBodegaId WHERE IDDETALLECOSTO = :idDetalleCosto", nativeQuery = true)
+    void actualizarDetalleCostoBodega(@Param("idDetalleCosto") Long idDetalleCosto, 
+                                      @Param("costoUnitarioBodega") Float costoUnitarioBodega, 
+                                      @Param("cantidadExistencia") Integer cantidadExistencia, 
+                                      @Param("infoExtraBodegaId") Long infoExtraBodegaId);
 
-    // Eliminar un detalle por ID
+    // Eliminar un detalle de costo por su ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM detalle_costo_bodega WHERE id = :id", nativeQuery = true)
-    void eliminarDetalle(@Param("id") Long id);
+    @Query(value = "DELETE FROM DETALLECOSTOBODEGA WHERE IDDETALLECOSTO = :idDetalleCosto", nativeQuery = true)
+    void eliminarDetalleCostoBodega(@Param("idDetalleCosto") Long idDetalleCosto);
 }

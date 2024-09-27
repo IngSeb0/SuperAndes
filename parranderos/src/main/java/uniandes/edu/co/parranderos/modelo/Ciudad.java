@@ -1,4 +1,5 @@
 package uniandes.edu.co.parranderos.modelo;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -6,43 +7,43 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Ciudades")
+@Table(name = "CIUDAD")
 public class Ciudad {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    
-    private Long codigo;
-    private String nombre;
+    private Long codigoCiudad;
+    private String nombreCiudad;
 
-    public Ciudad() {}
-
-    public Ciudad(Long codigo, String nombre) {
-        this.codigo = codigo;
-        this.nombre = nombre;
+    public Ciudad() {
     }
 
-    public Long getCodigo() {
-        return codigo;
+    public Ciudad(Long codigoCiudad, String nombreCiudad) {
+        this.codigoCiudad = codigoCiudad;
+        this.nombreCiudad = nombreCiudad;
     }
 
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
+    public Long getCodigoCiudad() {
+        return codigoCiudad;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setCodigoCiudad(Long codigoCiudad) {
+        this.codigoCiudad = codigoCiudad;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombreCiudad() {
+        return nombreCiudad;
+    }
+
+    public void setNombreCiudad(String nombreCiudad) {
+        this.nombreCiudad = nombreCiudad;
     }
 
     @Override
     public String toString() {
         return "Ciudad{" +
-                "codigo='" + codigo + '\'' +
-                ", nombre='" + nombre + '\'' +
+                "codigoCiudad=" + codigoCiudad +
+                ", nombreCiudad='" + nombreCiudad + '\'' +
                 '}';
     }
-
 }

@@ -6,34 +6,27 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Bodega;
+import uniandes.edu.co.parranderos.modelo.BodegaPK;
 
-import java.util.List;
+import java.util.Collection;
 
-public interface BodegaRepository extends JpaRepository<Bodega, Long> {
+public interface BodegaRepository extends JpaRepository<Bodega, BodegaPK> {
 
-    // Obtener todas las bodegas
-    @Query("SELECT b FROM Bodega b")
-    List<Bodega> obtenerTodasLasBodegas();
+    @Query(value = "SELECT * FROM BODEGA", nativeQuery = true)
+    Collection<Bodega> darBodegas();
 
-    // Obtener una bodega por ID
-    @Query("SELECT b FROM Bodega b WHERE b.id = :id")
-    Bodega obtenerBodegaPorId(@Param("id") Long id);
-
-    // Insertar una nueva bodega
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO bodega (nombre, tamaño, sucursal_id) VALUES (:nombre, :tamano, :sucursalId)", nativeQuery = true)
-    void insertarBodega(@Param("nombre") String nombre, @Param("tamano") Float tamano, @Param("sucursalId") Long sucursalId);
+    @Query(value = "INSERT INTO BODEGA (SUCURSAL_IDSUCURSAL, INFOEXTRABODEGA_ID, NOMBREBODEGA, TAMANIOBODEGA) VALUES (:sucursalId, :infoExtraId, :nombre, :tamano)", nativeQuery = true)
+    void insertarBodega(@Param("sucursalId") Long sucursalId, @Param("nombre") String nombreBodega, @Param("tamano") Float tamanioBodega);
 
-    // Actualizar una bodega por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE bodega SET nombre = :nombre, tamaño = :tamano WHERE id = :id", nativeQuery = true)
-    void actualizarBodega(@Param("id") Long id, @Param("nombre") String nombre, @Param("tamano") Float tamano);
+    @Query(value = "UPDATE BODEGA SET NOMBREBODEGA = :nombreBodega, TAMANIOBODEGA = :tamano WHERE SUCURSAL_IDSUCURSAL = :sucursalId AND INFOEXTRABODEGA_ID = :infoExtraId", nativeQuery = true)
+    void actualizarBodega(@Param("sucursalId") Long sucursalId, @Param("nombreBodega") String nombreBodega, @Param("tamano") Float tamanioBodega);
 
-    // Eliminar una bodega por ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM bodega WHERE id = :id", nativeQuery = true)
-    void eliminarBodega(@Param("id") Long id);
+    @Query(value = "DELETE FROM BODEGA WHERE SUCURSAL_IDSUCURSAL = :sucursalId AND INFOEXTRABODEGA_ID = :infoExtraId", nativeQuery = true)
+    void eliminarBodega(@Param("sucursalId") Long sucursalId);
 }

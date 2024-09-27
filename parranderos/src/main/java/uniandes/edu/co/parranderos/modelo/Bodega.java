@@ -1,57 +1,48 @@
 package uniandes.edu.co.parranderos.modelo;
+
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Bodegas")
+@Table(name = "BODEGA")
 public class Bodega {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String nombre;
-    private Float tamaño;
+
+    @EmbeddedId
+    private BodegaPK pk;
+
+    private String nombreBodega;
+    private Float tamanioBodega;
 
     public Bodega() {}
 
-    public Bodega(Long id, String nombre, Float tamaño) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tamaño = tamaño;
+    public Bodega(String nombreBodega, Float tamanoBodega, BodegaPK pk) {
+        this.nombreBodega = nombreBodega;
+        this.tamanioBodega = tamanoBodega;
+        this.pk = pk;
     }
 
-    public Long getId() {
-        return id;
+    public BodegaPK getPk() {
+        return pk;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPk(BodegaPK pk) {
+        this.pk = pk;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreBodega() {
+        return nombreBodega;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreBodega(String nombreBodega) {
+        this.nombreBodega = nombreBodega;
     }
 
-    public Float getTamaño() {
-        return tamaño;
+    public Float getTamanoBodega() {
+        return tamanioBodega;
     }
 
-    public void setTamaño(Float tamaño) {
-        this.tamaño = tamaño;
-    }
-
-    @Override
-    public String toString() {
-        return "Bodega{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", tamaño=" + tamaño +
-                '}';
+    public void setTamanoBodega(Float tamanoBodega) {
+        this.tamanioBodega = tamanoBodega;
     }
 }

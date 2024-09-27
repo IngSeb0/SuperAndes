@@ -1,60 +1,59 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="Sucursales")
+@Table(name = "SUCURSAL")
 public class Sucursal {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String nombre;
-    private Float tamaño;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDSUCURSAL")
+    private Long idSucursal;
+
+    @Column(name = "NOMBRE")
+    private String nombreSucursal;
+
+    @Column(name = "TAMAÑOBLOSTABLACION")
+    private String tamañoBloque; // Tamaño almacenado como String por convención en este caso.
+
+    @Column(name = "DIRECCION")
     private String direccion;
-    private Integer telefono;
 
-    // Constructor sin argumentos (necesario para JPA)
-    public Sucursal() {
-    }
+    @Column(name = "TELEFONO")
+    private String telefono;
 
-    // Constructor con todos los campos
-    public Sucursal(Long id, String nombre, Float tamaño, String direccion, Integer telefono) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tamaño = tamaño;
+    public Sucursal() {}
+
+    public Sucursal(String nombreSucursal, String tamañoBloque, String direccion, String telefono) {
+        this.nombreSucursal = nombreSucursal;
+        this.tamañoBloque = tamañoBloque;
         this.direccion = direccion;
         this.telefono = telefono;
     }
 
-    // Getters y Setters
-
-    public Long getId() {
-        return id;
+    public Long getIdSucursal() {
+        return idSucursal;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdSucursal(Long idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreSucursal() {
+        return nombreSucursal;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
     }
 
-    public Float getTamaño() {
-        return tamaño;
+    public String getTamañoBloque() {
+        return tamañoBloque;
     }
 
-    public void setTamaño(Float tamaño) {
-        this.tamaño = tamaño;
+    public void setTamañoBloque(String tamañoBloque) {
+        this.tamañoBloque = tamañoBloque;
     }
 
     public String getDireccion() {
@@ -65,23 +64,11 @@ public class Sucursal {
         this.direccion = direccion;
     }
 
-    public Integer getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Integer telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    // Método toString para representar el objeto como String
-    @Override
-    public String toString() {
-        return "Sucursal{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", tamaño=" + tamaño +
-                ", direccion='" + direccion + '\'' +
-                ", telefono=" + telefono +
-                '}';
     }
 }

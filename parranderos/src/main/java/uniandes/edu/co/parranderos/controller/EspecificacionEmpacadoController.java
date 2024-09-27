@@ -18,11 +18,11 @@ public class EspecificacionEmpacadoController {
 
     // Obtener todas las especificaciones de empacado
     @GetMapping
-    public Collection<EspecificacionEmpacado> obtenerEspecificacionesEmpacado() {
+    public Collection<EspecificacionEmpacado> obtenerEspecificaciones() {
         return especificacionEmpacadoRepository.obtenerTodasLasEspecificaciones();
     }
 
-    // Obtener una especificación de empacado por su ID
+    // Obtener una especificación de empacado por ID
     @GetMapping("/{id}")
     public ResponseEntity<EspecificacionEmpacado> obtenerEspecificacionPorId(@PathVariable("id") Long id) {
         EspecificacionEmpacado especificacion = especificacionEmpacadoRepository.obtenerEspecificacionPorId(id);
@@ -35,9 +35,12 @@ public class EspecificacionEmpacadoController {
 
     // Insertar una nueva especificación de empacado
     @PostMapping("/new/save")
-    public ResponseEntity<String> insertarEspecificacion(@RequestBody EspecificacionEmpacado especificacion) {
+    public ResponseEntity<String> insertarEspecificacion(@RequestBody EspecificacionEmpacado especificacionEmpacado) {
         try {
-            especificacionEmpacadoRepository.insertarEspecificacion(especificacion.getVolumenCm3(), especificacion.getPesoGr());
+            especificacionEmpacadoRepository.insertarEspecificacion(
+                    especificacionEmpacado.getVolumenCm3(),
+                    especificacionEmpacado.getPesoGr()
+            );
             return new ResponseEntity<>("Especificación de empacado creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al crear la especificación de empacado", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,9 +49,13 @@ public class EspecificacionEmpacadoController {
 
     // Actualizar una especificación de empacado por su ID
     @PostMapping("/{id}/edit/save")
-    public ResponseEntity<String> actualizarEspecificacion(@PathVariable("id") Long id, @RequestBody EspecificacionEmpacado especificacion) {
+    public ResponseEntity<String> actualizarEspecificacion(@PathVariable("id") Long id, @RequestBody EspecificacionEmpacado especificacionEmpacado) {
         try {
-            especificacionEmpacadoRepository.actualizarEspecificacion(id, especificacion.getVolumenCm3(), especificacion.getPesoGr());
+            especificacionEmpacadoRepository.actualizarEspecificacion(
+                    id,
+                    especificacionEmpacado.getVolumenCm3(),
+                    especificacionEmpacado.getPesoGr()
+            );
             return new ResponseEntity<>("Especificación de empacado actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al actualizar la especificación de empacado", HttpStatus.INTERNAL_SERVER_ERROR);

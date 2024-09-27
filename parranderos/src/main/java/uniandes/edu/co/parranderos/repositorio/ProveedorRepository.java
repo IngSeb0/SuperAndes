@@ -34,12 +34,13 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
     // Actualizar un proveedor por su NIT
     @Modifying
     @Transactional
-    @Query(value = "UPDATE proveedores SET nombre = :nombre, direccion = :direccion WHERE nit = :nit", nativeQuery = true)
+    @Query(value = "UPDATE proveedores SET nombre = :nombre, direccion = :direccion, telefono = :telefono, nombre_contacto = :nombreContacto WHERE nit = :nit", nativeQuery = true)
     void actualizarProveedor(@Param("nit") Long nit,
-    @Param("nombre") String nombre,
-    @Param("direccion") String direccion,
-    @Param("nombreContacto") String nombreContacto,
-    @Param("telefonoContacto") String telefonoContacto);
+                             @Param("nombre") String nombre,
+                             @Param("direccion") String direccion,
+                             @Param("telefono") String telefono,
+                             @Param("nombreContacto") String nombreContacto);
+    
 
     // Eliminar un proveedor por su NIT
     @Modifying

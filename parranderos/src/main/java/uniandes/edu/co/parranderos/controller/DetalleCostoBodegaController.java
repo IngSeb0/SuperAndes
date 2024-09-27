@@ -10,48 +10,68 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collection;
 
 @RestController
+@RequestMapping("/detalles_costo_bodega")
 public class DetalleCostoBodegaController {
 
     @Autowired
     private DetalleCostoBodegaRepository detalleCostoBodegaRepository;
 
-    // Obtener todos los detalles de costo de bodega
-    @GetMapping("/detalles_costo_bodega")
+    // Obtener todos los detalles de costo de la bodega
+    @GetMapping
     public Collection<DetalleCostoBodega> obtenerDetallesCostoBodega() {
-        return detalleCostoBodegaRepository.findAll();
+        return detalleCostoBodegaRepository.obtenerTodosLosDetallesCostoBodega();
+    }
+
+    // Obtener un detalle de costo por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<DetalleCostoBodega> obtenerDetalleCostoBodegaPorId(@PathVariable("id") Long id) {
+        DetalleCostoBodega detalle = detalleCostoBodegaRepository.obtenerDetalleCostoBodegaPorId(id);
+        if (detalle != null) {
+            return new ResponseEntity<>(detalle, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Insertar un nuevo detalle de costo de bodega
-    @PostMapping("/detalles_costo_bodega/new/save")
-    public ResponseEntity<String> insertarDetalleCostoBodega(@RequestBody DetalleCostoBodega detalle) {
+    @PostMapping("/new/save")
+    public ResponseEntity<String> insertarDetalleCostoBodega(@RequestBody DetalleCostoBodega detalleCostoBodega) {
         try {
-            detalleCostoBodegaRepository.insertarDetalle(detalle.getCostoUnitarioBodega(), detalle.getCantidadExistencia());
+            detalleCostoBodegaRepository.insertarDetalleCostoBodega(
+                detalleCostoBodega.getCostoUnitarioBodega(),
+                detalleCostoBodega.getCantidadExistencia(),
+                detalleCostoBodega.getInfoExtraBodegaId()
+            );
             return new ResponseEntity<>("Detalle de costo de bodega creado exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al crear el detalle", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al crear el detalle de costo de bodega", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Actualizar un detalle de costo de bodega
-    @PostMapping("/detalles_costo_bodega/{id}/edit/save")
-    public ResponseEntity<String> actualizarDetalleCostoBodega(@PathVariable("id") Long id, @RequestBody DetalleCostoBodega detalle) {
+    // Actualizar un detalle de costo de bodega por su ID
+    @PostMapping("/{id}/edit/save")
+    public ResponseEntity<String> actualizarDetalleCostoBodega(@PathVariable("id") Long id, @RequestBody DetalleCostoBodega detalleCostoBodega) {
         try {
-            detalleCostoBodegaRepository.actualizarDetalle(id, detalle.getCostoUnitarioBodega(),detalle.getCantidadExistencia() );
-            detalleCostoBodegaRepository.save(detalle);
+            detalleCostoBodegaRepository.actualizarDetalleCostoBodega(
+                id,
+                detalleCostoBodega.getCostoUnitarioBodega(),
+                detalleCostoBodega.getCantidadExistencia(),
+                detalleCostoBodega.getInfoExtraBodegaId()
+            );
             return new ResponseEntity<>("Detalle de costo de bodega actualizado exitosamente", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al actualizar el detalle", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al actualizar el detalle de costo de bodega", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Eliminar un detalle de costo de bodega
-    @PostMapping("/detalles_costo_bodega/{id}/delete")
+    // Eliminar un detalle de costo de bodega por su ID
+    @PostMapping("/{id}/delete")
     public ResponseEntity<String> eliminarDetalleCostoBodega(@PathVariable("id") Long id) {
         try {
-            detalleCostoBodegaRepository.deleteById(id);
+            detalleCostoBodegaRepository.eliminarDetalleCostoBodega(id);
             return new ResponseEntity<>("Detalle de costo de bodega eliminado exitosamente", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al eliminar el detalle", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al eliminar el detalle de costo de bodega", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

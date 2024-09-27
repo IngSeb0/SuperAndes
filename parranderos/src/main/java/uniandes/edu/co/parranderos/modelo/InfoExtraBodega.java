@@ -1,36 +1,50 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="Info Extra Bodegas")
+@Table(name = "INFOEXTRABODEGA")
 public class InfoExtraBodega {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer totalExistencia;
+
+    @EmbeddedId
+    private InfoExtraBodegaPk pk;
+
+    @Column(name = "TOTALEXISTENCIAS")
+    private Integer totalExistencias;
+
+    @Column(name = "COSTOPROMEDIO")
     private Float costoPromedio;
+
+    @Column(name = "CAPACIDADALMACENAMIENTO")
     private Integer capacidadAlmacenamiento;
-    private Integer nivelMinimoReorden;
+
+    @Column(name = "NIVELMINIMO")
+    private Float nivelMinimo;
 
     public InfoExtraBodega() {}
 
-    public InfoExtraBodega(Integer totalExistencia, Float costoPromedio, Integer capacidadAlmacenamiento, Integer nivelMinimoReorden) {
-        this.totalExistencia = totalExistencia;
+    public InfoExtraBodega(InfoExtraBodegaPk pk, Integer totalExistencias, Float costoPromedio, Integer capacidadAlmacenamiento, Float nivelMinimo) {
+        this.pk = pk;
+        this.totalExistencias = totalExistencias;
         this.costoPromedio = costoPromedio;
         this.capacidadAlmacenamiento = capacidadAlmacenamiento;
-        this.nivelMinimoReorden = nivelMinimoReorden;
+        this.nivelMinimo = nivelMinimo;
     }
 
-    public Integer getTotalExistencia() {
-        return totalExistencia;
+    public InfoExtraBodegaPk getPk() {
+        return pk;
     }
 
-    public void setTotalExistencia(Integer totalExistencia) {
-        this.totalExistencia = totalExistencia;
+    public void setPk(InfoExtraBodegaPk pk) {
+        this.pk = pk;
+    }
+
+    public Integer getTotalExistencias() {
+        return totalExistencias;
+    }
+
+    public void setTotalExistencias(Integer totalExistencias) {
+        this.totalExistencias = totalExistencias;
     }
 
     public Float getCostoPromedio() {
@@ -49,21 +63,22 @@ public class InfoExtraBodega {
         this.capacidadAlmacenamiento = capacidadAlmacenamiento;
     }
 
-    public Integer getNivelMinimoReorden() {
-        return nivelMinimoReorden;
+    public Float getNivelMinimo() {
+        return nivelMinimo;
     }
 
-    public void setNivelMinimoReorden(Integer nivelMinimoReorden) {
-        this.nivelMinimoReorden = nivelMinimoReorden;
+    public void setNivelMinimo(Float nivelMinimo) {
+        this.nivelMinimo = nivelMinimo;
     }
 
     @Override
     public String toString() {
         return "InfoExtraBodega{" +
-                "totalExistencia=" + totalExistencia +
+                "pk=" + pk +
+                ", totalExistencias=" + totalExistencias +
                 ", costoPromedio=" + costoPromedio +
                 ", capacidadAlmacenamiento=" + capacidadAlmacenamiento +
-                ", nivelMinimoReorden=" + nivelMinimoReorden +
+                ", nivelMinimo=" + nivelMinimo +
                 '}';
     }
 }

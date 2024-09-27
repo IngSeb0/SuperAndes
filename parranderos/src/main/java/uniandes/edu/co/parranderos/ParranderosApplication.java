@@ -63,7 +63,7 @@ public class ParranderosApplication implements CommandLineRunner {
         }
 
         // Bodegas
-        Collection<Bodega> bodegas = bodegaRepository.obtenerTodasLasBodegas();
+        Collection<Bodega> bodegas = bodegaRepository.darBodegas();
         System.out.println("\nBodegas:");
         for (Bodega b : bodegas) {
             System.out.println(b);
@@ -77,7 +77,7 @@ public class ParranderosApplication implements CommandLineRunner {
         }
 
         // Detalles Costo Bodega
-        Collection<DetalleCostoBodega> detallesCosto = detalleCostoBodegaRepository.obtenerTodosLosDetallesCosto();
+        Collection<DetalleCostoBodega> detallesCosto = detalleCostoBodegaRepository.obtenerTodosLosDetallesCostoBodega();
         System.out.println("\nDetalles de Costo de Bodega:");
         for (DetalleCostoBodega detalle : detallesCosto) {
             System.out.println(detalle);
@@ -105,7 +105,7 @@ public class ParranderosApplication implements CommandLineRunner {
         }
 
         // Info Extra Proveedor
-        Collection<InfoExtraProveedor> infoExtraProveedores = infoExtraProveedorRepository.obtenerTodaLaInfoExtraProveedor();
+        Collection<InfoExtraProveedor> infoExtraProveedores = infoExtraProveedorRepository. obtenerTodaInfoExtraProveedor();
         System.out.println("\nInfo Extra Proveedores:");
         for (InfoExtraProveedor proveedor : infoExtraProveedores) {
             System.out.println(proveedor);

@@ -16,16 +16,16 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     // Obtener todos los clientes
-    @GetMapping("/clientes")
+    @GetMapping("/cliente")
     public Collection<Cliente> obtenerClientes() {
         return clienteRepository.obtenerTodosLosClientes();
     }
 
     // Insertar un nuevo cliente
-    @PostMapping("/clientes/new/save")
+    @PostMapping("/cliente/new/save")
     public ResponseEntity<String> insertarCliente(@RequestBody Cliente cliente) {
         try {
-            clienteRepository.insertarCliente(cliente.getCedula(), cliente.getNombre());
+            clienteRepository.insertarCliente(cliente.getCedula(), cliente.getNombreCliente());
             return new ResponseEntity<>("Cliente creado exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al crear el cliente", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -33,10 +33,10 @@ public class ClienteController {
     }
 
     // Actualizar un cliente
-    @PostMapping("/clientes/{cedula}/edit/save")
+    @PostMapping("/cliente/{cedula}/edit/save")
     public ResponseEntity<String> actualizarCliente(@PathVariable("cedula") Long cedula, @RequestBody Cliente cliente) {
         try {
-            clienteRepository.actualizarCliente(cedula, cliente.getNombre());
+            clienteRepository.actualizarCliente(cedula, cliente.getNombreCliente());
             return new ResponseEntity<>("Cliente actualizado exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al actualizar el cliente", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,7 +44,7 @@ public class ClienteController {
     }
 
     // Eliminar un cliente
-    @PostMapping("/clientes/{cedula}/delete")
+    @PostMapping("/cliente/{cedula}/delete")
     public ResponseEntity<String> eliminarCliente(@PathVariable("cedula") Long cedula) {
         try {
             clienteRepository.eliminarCliente(cedula);

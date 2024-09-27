@@ -7,33 +7,33 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Ciudad;
 
-import java.util.Collection;
+import java.util.List;
 
-public interface CiudadRepository extends JpaRepository<Ciudad, String> {  
+public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
 
-    // Consultar todas las ciudades
-    @Query(value = "SELECT * FROM ciudades", nativeQuery = true)
-    Collection<Ciudad> obtenerTodasLasCiudades();
+    // Obtener todas las ciudades
+    @Query("SELECT c FROM Ciudad c")
+    List<Ciudad> obtenerTodasLasCiudades();
 
-    // Consultar una ciudad por su código
-    @Query(value = "SELECT * FROM ciudades WHERE codigo = :codigo", nativeQuery = true)
-    Ciudad obtenerCiudadPorCodigo(@Param("codigo") Long codigo);
+    // Obtener una ciudad por ID
+    @Query("SELECT c FROM Ciudad c WHERE c.codigoCiudad = :codigoCiudad")
+    Ciudad obtenerCiudadPorId(@Param("codigoCiudad") Long codigoCiudad);
 
     // Insertar una nueva ciudad
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO ciudades (codigo, nombre) VALUES (:codigo, :nombre)", nativeQuery = true)
-    void insertarCiudad(@Param("codigo") Long codigo, @Param("nombre") String nombre);
+    @Query(value = "INSERT INTO CIUDAD (NOMBRECIUDAD) VALUES (:nombreCiudad)", nativeQuery = true)
+    void insertarCiudad(@Param("nombreCiudad") String nombreCiudad);
 
-    // Actualizar una ciudad por su código
+    // Actualizar una ciudad por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE ciudades SET nombre = :nombre WHERE id = :codigo", nativeQuery = true)
-    void actualizarCiudad(@Param("codigo") Long codigo, @Param("nombre") String nombre);
+    @Query(value = "UPDATE CIUDAD SET NOMBRECIUDAD = :nombreCiudad WHERE CODIGOCIUDAD = :codigoCiudad", nativeQuery = true)
+    void actualizarCiudad(@Param("codigoCiudad") Long codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
 
-    // Eliminar una ciudad por su código
+    // Eliminar una ciudad por ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM ciudades WHERE codigo = :codigo", nativeQuery = true)
-    void eliminarCiudad(@Param("codigo") Long codigo);
+    @Query(value = "DELETE FROM CIUDAD WHERE CODIGOCIUDAD = :codigoCiudad", nativeQuery = true)
+    void eliminarCiudad(@Param("codigoCiudad") Long codigoCiudad);
 }

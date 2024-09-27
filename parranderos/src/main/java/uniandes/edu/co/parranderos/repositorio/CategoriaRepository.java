@@ -16,30 +16,29 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     List<Categoria> obtenerTodasLasCategorias();
 
     // Obtener una categoría por ID
-    @Query("SELECT c FROM Categoria c WHERE c.id = :id")
-    Categoria obtenerCategoriaPorId(@Param("id") Long id);
+    @Query("SELECT c FROM Categoria c WHERE c.codigoCategoria = :codigoCategoria")
+    Categoria obtenerCategoriaPorId(@Param("codigoCategoria") Long codigoCategoria);
 
-    // Insertar una nueva categoría (CORREGIDO)
+    // Insertar una nueva categoría
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO categoria (codigo, nombre, descripcion, caracteristica) VALUES (:codigo, :nombre, :descripcion, :caracteristica)", nativeQuery = true)
-    void insertarCategoria(@Param("codigo") Long codigo, 
-                           @Param("nombre") String nombre, 
-                           @Param("descripcion") String descripcion, 
-                           @Param("caracteristica") String caracteristica);
+    @Query(value = "INSERT INTO CATEGORIA (CARACTERISTICASALMACENAMIENTO, NOMBRECATEGORIA, DESCRIPCIÓN) VALUES (:caracteristicasAlmacenamiento, :nombreCategoria, :descripcion)", nativeQuery = true)
+    void insertarCategoria(@Param("caracteristicasAlmacenamiento") String caracteristicasAlmacenamiento,
+                           @Param("nombreCategoria") String nombreCategoria,
+                           @Param("descripcion") String descripcion);
 
-    // Actualizar una categoría por ID (CORREGIDO)
+    // Actualizar una categoría por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE categoria SET nombre = :nombre, descripcion = :descripcion, caracteristica = :caracteristica WHERE id = :codigo", nativeQuery = true)
-    void actualizarCategoria(@Param("codigo") Long codigo, 
-                             @Param("nombre") String nombre, 
-                             @Param("descripcion") String descripcion, 
-                             @Param("caracteristica") String caracteristica);
+    @Query(value = "UPDATE CATEGORIA SET CARACTERISTICASALMACENAMIENTO = :caracteristicasAlmacenamiento, NOMBRECATEGORIA = :nombreCategoria, DESCRIPCIÓN = :descripcion WHERE CODIGOCATEGORIA = :codigoCategoria", nativeQuery = true)
+    void actualizarCategoria(@Param("codigoCategoria") Long codigoCategoria,
+                             @Param("caracteristicasAlmacenamiento") String caracteristicasAlmacenamiento,
+                             @Param("nombreCategoria") String nombreCategoria,
+                             @Param("descripcion") String descripcion);
 
     // Eliminar una categoría por ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM categoria WHERE id = :id", nativeQuery = true)
-    void eliminarCategoria(@Param("id") Long id);
+    @Query(value = "DELETE FROM CATEGORIA WHERE CODIGOCATEGORIA = :codigoCategoria", nativeQuery = true)
+    void eliminarCategoria(@Param("codigoCategoria") Long codigoCategoria);
 }

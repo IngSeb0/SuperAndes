@@ -1,6 +1,5 @@
 package uniandes.edu.co.parranderos.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.InfoExtraVenta;
@@ -39,8 +38,10 @@ public class InfoExtraVentaController {
     public ResponseEntity<String> insertarInfoExtraVenta(@RequestBody InfoExtraVenta infoExtraVenta) {
         try {
             infoExtraVentaRepository.insertarInfoExtraVenta(
-                    infoExtraVenta.getCantidad(), 
-                    infoExtraVenta.getPrecioUnitarioVenta()
+                infoExtraVenta.getCantidad(), 
+                infoExtraVenta.getPrecioUnitario(),
+                infoExtraVenta.getVenta().getIdVenta(),
+                infoExtraVenta.getProducto().getCodigoBarras()
             );
             return new ResponseEntity<>("Información extra de venta creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -52,7 +53,12 @@ public class InfoExtraVentaController {
     @PostMapping("/{id}/edit/save")
     public ResponseEntity<String> actualizarInfoExtraVenta(@PathVariable("id") Long id, @RequestBody InfoExtraVenta infoExtraVenta) {
         try {
-            infoExtraVentaRepository.actualizarInfoExtraVenta(id, infoExtraVenta.getCantidad(), infoExtraVenta.getPrecioUnitarioVenta());
+            infoExtraVentaRepository.actualizarInfoExtraVenta(id, 
+                infoExtraVenta.getCantidad(), 
+                infoExtraVenta.getPrecioUnitario(),
+                infoExtraVenta.getVenta().getIdVenta(),
+                infoExtraVenta.getProducto().getCodigoBarras()
+            );
             return new ResponseEntity<>("Información extra de venta actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al actualizar la información extra de venta", HttpStatus.INTERNAL_SERVER_ERROR);

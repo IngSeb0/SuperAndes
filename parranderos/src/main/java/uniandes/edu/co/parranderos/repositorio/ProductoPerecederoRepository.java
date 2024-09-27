@@ -38,15 +38,16 @@ public interface ProductoPerecederoRepository extends JpaRepository<ProductoPere
     // Actualizar un producto perecedero por su ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE productos SET nombre = :nombre, precio_unitario_venta = :precioUnitarioVenta, fecha_vencimiento = :fechaVencimiento WHERE codigo_barras = :codigoBarras", nativeQuery = true)
+    @Query(value = "UPDATE productos SET nombre = :nombre, precio_unitario_venta = :precioUnitarioVenta, presentacion = :presentacion, cantidad_presentacion = :cantidadPresentacion, unidad_medida = :unidadMedida, fecha_expiracion = :fechaExpiracion, fecha_vencimiento = :fechaVencimiento WHERE codigo_barras = :codigoBarras", nativeQuery = true)
     void actualizarProductoPerecedero(@Param("codigoBarras") String codigoBarras,
-    @Param("nombre") String nombre,
-    @Param("precioUnitarioVenta") Float precioUnitarioVenta,
-    @Param("presentacion") String presentacion,
-    @Param("cantidadPresentacion") Integer cantidadPresentacion,
-    @Param("unidadMedida") String unidadMedida,
-    @Param("fechaExpiracion") String fechaExpiracion,
-    @Param("fechaVencimiento") String fechaVencimiento);
+                                      @Param("nombre") String nombre,
+                                      @Param("precioUnitarioVenta") Float precioUnitarioVenta,
+                                      @Param("presentacion") String presentacion,
+                                      @Param("cantidadPresentacion") Integer cantidadPresentacion,
+                                      @Param("unidadMedida") String unidadMedida,
+                                      @Param("fechaExpiracion") String fechaExpiracion,
+                                      @Param("fechaVencimiento") String fechaVencimiento);
+    
 
     // Eliminar un producto perecedero por su ID
     @Modifying

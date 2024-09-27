@@ -18,18 +18,27 @@ public class SucursalController {
 
     // Obtener todas las sucursales
     @GetMapping
-    public Collection<Sucursal> obtenerSucursales() {
-        return sucursalRepository.obtenerTodasLasSucursales();
+    public ResponseEntity<Collection<Sucursal>> obtenerSucursales() {
+        try {
+            Collection<Sucursal> sucursales = sucursalRepository.obtenerTodasLasSucursales();
+            return new ResponseEntity<>(sucursales, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Obtener una sucursal por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Sucursal> obtenerSucursalPorId(@PathVariable("id") Long id) {
-        Sucursal sucursal = sucursalRepository.obtenerSucursalPorId(id);
-        if (sucursal != null) {
-            return new ResponseEntity<>(sucursal, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Sucursal sucursal = sucursalRepository.obtenerSucursalPorId(id);
+            if (sucursal != null) {
+                return new ResponseEntity<>(sucursal, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -38,8 +47,8 @@ public class SucursalController {
     public ResponseEntity<String> insertarSucursal(@RequestBody Sucursal sucursal) {
         try {
             sucursalRepository.insertarSucursal(
-                    sucursal.getNombre(),
-                    sucursal.getTamaño(),
+                    sucursal.getNombreSucursal(),
+                    sucursal.getTamañoBloque(),
                     sucursal.getDireccion(),
                     sucursal.getTelefono()
             );
@@ -53,7 +62,13 @@ public class SucursalController {
     @PostMapping("/{id}/edit/save")
     public ResponseEntity<String> actualizarSucursal(@PathVariable("id") Long id, @RequestBody Sucursal sucursal) {
         try {
-            sucursalRepository.actualizarSucursal(id, sucursal.getNombre(), sucursal.getTamaño());
+            sucursalRepository.actualizarSucursal(
+                    id,
+                    sucursal.getNombreSucursal(),
+                    sucursal.getTamañoBloque(),
+                    sucursal.getDireccion(),
+                    sucursal.getTelefono()
+            );
             return new ResponseEntity<>("Sucursal actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al actualizar la sucursal", HttpStatus.INTERNAL_SERVER_ERROR);

@@ -16,24 +16,34 @@ public interface InfoExtraVentaRepository extends JpaRepository<InfoExtraVenta, 
     List<InfoExtraVenta> obtenerTodaLaInfoExtraVenta();
 
     // Obtener una información extra por ID
-    @Query("SELECT i FROM InfoExtraVenta i WHERE i.id = :id")
+    @Query("SELECT i FROM InfoExtraVenta i WHERE i.idInfoExtraVenta = :id")
     InfoExtraVenta obtenerInfoExtraVentaPorId(@Param("id") Long id);
 
     // Insertar nueva información extra
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO info_extra_venta (cantidad, precio_unitario) VALUES (:cantidad, :precioUnitario)", nativeQuery = true)
-    void insertarInfoExtraVenta(@Param("cantidad") Integer cantidad, @Param("precioUnitario") Float precioUnitario);
+    @Query(value = "INSERT INTO info_extra_venta (cantidad, precio_unitario, venta_idventa, producto_codigobarras) " +
+            "VALUES (:cantidad, :precioUnitario, :ventaId, :productoCodigoBarras)", nativeQuery = true)
+    void insertarInfoExtraVenta(@Param("cantidad") Integer cantidad, 
+                                @Param("precioUnitario") Float precioUnitario, 
+                                @Param("ventaId") Long ventaId,
+                                @Param("productoCodigoBarras") String productoCodigoBarras);
 
     // Actualizar información extra por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE info_extra_venta SET cantidad = :cantidad, precio_unitario = :precioUnitario WHERE id = :id", nativeQuery = true)
-    void actualizarInfoExtraVenta(@Param("id") Long id, @Param("cantidad") Integer cantidad, @Param("precioUnitario") Float precioUnitario);
+    @Query(value = "UPDATE info_extra_venta SET cantidad = :cantidad, precio_unitario = :precioUnitario, " +
+            "venta_idventa = :ventaId, producto_codigobarras = :productoCodigoBarras " +
+            "WHERE idinfoextraventa = :id", nativeQuery = true)
+    void actualizarInfoExtraVenta(@Param("id") Long id, 
+                                  @Param("cantidad") Integer cantidad, 
+                                  @Param("precioUnitario") Float precioUnitario,
+                                  @Param("ventaId") Long ventaId,
+                                  @Param("productoCodigoBarras") String productoCodigoBarras);
 
     // Eliminar una información extra por ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM info_extra_venta WHERE id = :id", nativeQuery = true)
+    @Query(value = "DELETE FROM info_extra_venta WHERE idinfoextraventa = :id", nativeQuery = true)
     void eliminarInfoExtraVenta(@Param("id") Long id);
 }

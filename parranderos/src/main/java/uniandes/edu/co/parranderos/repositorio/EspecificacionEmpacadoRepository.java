@@ -15,25 +15,25 @@ public interface EspecificacionEmpacadoRepository extends JpaRepository<Especifi
     @Query("SELECT e FROM EspecificacionEmpacado e")
     List<EspecificacionEmpacado> obtenerTodasLasEspecificaciones();
 
-    // Obtener una especificación por ID
-    @Query("SELECT e FROM EspecificacionEmpacado e WHERE e.id = :id")
+    // Obtener una especificación de empacado por ID
+    @Query("SELECT e FROM EspecificacionEmpacado e WHERE e.idEspecificacionEmpacado = :id")
     EspecificacionEmpacado obtenerEspecificacionPorId(@Param("id") Long id);
 
-    // Insertar una nueva especificación de empacado
+    // Insertar nueva especificación de empacado
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO especificacion_empacado (volumen, peso) VALUES (:volumen, :peso)", nativeQuery = true)
-    void insertarEspecificacion(@Param("volumen") Float volumen, @Param("peso") Float peso);
+    @Query(value = "INSERT INTO ESPECIFICACIONEMPACADO (VOLUMENCM3, PESOGR) VALUES (:volumenCm3, :pesoGr)", nativeQuery = true)
+    void insertarEspecificacion(@Param("volumenCm3") Float volumenCm3, @Param("pesoGr") Float pesoGr);
 
-    // Actualizar una especificación de empacado por ID
+    // Actualizar especificación de empacado por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE especificacion_empacado SET volumen = :volumen, peso = :peso WHERE id = :id", nativeQuery = true)
-    void actualizarEspecificacion(@Param("id") Long id, @Param("volumen") Float volumen, @Param("peso") Float peso);
+    @Query(value = "UPDATE ESPECIFICACIONEMPACADO SET VOLUMENCM3 = :volumenCm3, PESOGR = :pesoGr WHERE IDESPECIFICACIONEMPACADO = :id", nativeQuery = true)
+    void actualizarEspecificacion(@Param("id") Long id, @Param("volumenCm3") Float volumenCm3, @Param("pesoGr") Float pesoGr);
 
     // Eliminar una especificación de empacado por ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM especificacion_empacado WHERE id = :id", nativeQuery = true)
+    @Query(value = "DELETE FROM ESPECIFICACIONEMPACADO WHERE IDESPECIFICACIONEMPACADO = :id", nativeQuery = true)
     void eliminarEspecificacion(@Param("id") Long id);
 }

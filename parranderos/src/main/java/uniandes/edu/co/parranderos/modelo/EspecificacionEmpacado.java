@@ -1,4 +1,5 @@
 package uniandes.edu.co.parranderos.modelo;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -6,12 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Especificaciones Empacado")
-
+@Table(name = "ESPECIFICACIONEMPACADO") // Sin espacios en el nombre de la tabla
 public class EspecificacionEmpacado {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    
+    private Long idEspecificacionEmpacado;  // Agregamos el campo id
+
     private Float volumenCm3;
     private Float pesoGr;
 
@@ -20,6 +22,14 @@ public class EspecificacionEmpacado {
     public EspecificacionEmpacado(Float volumenCm3, Float pesoGr) {
         this.volumenCm3 = volumenCm3;
         this.pesoGr = pesoGr;
+    }
+
+    public Long getIdEspecificacionEmpacado() {
+        return idEspecificacionEmpacado;
+    }
+
+    public void setIdEspecificacionEmpacado(Long idEspecificacionEmpacado) {
+        this.idEspecificacionEmpacado = idEspecificacionEmpacado;
     }
 
     public Float getVolumenCm3() {
@@ -41,7 +51,8 @@ public class EspecificacionEmpacado {
     @Override
     public String toString() {
         return "EspecificacionEmpacado{" +
-                "volumenCm3=" + volumenCm3 +
+                "idEspecificacionEmpacado=" + idEspecificacionEmpacado +
+                ", volumenCm3=" + volumenCm3 +
                 ", pesoGr=" + pesoGr +
                 '}';
     }

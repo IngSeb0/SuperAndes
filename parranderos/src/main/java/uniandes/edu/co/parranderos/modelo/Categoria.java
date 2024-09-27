@@ -1,41 +1,54 @@
 package uniandes.edu.co.parranderos.modelo;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-
-
-
-
 @Entity
-@Table(name = "categoria")
+@Table(name = "CATEGORIA")
 public class Categoria {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long codigo;
-    
-    private String nombre;
+    private Long codigoCategoria;
+    private String caracteristicasAlmacenamiento;
+    private String nombreCategoria;
     private String descripcion;
-    private String caracteristica;  // Asegúrate de que este campo esté presente y mapeado
 
-    // Getters y Setters
-    public Long getCodigo() {
-        return codigo;
+    public Categoria() {
     }
 
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
+    public Categoria(Long codigoCategoria, String caracteristicasAlmacenamiento, String nombreCategoria, String descripcion) {
+        this.codigoCategoria = codigoCategoria;
+        this.caracteristicasAlmacenamiento = caracteristicasAlmacenamiento;
+        this.nombreCategoria = nombreCategoria;
+        this.descripcion = descripcion;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Long getCodigoCategoria() {
+        return codigoCategoria;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCodigoCategoria(Long codigoCategoria) {
+        this.codigoCategoria = codigoCategoria;
+    }
+
+    public String getCaracteristicasAlmacenamiento() {
+        return caracteristicasAlmacenamiento;
+    }
+
+    public void setCaracteristicasAlmacenamiento(String caracteristicasAlmacenamiento) {
+        this.caracteristicasAlmacenamiento = caracteristicasAlmacenamiento;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
     }
 
     public String getDescripcion() {
@@ -46,23 +59,13 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    public String getCaracteristica() {
-        return caracteristica;
-    }
-
-    public void setCaracteristica(String caracteristica) {
-        this.caracteristica = caracteristica;
-    }
-
-
-
     @Override
     public String toString() {
         return "Categoria{" +
-                "codigo='" + codigo + '\'' +
-                ", nombre='" + nombre + '\'' +
+                "codigoCategoria=" + codigoCategoria +
+                ", caracteristicasAlmacenamiento='" + caracteristicasAlmacenamiento + '\'' +
+                ", nombreCategoria='" + nombreCategoria + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", caracteristica='" + caracteristica+ '\'' +
                 '}';
     }
 }
