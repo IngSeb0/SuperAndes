@@ -1,48 +1,62 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "BODEGA")
 public class Bodega {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long BODEGAID;
+    @ManyToOne
+    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
+    private Sucursal sucursal;
 
-    @EmbeddedId
-    private BodegaPK pk;
-
-    private String nombreBodega;
+    private String nombreBodegas;
     private Float tamanioBodega;
 
     public Bodega() {}
 
-    public Bodega(String nombreBodega, Float tamanoBodega, BodegaPK pk) {
-        this.nombreBodega = nombreBodega;
-        this.tamanioBodega = tamanoBodega;
-        this.pk = pk;
+    public Bodega(String nombreBodegas, Float tamanioBodega, Sucursal sucursal) {
+        this.nombreBodegas = nombreBodegas;
+        this.tamanioBodega = tamanioBodega;
+        this.sucursal = sucursal;
+    }
+    public Long getId() {
+        return BODEGAID;
     }
 
-    public BodegaPK getPk() {
-        return pk;
+    public void setId(Long BODEGAID) {
+        this.BODEGAID = BODEGAID;
+    }
+    
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setPk(BodegaPK pk) {
-        this.pk = pk;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 
     public String getNombreBodega() {
-        return nombreBodega;
+        return nombreBodegas;
     }
 
-    public void setNombreBodega(String nombreBodega) {
-        this.nombreBodega = nombreBodega;
+    public void setNombreBodega(String nombreBodegas) {
+        this.nombreBodegas = nombreBodegas;
     }
 
-    public Float getTamanoBodega() {
+    public Float getTamanioBodega() {
         return tamanioBodega;
     }
 
-    public void setTamanoBodega(Float tamanoBodega) {
-        this.tamanioBodega = tamanoBodega;
+    public void setTamanioBodega(Float tamanioBodega) {
+        this.tamanioBodega = tamanioBodega;
     }
 }

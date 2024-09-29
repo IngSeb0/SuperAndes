@@ -9,16 +9,9 @@ public class InfoExtraBodega {
     @EmbeddedId
     private InfoExtraBodegaPk pk;
 
-    @Column(name = "TOTALEXISTENCIAS")
     private Integer totalExistencias;
-
-    @Column(name = "COSTOPROMEDIO")
     private Float costoPromedio;
-
-    @Column(name = "CAPACIDADALMACENAMIENTO")
     private Integer capacidadAlmacenamiento;
-
-    @Column(name = "NIVELMINIMO")
     private Float nivelMinimo;
 
     public InfoExtraBodega() {}
@@ -69,16 +62,5 @@ public class InfoExtraBodega {
 
     public void setNivelMinimo(Float nivelMinimo) {
         this.nivelMinimo = nivelMinimo;
-    }
-
-    @Override
-    public String toString() {
-        return "InfoExtraBodega{" +
-                "pk=" + pk +
-                ", totalExistencias=" + totalExistencias +
-                ", costoPromedio=" + costoPromedio +
-                ", capacidadAlmacenamiento=" + capacidadAlmacenamiento +
-                ", nivelMinimo=" + nivelMinimo +
-                '}';
     }
 }

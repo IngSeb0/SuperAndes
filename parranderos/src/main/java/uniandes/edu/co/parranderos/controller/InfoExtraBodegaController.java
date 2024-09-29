@@ -1,11 +1,11 @@
 package uniandes.edu.co.parranderos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.InfoExtraBodega;
 import uniandes.edu.co.parranderos.repositorio.InfoExtraBodegaRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Collection;
 
@@ -27,11 +27,11 @@ public class InfoExtraBodegaController {
         }
     }
 
-    // Obtener información extra de bodega por su ID
-    @GetMapping("/{id}")
-    public ResponseEntity<InfoExtraBodega> obtenerInfoExtraBodegaPorId(@PathVariable("id") Long id) {
+    // Obtener información extra de bodega por su ID (vinculado a Bodega)
+    @GetMapping("/{bodegaId}")
+    public ResponseEntity<InfoExtraBodega> obtenerInfoExtraBodegaPorBodegaId(@PathVariable("bodegaId") Long bodegaId) {
         try {
-            InfoExtraBodega infoExtra = infoExtraBodegaRepository.obtenerInfoExtraBodegaPorId(id);
+            InfoExtraBodega infoExtra = infoExtraBodegaRepository.obtenerInfoExtraBodegaPorId(bodegaId);
             if (infoExtra != null) {
                 return new ResponseEntity<>(infoExtra, HttpStatus.OK);
             } else {
@@ -46,12 +46,12 @@ public class InfoExtraBodegaController {
     @PostMapping("/new")
     public ResponseEntity<String> insertarInfoExtraBodega(@RequestBody InfoExtraBodega infoExtraBodega) {
         try {
+
             infoExtraBodegaRepository.insertarInfoExtraBodega(
                     infoExtraBodega.getTotalExistencias(),
                     infoExtraBodega.getCostoPromedio(),
                     infoExtraBodega.getCapacidadAlmacenamiento(),
-                    infoExtraBodega.getNivelMinimo(),
-                    infoExtraBodega.getPk().getIdInfoExtraBodega()
+                    infoExtraBodega.getNivelMinimo()                    
             );
             return new ResponseEntity<>("Información extra de bodega creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -60,16 +60,15 @@ public class InfoExtraBodegaController {
     }
 
     // Actualizar información extra de bodega por su ID
-    @PutMapping("/{id}/edit")
-    public ResponseEntity<String> actualizarInfoExtraBodega(@PathVariable("id") Long id, @RequestBody InfoExtraBodega infoExtraBodega) {
+    @PutMapping("/{bodegaId}/edit")
+    public ResponseEntity<String> actualizarInfoExtraBodega(@PathVariable("bodegaId") Long bodegaId, @RequestBody InfoExtraBodega infoExtraBodega) {
         try {
             infoExtraBodegaRepository.actualizarInfoExtraBodega(
-                    id,
+                    bodegaId,
                     infoExtraBodega.getTotalExistencias(),
                     infoExtraBodega.getCostoPromedio(),
                     infoExtraBodega.getCapacidadAlmacenamiento(),
-                    infoExtraBodega.getNivelMinimo(),
-                    infoExtraBodega.getPk().getIdInfoExtraBodega()
+                    infoExtraBodega.getNivelMinimo()
             );
             return new ResponseEntity<>("Información extra de bodega actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
@@ -78,10 +77,10 @@ public class InfoExtraBodegaController {
     }
 
     // Eliminar información extra de bodega por su ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarInfoExtraBodega(@PathVariable("id") Long id) {
+    @DeleteMapping("/{bodegaId}")
+    public ResponseEntity<String> eliminarInfoExtraBodega(@PathVariable("bodegaId") Long bodegaId) {
         try {
-            infoExtraBodegaRepository.eliminarInfoExtraBodega(id);
+            infoExtraBodegaRepository.eliminarInfoExtraBodega(bodegaId);
             return new ResponseEntity<>("Información extra de bodega eliminada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al eliminar la información extra de bodega", HttpStatus.INTERNAL_SERVER_ERROR);

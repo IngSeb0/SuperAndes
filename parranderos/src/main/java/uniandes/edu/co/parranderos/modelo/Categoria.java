@@ -12,6 +12,7 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    
     private Long codigoCategoria;
     private String caracteristicasAlmacenamiento;
     private String nombreCategoria;

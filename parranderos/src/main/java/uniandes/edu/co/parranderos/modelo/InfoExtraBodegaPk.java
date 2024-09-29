@@ -1,27 +1,24 @@
 package uniandes.edu.co.parranderos.modelo;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Embeddable
 public class InfoExtraBodegaPk implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "BODEGA_IDBODEGA", referencedColumnName = "IDBODEGA")
+    @JoinColumn(name = "BODEGAID", referencedColumnName = "BODEGAID")
     private Bodega bodega;
 
-    @Column(name = "IDINFOEXTRABODEGA")
-    private Long idInfoExtraBodega;
+    @ManyToOne
+    @JoinColumn(name = "IDPRODUCTO", referencedColumnName = "IDPRODUCTO")
+    private Producto producto;
 
     public InfoExtraBodegaPk() {}
 
-    public InfoExtraBodegaPk(Bodega bodega, Long idInfoExtraBodega) {
+    public InfoExtraBodegaPk(Bodega bodega, Producto producto) {
         this.bodega = bodega;
-        this.idInfoExtraBodega = idInfoExtraBodega;
+        this.producto = producto;
     }
 
     public Bodega getBodega() {
@@ -32,11 +29,11 @@ public class InfoExtraBodegaPk implements Serializable {
         this.bodega = bodega;
     }
 
-    public Long getIdInfoExtraBodega() {
-        return idInfoExtraBodega;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setIdInfoExtraBodega(Long idInfoExtraBodega) {
-        this.idInfoExtraBodega = idInfoExtraBodega;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }

@@ -22,14 +22,14 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
     // Insertar una nueva venta
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO VENTA (FECHA, CANTIDADEXISTENCIA, SUCURSAL_IDSUCURSAL, CLIENTE_CEDULA, PROVEEDOR_NIT, VENTA_IDINFOEXTRAVENTA) VALUES (:fecha, :cantidadExistencia, :idSucursal, :idCliente, :idProveedor, :idInfoExtraVenta)", nativeQuery = true)
-    void insertarVenta(@Param("fecha") String fecha, @Param("cantidadExistencia") Long cantidadExistencia, @Param("idSucursal") Long idSucursal, @Param("idCliente") Long idCliente, @Param("idProveedor") Long idProveedor, @Param("idInfoExtraVenta") Long idInfoExtraVenta);
+    @Query(value = "INSERT INTO VENTA (FECHA, CANTIDADEXISTENCIA, SUCURSAL_IDSUCURSAL, CLIENTE_CEDULA, PROVEEDOR_NIT, VENTA_IDINFOEXTRAVENTA) VALUES (:fecha, :cantidadExistencia, :idSucursal, :idCliente, :idProveedor)", nativeQuery = true)
+    void insertarVenta(@Param("fecha") String fecha, @Param("cantidadExistencia") Long cantidadExistencia, @Param("idSucursal") Long idSucursal, @Param("idCliente") Long idCliente, @Param("idProveedor") Long idProveedor);
 
     // Actualizar una venta por su ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE VENTA SET FECHA = :fecha, CANTIDADEXISTENCIA = :cantidadExistencia, SUCURSAL_IDSUCURSAL = :idSucursal, CLIENTE_CEDULA = :idCliente, PROVEEDOR_NIT = :idProveedor, VENTA_IDINFOEXTRAVENTA = :idInfoExtraVenta WHERE IDVENTA = :id", nativeQuery = true)
-    void actualizarVenta(@Param("id") Long id, @Param("fecha") String fecha, @Param("cantidadExistencia") Long cantidadExistencia, @Param("idSucursal") Long idSucursal, @Param("idCliente") Long idCliente, @Param("idProveedor") Long idProveedor, @Param("idInfoExtraVenta") Long idInfoExtraVenta);
+    @Query(value = "UPDATE VENTA SET FECHA = :fecha, CANTIDADEXISTENCIA = :cantidadExistencia, SUCURSAL_IDSUCURSAL = :idSucursal, CLIENTE_CEDULA = :idCliente, PROVEEDOR_NIT = :idProveedor WHERE IDVENTA = :id", nativeQuery = true)
+    void actualizarVenta(@Param("id") Long id, @Param("fecha") String fecha, @Param("cantidadExistencia") Long cantidadExistencia, @Param("idSucursal") Long idSucursal, @Param("idCliente") Long idCliente, @Param("idProveedor") Long idProveedor);
 
     // Eliminar una venta por su ID
     @Modifying

@@ -1,62 +1,94 @@
 package uniandes.edu.co.parranderos.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import uniandes.edu.co.parranderos.modelo.DetalleCostoBodega;
-import uniandes.edu.co.parranderos.repositorio.DetalleCostoBodegaRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import uniandes.edu.co.parranderos.modelo.DetalleCostoBodega;
+import uniandes.edu.co.parranderos.modelo.DetalleCostoBodegaPk;
+import uniandes.edu.co.parranderos.repositorio.DetalleCostoBodegaRepository;
+
 @RestController
-@RequestMapping("/detalles_costo_bodega")
 public class DetalleCostoBodegaController {
 
     @Autowired
     private DetalleCostoBodegaRepository detalleCostoBodegaRepository;
 
-    // Obtener todos los detalles de costo de la bodega
-    @GetMapping
-    public Collection<DetalleCostoBodega> obtenerDetallesCostoBodega() {
-        return detalleCostoBodegaRepository.obtenerTodosLosDetallesCostoBodega();
-    }
-
-    // Obtener un detalle de costo por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<DetalleCostoBodega> obtenerDetalleCostoBodegaPorId(@PathVariable("id") Long id) {
-        DetalleCostoBodega detalle = detalleCostoBodegaRepository.obtenerDetalleCostoBodegaPorId(id);
-        if (detalle != null) {
-            return new ResponseEntity<>(detalle, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    // Obtener todos los detalles de costo de bodega
+    @GetMapping("/detalles_costo_bodega")
+    public ResponseEntity<Collection<DetalleCostoBodega>> obtenerDetallesCostoBodega() {
+        try {
+            Collection<DetalleCostoBodega> detalles = detalleCostoBodegaRepository.obtenerTodosLosDetallesCostoBodega();
+            return ResponseEntity.ok(detalles);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    // Insertar un nuevo detalle de costo de bodega
-    @PostMapping("/new/save")
-    public ResponseEntity<String> insertarDetalleCostoBodega(@RequestBody DetalleCostoBodega detalleCostoBodega) {
+    // Crear un nuevo detalle de costo de bodega
+    @PostMapping("/detalles_costo_bodega/new/save")
+    public ResponseEntity<?> crearDetalleCostoBodega(@RequestBody DetalleCostoBodega detalleCostoBodega) {
         try {
+            DetalleCostoBodegaPk pk = detalleCostoBodega.getPk();
+
+            if (pk == null || pk.getInfoExtraBodega() == null || pk.getIdDetalleCosto() == null) {
+                throw new RuntimeException("Faltan datos en la clave primaria");
+            }
+
+            Long idBodega = pk.getInfoExtraBodega().getPk().getBodega().getId();
+            Long idProducto = pk.getInfoExtraBodega().getPk().getProducto().getId();
+            Long idDetalleCosto = pk.getIdDetalleCosto();
+
             detalleCostoBodegaRepository.insertarDetalleCostoBodega(
-                detalleCostoBodega.getCostoUnitarioBodega(),
+                detalleCostoBodega.getCosto(),
                 detalleCostoBodega.getCantidadExistencia(),
-                detalleCostoBodega.getInfoExtraBodegaId()
+                idBodega,
+                idProducto,
+                idDetalleCosto
             );
-            return new ResponseEntity<>("Detalle de costo de bodega creado exitosamente", HttpStatus.CREATED);
+
+            DetalleCostoBodega nuevoDetalle = detalleCostoBodegaRepository.obtenerDetalleCostoBodegaPorId(idBodega, idProducto, idDetalleCosto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoDetalle);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al crear el detalle de costo de bodega", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Actualizar un detalle de costo de bodega por su ID
-    @PostMapping("/{id}/edit/save")
-    public ResponseEntity<String> actualizarDetalleCostoBodega(@PathVariable("id") Long id, @RequestBody DetalleCostoBodega detalleCostoBodega) {
+    // Obtener un detalle de costo por su clave primaria compuesta
+    @GetMapping("/detalles_costo_bodega/{bodegaId}/{productoId}/{idDetalle}")
+    public ResponseEntity<DetalleCostoBodega> obtenerDetalleCostoBodegaPorId(
+            @PathVariable("bodegaId") Long bodegaId,
+            @PathVariable("productoId") Long productoId,
+            @PathVariable("idDetalle") Long idDetalle) {
+        try {
+            DetalleCostoBodega detalle = detalleCostoBodegaRepository.obtenerDetalleCostoBodegaPorId(bodegaId, productoId, idDetalle);
+            if (detalle != null) {
+                return new ResponseEntity<>(detalle, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Actualizar un detalle de costo de bodega
+    @PostMapping("/detalles_costo_bodega/{bodegaId}/{productoId}/{idDetalle}/edit/save")
+    public ResponseEntity<String> actualizarDetalleCostoBodega(
+            @PathVariable("bodegaId") Long bodegaId,
+            @PathVariable("productoId") Long productoId,
+            @PathVariable("idDetalle") Long idDetalle,
+            @RequestBody DetalleCostoBodega detalleCostoBodega) {
         try {
             detalleCostoBodegaRepository.actualizarDetalleCostoBodega(
-                id,
-                detalleCostoBodega.getCostoUnitarioBodega(),
+                idDetalle,
+                detalleCostoBodega.getCosto(),
                 detalleCostoBodega.getCantidadExistencia(),
-                detalleCostoBodega.getInfoExtraBodegaId()
+                bodegaId,
+                productoId
             );
             return new ResponseEntity<>("Detalle de costo de bodega actualizado exitosamente", HttpStatus.OK);
         } catch (Exception e) {
@@ -64,11 +96,14 @@ public class DetalleCostoBodegaController {
         }
     }
 
-    // Eliminar un detalle de costo de bodega por su ID
-    @PostMapping("/{id}/delete")
-    public ResponseEntity<String> eliminarDetalleCostoBodega(@PathVariable("id") Long id) {
+    // Eliminar un detalle de costo de bodega
+    @PostMapping("/detalles_costo_bodega/{bodegaId}/{productoId}/{idDetalle}/delete")
+    public ResponseEntity<String> eliminarDetalleCostoBodega(
+            @PathVariable("bodegaId") Long bodegaId,
+            @PathVariable("productoId") Long productoId,
+            @PathVariable("idDetalle") Long idDetalle) {
         try {
-            detalleCostoBodegaRepository.eliminarDetalleCostoBodega(id);
+            detalleCostoBodegaRepository.eliminarDetalleCostoBodega(idDetalle, bodegaId, productoId);
             return new ResponseEntity<>("Detalle de costo de bodega eliminado exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al eliminar el detalle de costo de bodega", HttpStatus.INTERNAL_SERVER_ERROR);

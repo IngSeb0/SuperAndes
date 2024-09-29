@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;  // Cambiado de String a Long para ser clave primaria
+    private Long IDPRODUCTO;  // Cambiado de String a Long para ser clave primaria
 
     private String codigoBarras;
     private String nombre;
@@ -33,11 +33,11 @@ public class Producto {
     // Getters y setters
 
     public Long getId() {
-        return id;
+        return IDPRODUCTO;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long IDPRODUCTO) {
+        this.IDPRODUCTO = IDPRODUCTO;
     }
 
     public String getCodigoBarras() {

@@ -7,8 +7,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.RecepcionProducto;
 
-
 import java.util.Collection;
+
+
 
 public interface RecepcionProductoRepository extends JpaRepository<RecepcionProducto, Long> {
 

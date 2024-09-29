@@ -26,8 +26,8 @@ public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega
     void insertarInfoExtraBodega(@Param("totalExistencias") Integer totalExistencias, 
                                  @Param("costoPromedio") Float costoPromedio, 
                                  @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento, 
-                                 @Param("nivelMinimo") Float nivelMinimo, 
-                                 @Param("bodegaIdBodega") Long bodegaIdBodega);
+                                 @Param("nivelMinimo") Float nivelMinimo
+                                );
 
     // Actualizar información extra de bodega por ID
     @Modifying
@@ -37,8 +37,8 @@ public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega
                                    @Param("totalExistencias") Integer totalExistencias, 
                                    @Param("costoPromedio") Float costoPromedio, 
                                    @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento, 
-                                   @Param("nivelMinimo") Float nivelMinimo, 
-                                   @Param("bodegaIdBodega") Long bodegaIdBodega);
+                                   @Param("nivelMinimo") Float nivelMinimo
+                                  );
 
     // Eliminar una información extra de bodega por ID
     @Modifying

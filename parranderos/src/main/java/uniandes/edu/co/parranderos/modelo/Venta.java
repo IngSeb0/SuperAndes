@@ -33,21 +33,19 @@ public class Venta {
     @JoinColumn(name = "PROVEEDOR_NIT") // Relación con Proveedor
     private Proveedor proveedor; // Corresponde a PROVEEDOR_NIT en la base de datos
 
-    @ManyToOne
-    @JoinColumn(name = "VENTA_IDINFOEXTRAVENTA") // Relación con InfoExtraVenta
-    private InfoExtraVenta infoExtraVenta; // Corresponde a VENTA_IDINFOEXTRAVENTA en la base de datos
+    
 
     // Constructor por defecto
     public Venta() {;}
 
     // Constructor con parámetros
-    public Venta(Date fecha, Long cantidadExistencia, Sucursal sucursal, Cliente cliente, Proveedor proveedor, InfoExtraVenta infoExtraVenta) {
+    public Venta(Date fecha, Long cantidadExistencia, Sucursal sucursal, Cliente cliente, Proveedor proveedor) {
         this.fecha = fecha;
         this.cantidadExistencia = cantidadExistencia;
         this.sucursal = sucursal;
         this.cliente = cliente;
         this.proveedor = proveedor;
-        this.infoExtraVenta = infoExtraVenta;
+        
     }
 
     // Getters y Setters
@@ -99,13 +97,7 @@ public class Venta {
         this.proveedor = proveedor;
     }
 
-    public InfoExtraVenta getInfoExtraVenta() {
-        return infoExtraVenta;
-    }
-
-    public void setInfoExtraVenta(InfoExtraVenta infoExtraVenta) {
-        this.infoExtraVenta = infoExtraVenta;
-    }
+   
 
     @Override
     public String toString() {
@@ -116,7 +108,7 @@ public class Venta {
                 ", sucursal=" + sucursal +
                 ", cliente=" + cliente +
                 ", proveedor=" + proveedor +
-                ", infoExtraVenta=" + infoExtraVenta +
+               
                 '}';
     }
 }

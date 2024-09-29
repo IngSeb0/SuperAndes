@@ -43,8 +43,8 @@ public class VentaController {
                     venta.getCantidadExistencia(),
                     venta.getSucursal().getIdSucursal(),
                     venta.getCliente().getCedula(),
-                    venta.getProveedor().getNit(),
-                    venta.getInfoExtraVenta().getIdInfoExtraVenta()
+                    venta.getProveedor().getNit()
+                    
             );
             return new ResponseEntity<>("Venta creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -62,9 +62,8 @@ public class VentaController {
                     venta.getCantidadExistencia(),
                     venta.getSucursal().getIdSucursal(),
                     venta.getCliente().getCedula(),
-                    venta.getProveedor().getNit(),
-                    venta.getInfoExtraVenta().getIdInfoExtraVenta()
-            );
+                    venta.getProveedor().getNit()
+                             );
             return new ResponseEntity<>("Venta actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al actualizar la venta", HttpStatus.INTERNAL_SERVER_ERROR);

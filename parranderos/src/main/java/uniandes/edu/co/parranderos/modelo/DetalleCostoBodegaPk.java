@@ -1,41 +1,38 @@
 package uniandes.edu.co.parranderos.modelo;
-
 import java.io.Serializable;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
+import jakarta.persistence.*;
 
 @Embeddable
 public class DetalleCostoBodegaPk implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "BODEGA_IDBODEGA", referencedColumnName = "IDBODEGA")
-    private Bodega bodega;
+    @JoinColumn(name = "INFOEXTRABODEGA_BODEGA_ID", referencedColumnName = "BODEGAID")
+    @JoinColumn(name = "INFOEXTRABODEGA_PRODUCTO_ID", referencedColumnName = "IDPRODUCTO")
+    private InfoExtraBodega infoExtraBodega;
 
-    @ManyToOne
-    @JoinColumn(name = "PRODUCTO_CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
-    private Producto producto;
+    private Long idDetalleCosto;
 
     public DetalleCostoBodegaPk() {}
 
-    public DetalleCostoBodegaPk(Bodega bodega, Producto producto) {
-        this.bodega = bodega;
-        this.producto = producto;
+    public DetalleCostoBodegaPk(InfoExtraBodega infoExtraBodega, Long idDetalleCosto) {
+        this.infoExtraBodega = infoExtraBodega;
+        this.idDetalleCosto = idDetalleCosto;
     }
 
-    public Bodega getBodega() {
-        return bodega;
+    public InfoExtraBodega getInfoExtraBodega() {
+        return infoExtraBodega;
     }
 
-    public void setBodega(Bodega bodega) {
-        this.bodega = bodega;
+    public void setInfoExtraBodega(InfoExtraBodega infoExtraBodega) {
+        this.infoExtraBodega = infoExtraBodega;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Long getIdDetalleCosto() {
+        return idDetalleCosto;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setIdDetalleCosto(Long idDetalleCosto) {
+        this.idDetalleCosto = idDetalleCosto;
     }
 }
