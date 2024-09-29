@@ -12,24 +12,24 @@ public class EspecificacionEmpacado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idEspecificacionEmpacado; 
+    private Long idEspecificacion; 
 
     private Float volumen;
-    private Float pesoGr;
+    private Float peso;
 
     public EspecificacionEmpacado() {}
 
-    public EspecificacionEmpacado(Float volumen, Float pesoGr) {
+    public EspecificacionEmpacado(Float volumen, Float peso) {
         this.volumen = volumen;
-        this.pesoGr = pesoGr;
+        this.peso = peso;
     }
 
     public Long getIdEspecificacionEmpacado() {
-        return idEspecificacionEmpacado;
+        return idEspecificacion;
     }
 
-    public void setIdEspecificacionEmpacado(Long idEspecificacionEmpacado) {
-        this.idEspecificacionEmpacado = idEspecificacionEmpacado;
+    public void setIdEspecificacionEmpacado(Long idEspecificacion) {
+        this.idEspecificacion = idEspecificacion;
     }
 
     public Float getVolumen() {
@@ -41,19 +41,19 @@ public class EspecificacionEmpacado {
     }
 
     public Float getPesoGr() {
-        return pesoGr;
+        return peso;
     }
 
-    public void setPesoGr(Float pesoGr) {
-        this.pesoGr = pesoGr;
+    public void setPesoGr(Float peso) {
+        this.peso = peso;
     }
 
     @Override
     public String toString() {
         return "EspecificacionEmpacado{" +
-                "idEspecificacionEmpacado=" + idEspecificacionEmpacado +
-             
-                ", pesoGr=" + pesoGr +
+                "idEspecificacion=" + idEspecificacion +
+                ",Volumen="+volumen+
+                ", pesoGr=" + peso +
                 '}';
     }
 }

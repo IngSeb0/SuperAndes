@@ -1,37 +1,31 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "INFOEXTRAPROVEEDOR")
 public class InfoExtraProveedor {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idInfoExtraProveedor;
-    
+    @EmbeddedId
+    private InfoExtraProveedorPk pk;
+
     private Integer cantidadExistencias;
-    private Long proveedorNit;
-    private String productoCodigoBarras;
 
-    public InfoExtraProveedor() {}
+    public InfoExtraProveedor() {
+        super();
+    }
 
-    public InfoExtraProveedor(Integer cantidadExistencias, Long proveedorNit, String productoCodigoBarras) {
+    public InfoExtraProveedor(Proveedor proveedorNit, Producto productoCodigoBarras, Integer cantidadExistencias) {
+        this.pk = new InfoExtraProveedorPk(proveedorNit, productoCodigoBarras);
         this.cantidadExistencias = cantidadExistencias;
-        this.proveedorNit = proveedorNit;
-        this.productoCodigoBarras = productoCodigoBarras;
     }
 
-    public Long getIdInfoExtraProveedor() {
-        return idInfoExtraProveedor;
+    public InfoExtraProveedorPk getPk() {
+        return pk;
     }
 
-    public void setIdInfoExtraProveedor(Long idInfoExtraProveedor) {
-        this.idInfoExtraProveedor = idInfoExtraProveedor;
+    public void setPk(InfoExtraProveedorPk pk) {
+        this.pk = pk;
     }
 
     public Integer getCantidadExistencias() {
@@ -42,29 +36,11 @@ public class InfoExtraProveedor {
         this.cantidadExistencias = cantidadExistencias;
     }
 
-    public Long getProveedorNit() {
-        return proveedorNit;
-    }
-
-    public void setProveedorNit(Long proveedorNit) {
-        this.proveedorNit = proveedorNit;
-    }
-
-    public String getProductoCodigoBarras() {
-        return productoCodigoBarras;
-    }
-
-    public void setProductoCodigoBarras(String productoCodigoBarras) {
-        this.productoCodigoBarras = productoCodigoBarras;
-    }
-
     @Override
     public String toString() {
         return "InfoExtraProveedor{" +
-                "idInfoExtraProveedor=" + idInfoExtraProveedor +
+                "pk=" + pk +
                 ", cantidadExistencias=" + cantidadExistencias +
-                ", proveedorNit=" + proveedorNit +
-                ", productoCodigoBarras='" + productoCodigoBarras + '\'' +
                 '}';
     }
 }

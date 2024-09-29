@@ -1,50 +1,31 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "INFOEXTRAORDEN") // Nombre de la tabla en la base de datos
+@Table(name = "INFOEXTRAORDEN")
 public class InfoExtraOrden {
 
-    @Id
-    @JoinColumn(name = "IDINFOEXTRAORDEN") // Columna IDINFOEXTRAORDEN
-    private Long idInfoExtraOrden;
+    @EmbeddedId
+    private InfoExtraOrdenPk pk;
 
-    private Long cantidad; // Columna CANTIDAD
+    private Long cantidad;
+    private Float costoUnitario;
 
-    private Float costoUnitario; // Columna COSTOUNITARIO
+    public InfoExtraOrden() {; }
 
-    @ManyToOne
-    @JoinColumn(name = "ORDENCOMPRA_IDORDEN") // Columna ORDENCOMPRA_IDORDEN
-    private OrdenCompra ordenCompra;
-
-    @ManyToOne
-    @JoinColumn(name = "PRODUCTO_CODIGOBARRAS") // Columna PRODUCTO_CODIGOBARRAS
-    private Producto producto;
-
-    // Constructor vacío
-    public InfoExtraOrden() {}
-
-    // Constructor con parámetros
-    public InfoExtraOrden(Long idInfoExtraOrden, Long cantidad, Float costoUnitario, OrdenCompra ordenCompra, Producto producto) {
-        this.idInfoExtraOrden = idInfoExtraOrden;
+    public InfoExtraOrden(OrdenCompra ordenCompra, Producto producto, Long cantidad, Float costoUnitario) {
+        this.pk = new InfoExtraOrdenPk(ordenCompra, producto);
         this.cantidad = cantidad;
         this.costoUnitario = costoUnitario;
-        this.ordenCompra = ordenCompra;
-        this.producto = producto;
     }
 
-    // Getters y setters
-    public Long getIdInfoExtraOrden() {
-        return idInfoExtraOrden;
+    public InfoExtraOrdenPk getPk() {
+        return pk;
     }
 
-    public void setIdInfoExtraOrden(Long idInfoExtraOrden) {
-        this.idInfoExtraOrden = idInfoExtraOrden;
+    public void setPk(InfoExtraOrdenPk pk) {
+        this.pk = pk;
     }
 
     public Long getCantidad() {
@@ -63,30 +44,12 @@ public class InfoExtraOrden {
         this.costoUnitario = costoUnitario;
     }
 
-    public OrdenCompra getOrdenCompra() {
-        return ordenCompra;
-    }
-
-    public void setOrdenCompra(OrdenCompra ordenCompra) {
-        this.ordenCompra = ordenCompra;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
     @Override
     public String toString() {
         return "InfoExtraOrden{" +
-                "idInfoExtraOrden=" + idInfoExtraOrden +
+                "pk=" + pk +
                 ", cantidad=" + cantidad +
                 ", costoUnitario=" + costoUnitario +
-                ", ordenCompra=" + ordenCompra +
-                ", producto=" + producto +
                 '}';
     }
 }

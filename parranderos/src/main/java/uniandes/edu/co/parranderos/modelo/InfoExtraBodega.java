@@ -14,10 +14,10 @@ public class InfoExtraBodega {
     private Integer capacidadAlmacenamiento;
     private Float nivelMinimo;
 
-    public InfoExtraBodega() {}
+    public InfoExtraBodega() {;}
 
-    public InfoExtraBodega(InfoExtraBodegaPk pk, Integer totalExistencias, Float costoPromedio, Integer capacidadAlmacenamiento, Float nivelMinimo) {
-        this.pk = pk;
+    public InfoExtraBodega(Bodega bodega, Producto producto , Integer totalExistencias, Float costoPromedio, Integer capacidadAlmacenamiento, Float nivelMinimo) {
+        this.pk = new InfoExtraBodegaPk(bodega, producto);
         this.totalExistencias = totalExistencias;
         this.costoPromedio = costoPromedio;
         this.capacidadAlmacenamiento = capacidadAlmacenamiento;

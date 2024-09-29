@@ -6,34 +6,36 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.InfoExtraOrden;
+import uniandes.edu.co.parranderos.modelo.InfoExtraOrdenPk;
 
-import java.util.List;
+import java.util.Collection;
 
-public interface InfoExtraOrdenRepository extends JpaRepository<InfoExtraOrden, Long> {
+public interface InfoExtraOrdenRepository extends JpaRepository<InfoExtraOrden, InfoExtraOrdenPk> {
 
-    // Obtener toda la información extra de las órdenes
-    @Query("SELECT i FROM InfoExtraOrden i")
-    List<InfoExtraOrden> obtenerTodaLaInfoExtraOrden();
+    @Query(value = "SELECT * FROM infoextraorden", nativeQuery = true)
+    Collection<InfoExtraOrden> obtenerTodaLaInfoExtraOrden();
 
-    // Obtener una información extra por ID
-    @Query("SELECT i FROM InfoExtraOrden i WHERE i.id = :id")
-    InfoExtraOrden obtenerInfoExtraOrdenPorId(@Param("id") Long id);
+    @Query(value = "SELECT * FROM infoextraorden WHERE ordencompra_idorden = :ordenId AND producto_codigobarras = :productoId", nativeQuery = true)
+    InfoExtraOrden obtenerInfoExtraOrdenPorId(@Param("ordenId") Long ordenId, @Param("productoId") Long productoId);
 
-    // Insertar nueva información extra
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO info_extra_orden (cantidad, costo_unitario) VALUES (:cantidad, :costoUnitario)", nativeQuery = true)
-    void insertarInfoExtraOrden(@Param("cantidad") Integer cantidad, @Param("costoUnitario") Float costoUnitario);
+    @Query(value = "DELETE FROM infoextraorden WHERE ordencompra_idorden = :ordenId AND producto_codigobarras = :productoId", nativeQuery = true)
+    void eliminarInfoExtraOrden(@Param("ordenId") Long ordenId, @Param("productoId") Long productoId);
 
-    // Actualizar información extra por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE info_extra_orden SET cantidad = :cantidad, costo_unitario = :costoUnitario WHERE id = :id", nativeQuery = true)
-    void actualizarInfoExtraOrden(@Param("id") Long id, @Param("cantidad") Integer cantidad, @Param("costoUnitario") Float costoUnitario);
+    @Query(value = "UPDATE infoextraorden SET cantidad = :cantidad, costounitario = :costoUnitario WHERE ordencompra_idorden = :ordenId AND producto_codigobarras = :productoId", nativeQuery = true)
+    void actualizarInfoExtraOrden(@Param("ordenId") Long ordenId,
+                                  @Param("productoId") Long productoId,
+                                  @Param("cantidad") Long cantidad,
+                                  @Param("costoUnitario") Float costoUnitario);
 
-    // Eliminar una información extra por ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM info_extra_orden WHERE id = :id", nativeQuery = true)
-    void eliminarInfoExtraOrden(@Param("id") Long id);
+    @Query(value = "INSERT INTO infoextraorden (ordencompra_idorden, producto_codigobarras, cantidad, costounitario) VALUES (:ordenId, :productoId, :cantidad, :costoUnitario)", nativeQuery = true)
+    void insertarInfoExtraOrden(@Param("ordenId") Long ordenId,
+                                @Param("productoId") Long productoId,
+                                @Param("cantidad") Long cantidad,
+                                @Param("costoUnitario") Float costoUnitario);
 }

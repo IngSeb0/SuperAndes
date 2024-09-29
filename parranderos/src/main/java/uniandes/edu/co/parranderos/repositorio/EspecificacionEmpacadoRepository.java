@@ -16,24 +16,24 @@ public interface EspecificacionEmpacadoRepository extends JpaRepository<Especifi
     List<EspecificacionEmpacado> obtenerTodasLasEspecificaciones();
 
     // Obtener una especificación de empacado por ID
-    @Query("SELECT e FROM EspecificacionEmpacado e WHERE e.idEspecificacionEmpacado = :id")
+    @Query("SELECT e FROM EspecificacionEmpacado e WHERE e.idEspecificacion = :id")
     EspecificacionEmpacado obtenerEspecificacionPorId(@Param("id") Long id);
 
     // Insertar nueva especificación de empacado
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO ESPECIFICACIONEMPACADO (VOLUMEN, PESOGR) VALUES (:volumen, :pesoGr)", nativeQuery = true)
-    void insertarEspecificacion(@Param("volumenCm3") Float volumenCm3, @Param("pesoGr") Float pesoGr);
+    @Query(value = "INSERT INTO ESPECIFICACIONEMPACADO (VOLUMEN, PESO) VALUES (:volumen, :peso)", nativeQuery = true)
+    void insertarEspecificacion(@Param("volumen") Float volumen, @Param("peso") Float peso);
 
     // Actualizar especificación de empacado por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE ESPECIFICACIONEMPACADO SET VOLUMEN = :volumen, PESOGR = :pesoGr WHERE IDESPECIFICACIONEMPACADO = :id", nativeQuery = true)
-    void actualizarEspecificacion(@Param("id") Long id, @Param("volumenCm3") Float volumen, @Param("pesoGr") Float pesoGr);
+    @Query(value = "UPDATE ESPECIFICACIONEMPACADO SET VOLUMEN = :volumen, PESO = :peso WHERE idEspecificacion = :id", nativeQuery = true)
+    void actualizarEspecificacion(@Param("id") Long id, @Param("volumen") Float volumen, @Param("peso") Float peso);
 
     // Eliminar una especificación de empacado por ID
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM ESPECIFICACIONEMPACADO WHERE IDESPECIFICACIONEMPACADO = :id", nativeQuery = true)
+    @Query(value = "DELETE FROM ESPECIFICACIONEMPACADO WHERE idEspecificacion = :id", nativeQuery = true)
     void eliminarEspecificacion(@Param("id") Long id);
 }

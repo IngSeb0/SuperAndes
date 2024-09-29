@@ -8,48 +8,38 @@ import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.InfoExtraBodega;
 import uniandes.edu.co.parranderos.modelo.InfoExtraBodegaPk;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega, InfoExtraBodegaPk> {
 
-    // Obtener toda la información extra de las bodegas
-    @Query("SELECT i FROM InfoExtraBodega i")
-    List<InfoExtraBodega> obtenerTodaLaInfoExtraBodega();
+    @Query(value = "SELECT * FROM infoextrabodega", nativeQuery = true)
+    Collection<InfoExtraBodega> obtenerTodaLaInfoExtraBodega();
 
-    // Obtener una información extra de bodega por su clave primaria compuesta (bodegaId y productoId)
-    @Query("SELECT i FROM InfoExtraBodega i WHERE i.pk.bodega.id = :bodegaId AND i.pk.producto.id = :productoId")
+    @Query(value = "SELECT * FROM infoextrabodega WHERE bodega_idbodega = :bodegaId AND producto_idproducto = :productoId", nativeQuery = true)
     InfoExtraBodega obtenerInfoExtraBodegaPorId(@Param("bodegaId") Long bodegaId, @Param("productoId") Long productoId);
 
-    // Insertar nueva información extra de bodega
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO INFOEXTRABODEGA (TOTALEXISTENCIAS, COSTOPROMEDIO, CAPACIDADALMACENAMIENTO, NIVELMINIMO, BODEGA_IDBODEGA, PRODUCTO_IDPRODUCTO) " +
-                   "VALUES (:totalExistencias, :costoPromedio, :capacidadAlmacenamiento, :nivelMinimo, :bodegaIdBodega, :productoIdProducto)", 
-           nativeQuery = true)
-    void insertarInfoExtraBodega(@Param("totalExistencias") Integer totalExistencias, 
-                                 @Param("costoPromedio") Float costoPromedio, 
-                                 @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento, 
-                                 @Param("nivelMinimo") Float nivelMinimo,
-                                 @Param("bodegaIdBodega") Long bodegaIdBodega,
-                                 @Param("productoIdProducto") Long productoIdProducto);
+    @Query(value = "DELETE FROM infoextrabodega WHERE bodega_idbodega = :bodegaId AND producto_idproducto = :productoId", nativeQuery = true)
+    void eliminarInfoExtraBodega(@Param("bodegaId") Long bodegaId, @Param("productoId") Long productoId);
 
-    // Actualizar información extra de bodega por su clave primaria compuesta (bodegaId y productoId)
     @Modifying
     @Transactional
-    @Query(value = "UPDATE INFOEXTRABODEGA SET TOTALEXISTENCIAS = :totalExistencias, COSTOPROMEDIO = :costoPromedio, CAPACIDADALMACENAMIENTO = :capacidadAlmacenamiento, " +
-                   "NIVELMINIMO = :nivelMinimo WHERE BODEGA_IDBODEGA = :bodegaIdBodega AND PRODUCTO_IDPRODUCTO = :productoIdProducto", 
-           nativeQuery = true)
-    void actualizarInfoExtraBodega(@Param("totalExistencias") Integer totalExistencias, 
-                                   @Param("costoPromedio") Float costoPromedio, 
-                                   @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento, 
-                                   @Param("nivelMinimo") Float nivelMinimo,
-                                   @Param("bodegaIdBodega") Long bodegaIdBodega,
-                                   @Param("productoIdProducto") Long productoIdProducto);
+    @Query(value = "UPDATE infoextrabodega SET totalexistencias = :totalExistencias, costopromedio = :costoPromedio, capacidadalmacenamiento = :capacidadAlmacenamiento, nivelminimo = :nivelMinimo WHERE bodega_idbodega = :bodegaId AND producto_idproducto = :productoId", nativeQuery = true)
+    void actualizarInfoExtraBodega(@Param("bodegaId") Long bodegaId,
+                                   @Param("productoId") Long productoId,
+                                   @Param("totalExistencias") Integer totalExistencias,
+                                   @Param("costoPromedio") Float costoPromedio,
+                                   @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento,
+                                   @Param("nivelMinimo") Float nivelMinimo);
 
-    // Eliminar una información extra de bodega por su clave primaria compuesta (bodegaId y productoId)
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM INFOEXTRABODEGA WHERE BODEGA_IDBODEGA = :bodegaIdBodega AND PRODUCTO_IDPRODUCTO = :productoIdProducto", 
-           nativeQuery = true)
-    void eliminarInfoExtraBodega(@Param("bodegaIdBodega") Long bodegaIdBodega, @Param("productoIdProducto") Long productoIdProducto);
+    @Query(value = "INSERT INTO infoextrabodega (bodega_idbodega, producto_idproducto, totalexistencias, costopromedio, capacidadalmacenamiento, nivelminimo) VALUES (:bodegaId, :productoId, :totalExistencias, :costoPromedio, :capacidadAlmacenamiento, :nivelMinimo)", nativeQuery = true)
+    void insertarInfoExtraBodega(@Param("bodegaId") Long bodegaId,
+                                 @Param("productoId") Long productoId,
+                                 @Param("totalExistencias") Integer totalExistencias,
+                                 @Param("costoPromedio") Float costoPromedio,
+                                 @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento,
+                                 @Param("nivelMinimo") Float nivelMinimo);
 }

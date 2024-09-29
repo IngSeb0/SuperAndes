@@ -4,65 +4,88 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import uniandes.edu.co.parranderos.modelo.InfoExtraProveedor;
+import uniandes.edu.co.parranderos.modelo.InfoExtraProveedorPk;
 import uniandes.edu.co.parranderos.repositorio.InfoExtraProveedorRepository;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
-@RequestMapping("/info_extra_proveedor")
 public class InfoExtraProveedorController {
 
     @Autowired
     private InfoExtraProveedorRepository infoExtraProveedorRepository;
 
     // Obtener toda la información extra de proveedores
-    @GetMapping
-    public List<InfoExtraProveedor> obtenerInfoExtraProveedor() {
-        return infoExtraProveedorRepository.obtenerTodaInfoExtraProveedor();
-    }
-
-    // Obtener información extra de proveedor por su ID
-    @GetMapping("/{id}")
-    public ResponseEntity<InfoExtraProveedor> obtenerInfoExtraProveedorPorId(@PathVariable("id") Long id) {
-        InfoExtraProveedor infoExtra = infoExtraProveedorRepository.obtenerInfoExtraProveedorPorId(id);
-        if (infoExtra != null) {
-            return new ResponseEntity<>(infoExtra, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/infoExtraProveedor")
+    public ResponseEntity<Collection<InfoExtraProveedor>> obtenerInfoExtraProveedor() {
+        try {
+            Collection<InfoExtraProveedor> infoExtraProveedores = infoExtraProveedorRepository.obtenerTodaInfoExtraProveedor();
+            return ResponseEntity.ok(infoExtraProveedores);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    // Insertar una nueva información extra de proveedor
-    @PostMapping("/new/save")
-    public ResponseEntity<String> insertarInfoExtraProveedor(@RequestBody InfoExtraProveedor infoExtraProveedor) {
+    // Crear una nueva información extra de proveedor
+    @PostMapping("/infoExtraProveedor/new/save")
+    public ResponseEntity<?> createInfoExtraProveedor(@RequestBody InfoExtraProveedor infoExtraProveedor) {
         try {
-            infoExtraProveedorRepository.insertarInfoExtraProveedor(infoExtraProveedor.getCantidadExistencias(), infoExtraProveedor.getProveedorNit(), infoExtraProveedor.getProductoCodigoBarras());
-            return new ResponseEntity<>("Información extra de proveedor creada exitosamente", HttpStatus.CREATED);
+             InfoExtraProveedorPk pk = infoExtraProveedor.getPk();
+
+            if (pk == null || pk.getProveedorNit() == null || pk.getProductoCodigoBarras() == null) {
+                throw new RuntimeException("Faltan datos en la clave primaria");
+            }
+
+            Long proveedorNit = pk.getProveedorNit();
+            String productoCodigoBarras = pk.getProductoCodigoBarras();
+
+            if (proveedorNit == null || productoCodigoBarras == null) {
+                throw new RuntimeException("Faltan datos en la clave primaria");
+            }
+
+            Integer cantidadExistencias = infoExtraProveedor.getCantidadExistencias();
+            infoExtraProveedorRepository.insertarInfoExtraProveedor(cantidadExistencias, proveedorNit, productoCodigoBarras);
+
+            InfoExtraProveedor nuevaInfoExtraProveedor = infoExtraProveedorRepository.obtenerInfoExtraProveedorPorId(proveedorNit, productoCodigoBarras);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevaInfoExtraProveedor);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al crear la información extra de proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al crear la información extra del proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Actualizar información extra de proveedor
-    @PostMapping("/{id}/edit/save")
-    public ResponseEntity<String> actualizarInfoExtraProveedor(@PathVariable("id") Long id, @RequestBody InfoExtraProveedor infoExtraProveedor) {
+    // Actualizar una información extra de proveedor
+    @PostMapping("/infoExtraProveedor/{proveedorNit}/{productoCodigoBarras}/edit/save")
+    public ResponseEntity<?> actualizarInfoExtraProveedor(
+            @PathVariable("proveedorNit") Long proveedorNit,
+            @PathVariable("productoCodigoBarras") String productoCodigoBarras,
+            @RequestBody InfoExtraProveedor infoExtraProveedorDetalles) {
         try {
-            infoExtraProveedorRepository.actualizarInfoExtraProveedor(id, infoExtraProveedor.getCantidadExistencias(), infoExtraProveedor.getProveedorNit(), infoExtraProveedor.getProductoCodigoBarras());
-            return new ResponseEntity<>("Información extra de proveedor actualizada exitosamente", HttpStatus.OK);
+            if (proveedorNit == null || productoCodigoBarras == null) {
+                throw new RuntimeException("Faltan datos en la clave primaria");
+            }
+
+            Integer cantidadExistencias = infoExtraProveedorDetalles.getCantidadExistencias();
+            infoExtraProveedorRepository.actualizarInfoExtraProveedor(cantidadExistencias, proveedorNit, productoCodigoBarras);
+            
+            InfoExtraProveedor actualizadaInfoExtraProveedor = infoExtraProveedorRepository.obtenerInfoExtraProveedorPorId(proveedorNit, productoCodigoBarras);
+            return new ResponseEntity<>(actualizadaInfoExtraProveedor, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al actualizar la información extra de proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al actualizar la información extra del proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Eliminar información extra de proveedor
-    @PostMapping("/{id}/delete")
-    public ResponseEntity<String> eliminarInfoExtraProveedor(@PathVariable("id") Long id) {
+    // Eliminar una información extra de proveedor
+    @PostMapping("/infoExtraProveedor/{proveedorNit}/{productoCodigoBarras}/delete")
+    public ResponseEntity<?> eliminarInfoExtraProveedor(
+            @PathVariable("proveedorNit") Long proveedorNit,
+            @PathVariable("productoCodigoBarras") String productoCodigoBarras) {
         try {
-            infoExtraProveedorRepository.eliminarInfoExtraProveedor(id);
-            return new ResponseEntity<>("Información extra de proveedor eliminada exitosamente", HttpStatus.OK);
+            infoExtraProveedorRepository.eliminarInfoExtraProveedor(proveedorNit, productoCodigoBarras);
+            return new ResponseEntity<>("Información extra del proveedor eliminada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al eliminar la información extra de proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al eliminar la información extra del proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

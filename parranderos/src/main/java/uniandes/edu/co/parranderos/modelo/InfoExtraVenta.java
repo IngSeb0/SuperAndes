@@ -1,52 +1,34 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "INFOEXTRAVENTA") // Nombre de la tabla en la base de datos
-
+@Table(name = "INFOEXTRAVENTA")
 public class InfoExtraVenta {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idInfoExtraVenta; // Clave primaria
+    @EmbeddedId
+    private InfoExtraVentaPk pk;
 
-    private Integer cantidad; // Campo CANTIDAD en la BD
-
-    private Float precioUnitario; // Campo PRECIOUNITARIO en la BD
-
-    @ManyToOne
-    @JoinColumn(name = "VENTA_IDVENTA") // Relación con la tabla VENTA
-    private Venta venta;
-
-    @ManyToOne
-    @JoinColumn(name = "PRODUCTO_CODIGOBARRAS") // Relación con la tabla PRODUCTO
-    private Producto producto;
+    private Integer cantidad;
+    private Float precioUnitario;
 
     // Constructor vacío
-    public InfoExtraVenta() {}
+    public InfoExtraVenta() {;}
 
     // Constructor con parámetros
-    public InfoExtraVenta(Integer cantidad, Float precioUnitario, Venta venta, Producto producto) {
+    public InfoExtraVenta(Venta idVenta, Producto idProducto, Integer cantidad, Float precioUnitario) {
+        this.pk = new InfoExtraVentaPk(idVenta, idProducto);
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
-        this.venta = venta;
-        this.producto = producto;
     }
 
     // Getters y Setters
-    public Long getIdInfoExtraVenta() {
-        return idInfoExtraVenta;
+    public InfoExtraVentaPk getPk() {
+        return pk;
     }
 
-    public void setIdInfoExtraVenta(Long idInfoExtraVenta) {
-        this.idInfoExtraVenta = idInfoExtraVenta;
+    public void setPk(InfoExtraVentaPk pk) {
+        this.pk = pk;
     }
 
     public Integer getCantidad() {
@@ -65,30 +47,12 @@ public class InfoExtraVenta {
         this.precioUnitario = precioUnitario;
     }
 
-    public Venta getVenta() {
-        return venta;
-    }
-
-    public void setVenta(Venta venta) {
-        this.venta = venta;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
     @Override
     public String toString() {
         return "InfoExtraVenta{" +
-                "idInfoExtraVenta=" + idInfoExtraVenta +
+                "pk=" + pk +
                 ", cantidad=" + cantidad +
                 ", precioUnitario=" + precioUnitario +
-                ", venta=" + venta +
-                ", producto=" + producto +
                 '}';
     }
 }
