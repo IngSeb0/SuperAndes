@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.InfoExtraBodega;
+import uniandes.edu.co.parranderos.modelo.InfoExtraBodegaPk;
 import uniandes.edu.co.parranderos.repositorio.InfoExtraBodegaRepository;
 
 import java.util.Collection;
@@ -27,11 +28,13 @@ public class InfoExtraBodegaController {
         }
     }
 
-    // Obtener información extra de bodega por su ID (vinculado a Bodega)
-    @GetMapping("/{bodegaId}")
-    public ResponseEntity<InfoExtraBodega> obtenerInfoExtraBodegaPorBodegaId(@PathVariable("bodegaId") Long bodegaId) {
+    // Obtener información extra de bodega por su clave compuesta (bodegaId y productoId)
+    @GetMapping("/{bodegaId}/{productoId}")
+    public ResponseEntity<InfoExtraBodega> obtenerInfoExtraBodegaPorId(
+            @PathVariable("bodegaId") Long bodegaId,
+            @PathVariable("productoId") Long productoId) {
         try {
-            InfoExtraBodega infoExtra = infoExtraBodegaRepository.obtenerInfoExtraBodegaPorId(bodegaId);
+            InfoExtraBodega infoExtra = infoExtraBodegaRepository.obtenerInfoExtraBodegaPorId(bodegaId, productoId);
             if (infoExtra != null) {
                 return new ResponseEntity<>(infoExtra, HttpStatus.OK);
             } else {
@@ -46,12 +49,13 @@ public class InfoExtraBodegaController {
     @PostMapping("/new")
     public ResponseEntity<String> insertarInfoExtraBodega(@RequestBody InfoExtraBodega infoExtraBodega) {
         try {
-
             infoExtraBodegaRepository.insertarInfoExtraBodega(
                     infoExtraBodega.getTotalExistencias(),
                     infoExtraBodega.getCostoPromedio(),
                     infoExtraBodega.getCapacidadAlmacenamiento(),
-                    infoExtraBodega.getNivelMinimo()                    
+                    infoExtraBodega.getNivelMinimo(),
+                    infoExtraBodega.getPk().getBodega().getId(),
+                    infoExtraBodega.getPk().getProducto().getId()
             );
             return new ResponseEntity<>("Información extra de bodega creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -59,16 +63,21 @@ public class InfoExtraBodegaController {
         }
     }
 
-    // Actualizar información extra de bodega por su ID
-    @PutMapping("/{bodegaId}/edit")
-    public ResponseEntity<String> actualizarInfoExtraBodega(@PathVariable("bodegaId") Long bodegaId, @RequestBody InfoExtraBodega infoExtraBodega) {
+    // Actualizar información extra de bodega por su clave compuesta (bodegaId y productoId)
+    @PutMapping("/{bodegaId}/{productoId}/edit")
+    public ResponseEntity<String> actualizarInfoExtraBodega(
+            @PathVariable("bodegaId") Long bodegaId,
+            @PathVariable("productoId") Long productoId,
+            @RequestBody InfoExtraBodega infoExtraBodega) {
         try {
             infoExtraBodegaRepository.actualizarInfoExtraBodega(
-                    bodegaId,
+                    
                     infoExtraBodega.getTotalExistencias(),
                     infoExtraBodega.getCostoPromedio(),
                     infoExtraBodega.getCapacidadAlmacenamiento(),
-                    infoExtraBodega.getNivelMinimo()
+                    infoExtraBodega.getNivelMinimo(),
+                    bodegaId,
+                    productoId
             );
             return new ResponseEntity<>("Información extra de bodega actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
@@ -76,11 +85,13 @@ public class InfoExtraBodegaController {
         }
     }
 
-    // Eliminar información extra de bodega por su ID
-    @DeleteMapping("/{bodegaId}")
-    public ResponseEntity<String> eliminarInfoExtraBodega(@PathVariable("bodegaId") Long bodegaId) {
+    // Eliminar información extra de bodega por su clave compuesta (bodegaId y productoId)
+    @DeleteMapping("/{bodegaId}/{productoId}")
+    public ResponseEntity<String> eliminarInfoExtraBodega(
+            @PathVariable("bodegaId") Long bodegaId,
+            @PathVariable("productoId") Long productoId) {
         try {
-            infoExtraBodegaRepository.eliminarInfoExtraBodega(bodegaId);
+            infoExtraBodegaRepository.eliminarInfoExtraBodega(bodegaId, productoId);
             return new ResponseEntity<>("Información extra de bodega eliminada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al eliminar la información extra de bodega", HttpStatus.INTERNAL_SERVER_ERROR);

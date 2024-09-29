@@ -12,15 +12,15 @@ public class EspecificacionEmpacado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idEspecificacionEmpacado;  // Agregamos el campo id
+    private Long idEspecificacionEmpacado; 
 
-    private Float volumenCm3;
+    private Float volumen;
     private Float pesoGr;
 
     public EspecificacionEmpacado() {}
 
-    public EspecificacionEmpacado(Float volumenCm3, Float pesoGr) {
-        this.volumenCm3 = volumenCm3;
+    public EspecificacionEmpacado(Float volumen, Float pesoGr) {
+        this.volumen = volumen;
         this.pesoGr = pesoGr;
     }
 
@@ -32,12 +32,12 @@ public class EspecificacionEmpacado {
         this.idEspecificacionEmpacado = idEspecificacionEmpacado;
     }
 
-    public Float getVolumenCm3() {
-        return volumenCm3;
+    public Float getVolumen() {
+        return volumen;
     }
 
-    public void setVolumenCm3(Float volumenCm3) {
-        this.volumenCm3 = volumenCm3;
+    public void setVolumen(Float volumen) {
+        this.volumen = volumen;
     }
 
     public Float getPesoGr() {
@@ -52,7 +52,7 @@ public class EspecificacionEmpacado {
     public String toString() {
         return "EspecificacionEmpacado{" +
                 "idEspecificacionEmpacado=" + idEspecificacionEmpacado +
-                ", volumenCm3=" + volumenCm3 +
+             
                 ", pesoGr=" + pesoGr +
                 '}';
     }

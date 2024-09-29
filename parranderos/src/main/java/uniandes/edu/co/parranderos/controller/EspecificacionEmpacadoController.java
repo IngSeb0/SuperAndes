@@ -38,7 +38,7 @@ public class EspecificacionEmpacadoController {
     public ResponseEntity<String> insertarEspecificacion(@RequestBody EspecificacionEmpacado especificacionEmpacado) {
         try {
             especificacionEmpacadoRepository.insertarEspecificacion(
-                    especificacionEmpacado.getVolumenCm3(),
+                    especificacionEmpacado.getVolumen(),
                     especificacionEmpacado.getPesoGr()
             );
             return new ResponseEntity<>("Especificación de empacado creada exitosamente", HttpStatus.CREATED);
@@ -53,7 +53,7 @@ public class EspecificacionEmpacadoController {
         try {
             especificacionEmpacadoRepository.actualizarEspecificacion(
                     id,
-                    especificacionEmpacado.getVolumenCm3(),
+                    especificacionEmpacado.getVolumen(),
                     especificacionEmpacado.getPesoGr()
             );
             return new ResponseEntity<>("Especificación de empacado actualizada exitosamente", HttpStatus.OK);

@@ -22,14 +22,14 @@ public interface EspecificacionEmpacadoRepository extends JpaRepository<Especifi
     // Insertar nueva especificación de empacado
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO ESPECIFICACIONEMPACADO (VOLUMENCM3, PESOGR) VALUES (:volumenCm3, :pesoGr)", nativeQuery = true)
+    @Query(value = "INSERT INTO ESPECIFICACIONEMPACADO (VOLUMEN, PESOGR) VALUES (:volumen, :pesoGr)", nativeQuery = true)
     void insertarEspecificacion(@Param("volumenCm3") Float volumenCm3, @Param("pesoGr") Float pesoGr);
 
     // Actualizar especificación de empacado por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE ESPECIFICACIONEMPACADO SET VOLUMENCM3 = :volumenCm3, PESOGR = :pesoGr WHERE IDESPECIFICACIONEMPACADO = :id", nativeQuery = true)
-    void actualizarEspecificacion(@Param("id") Long id, @Param("volumenCm3") Float volumenCm3, @Param("pesoGr") Float pesoGr);
+    @Query(value = "UPDATE ESPECIFICACIONEMPACADO SET VOLUMEN = :volumen, PESOGR = :pesoGr WHERE IDESPECIFICACIONEMPACADO = :id", nativeQuery = true)
+    void actualizarEspecificacion(@Param("id") Long id, @Param("volumenCm3") Float volumen, @Param("pesoGr") Float pesoGr);
 
     // Eliminar una especificación de empacado por ID
     @Modifying

@@ -9,14 +9,14 @@ public class DetalleCostoBodega {
     @EmbeddedId
     private DetalleCostoBodegaPk pk;
 
-    private Float costo;
+    private Float costoUnitarioBodega;
     private Integer cantidadExistencia;
 
     public DetalleCostoBodega() {}
 
-    public DetalleCostoBodega(DetalleCostoBodegaPk pk, Float costo, Integer cantidadExistencia) {
+    public DetalleCostoBodega(DetalleCostoBodegaPk pk, Float costoUnitarioBodega, Integer cantidadExistencia) {
         this.pk = pk;
-        this.costo = costo;
+        this.costoUnitarioBodega = costoUnitarioBodega;
         this.cantidadExistencia = cantidadExistencia;
     }
 
@@ -29,11 +29,11 @@ public class DetalleCostoBodega {
     }
 
     public Float getCosto() {
-        return costo;
+        return costoUnitarioBodega;
     }
 
-    public void setCosto(Float costo) {
-        this.costo = costo;
+    public void setCosto(Float costoUnitarioBodega) {
+        this.costoUnitarioBodega = costoUnitarioBodega;
     }
 
     public Integer getCantidadExistencia() {

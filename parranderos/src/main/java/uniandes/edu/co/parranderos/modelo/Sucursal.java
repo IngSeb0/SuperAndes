@@ -8,19 +8,18 @@ public class Sucursal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDSUCURSAL")
-    private Long idSucursal;
 
-    @Column(name = "NOMBRE")
+    private Long SUCURSAL_IDSUCURSAL;
+
     private String nombreSucursal;
 
-    @Column(name = "TAMAÑOBLOSTABLACION")
-    private String tamañoBloque; // Tamaño almacenado como String por convención en este caso.
 
-    @Column(name = "DIRECCION")
+    private String tamañoBloque; 
+
+   
     private String direccion;
 
-    @Column(name = "TELEFONO")
+
     private String telefono;
 
     public Sucursal() {}
@@ -33,11 +32,11 @@ public class Sucursal {
     }
 
     public Long getIdSucursal() {
-        return idSucursal;
+        return SUCURSAL_IDSUCURSAL;
     }
 
-    public void setIdSucursal(Long idSucursal) {
-        this.idSucursal = idSucursal;
+    public void setIdSucursal(Long SUCURSAL_IDSUCURSAL) {
+        this.SUCURSAL_IDSUCURSAL = SUCURSAL_IDSUCURSAL;
     }
 
     public String getNombreSucursal() {

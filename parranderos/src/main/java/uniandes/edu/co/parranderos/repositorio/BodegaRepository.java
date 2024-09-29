@@ -15,11 +15,11 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO BODEGA (IDSUCURSAL, NOMBREBODEGA, TAMANIOBODEGA) VALUES (:sucursalId, :nombre, :tamano)", nativeQuery = true)
-    void insertarBodega(@Param("sucursalId") Long sucursalId, @Param("nombre") String nombreBodega, @Param("tamano") Float tamanioBodega);
+    @Query(value = "INSERT INTO BODEGA (IDSUCURSAL, NOMBREBODEGA, TAMANIOBODEGA) VALUES (:idSucursal, :nombre, :tamano)", nativeQuery = true)
+    void insertarBodega(@Param("sucursalId") Long idSucursal, @Param("nombre") String nombreBodega, @Param("tamano") Float tamanioBodega);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM BODEGA WHERE IDSUCURSAL = :sucursalId", nativeQuery = true)
+    @Query(value = "DELETE FROM BODEGA WHERE IDSUCURSAL = :idSucursal", nativeQuery = true)
     void eliminarBodega(@Param("sucursalId") Long sucursalId);
 }

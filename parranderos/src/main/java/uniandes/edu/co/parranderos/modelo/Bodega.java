@@ -13,27 +13,27 @@ import jakarta.persistence.Table;
 public class Bodega {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long BODEGAID;
+    private Long IDBODEGA;
     @ManyToOne
-    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
+    @JoinColumn(name = "SUCURSAL_IDSUCURSAL", referencedColumnName = "SUCURSAL_IDSUCURSAL")
     private Sucursal sucursal;
 
-    private String nombreBodegas;
+    private String nombreBodega;
     private Float tamanioBodega;
 
     public Bodega() {}
 
-    public Bodega(String nombreBodegas, Float tamanioBodega, Sucursal sucursal) {
-        this.nombreBodegas = nombreBodegas;
+    public Bodega(String nombreBodega, Float tamanioBodega, Sucursal sucursal) {
+        this.nombreBodega = nombreBodega;
         this.tamanioBodega = tamanioBodega;
         this.sucursal = sucursal;
     }
     public Long getId() {
-        return BODEGAID;
+        return IDBODEGA;
     }
 
-    public void setId(Long BODEGAID) {
-        this.BODEGAID = BODEGAID;
+    public void setId(Long IDBODEGA) {
+        this.IDBODEGA = IDBODEGA;
     }
     
     public Sucursal getSucursal() {
@@ -45,11 +45,11 @@ public class Bodega {
     }
 
     public String getNombreBodega() {
-        return nombreBodegas;
+        return nombreBodega;
     }
 
     public void setNombreBodega(String nombreBodegas) {
-        this.nombreBodegas = nombreBodegas;
+        this.nombreBodega = nombreBodegas;
     }
 
     public Float getTamanioBodega() {

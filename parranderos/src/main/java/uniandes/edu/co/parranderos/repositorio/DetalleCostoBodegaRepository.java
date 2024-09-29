@@ -25,24 +25,24 @@ public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCosto
     // Insertar un nuevo detalle de costo de bodega
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO DETALLECOSTOBODEGA (COSTOUNITARIOBODEGA, CANTIDADEXISTENCIA, INFOEXTRABODEGA_BODEGA_ID, INFOEXTRABODEGA_PRODUCTO_ID, IDDETALLECOSTO) " +
+    @Query(value = "INSERT INTO DETALLECOSTOBODEGA (COSTOUNITARIOBODEGA, CANTIDADEXISTENCIA, IDBODEGA, IDPRODUCTO, IDDETALLECOSTO) " +
                    "VALUES (:costoUnitarioBodega, :cantidadExistencia, :bodegaId, :productoId, :idDetalleCosto)", nativeQuery = true)
     void insertarDetalleCostoBodega(@Param("costoUnitarioBodega") Float costoUnitarioBodega, 
                                     @Param("cantidadExistencia") Integer cantidadExistencia, 
-                                    @Param("bodegaId") Long bodegaId,
-                                    @Param("productoId") Long productoId,
+                                    @Param("bodegaId") Long idBodega,
+                                    @Param("productoId") Long idProducto,
                                     @Param("idDetalleCosto") Long idDetalleCosto);
 
     // Actualizar un detalle de costo por su clave primaria compuesta
     @Modifying
     @Transactional
     @Query(value = "UPDATE DETALLECOSTOBODEGA SET COSTOUNITARIOBODEGA = :costoUnitarioBodega, CANTIDADEXISTENCIA = :cantidadExistencia " +
-                   "WHERE INFOEXTRABODEGA_BODEGA_ID = :bodegaId AND INFOEXTRABODEGA_PRODUCTO_ID = :productoId AND IDDETALLECOSTO = :idDetalleCosto", nativeQuery = true)
+                   "WHERE IDBODEGA = :bodegaId AND IDPRODUCTO = :productoId AND IDDETALLECOSTO = :idDetalleCosto", nativeQuery = true)
     void actualizarDetalleCostoBodega(@Param("idDetalleCosto") Long idDetalleCosto, 
                                       @Param("costoUnitarioBodega") Float costoUnitarioBodega, 
                                       @Param("cantidadExistencia") Integer cantidadExistencia, 
-                                      @Param("bodegaId") Long bodegaId,
-                                      @Param("productoId") Long productoId);
+                                      @Param("bodegaId") Long idBodega,
+                                    @Param("productoId") Long idProducto);
 
     // Eliminar un detalle de costo por su clave primaria compuesta
     @Modifying

@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class InfoExtraBodegaPk implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "BODEGAID", referencedColumnName = "BODEGAID")
+    @JoinColumn(name = "IDBODEGA", referencedColumnName = "IDBODEGA")
     private Bodega bodega;
 
     @ManyToOne

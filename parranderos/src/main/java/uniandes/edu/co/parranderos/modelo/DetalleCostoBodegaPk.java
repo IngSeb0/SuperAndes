@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 public class DetalleCostoBodegaPk implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "INFOEXTRABODEGA_BODEGA_ID", referencedColumnName = "BODEGAID")
-    @JoinColumn(name = "INFOEXTRABODEGA_PRODUCTO_ID", referencedColumnName = "IDPRODUCTO")
+    @JoinColumn(name = "IDBODEGA", referencedColumnName = "IDBODEGA")
+    @JoinColumn(name = "IDPRODUCTO", referencedColumnName = "IDPRODUCTO")
     private InfoExtraBodega infoExtraBodega;
 
     private Long idDetalleCosto;
