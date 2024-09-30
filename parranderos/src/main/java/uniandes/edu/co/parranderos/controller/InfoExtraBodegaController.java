@@ -36,7 +36,7 @@ public class InfoExtraBodegaController {
             }
 
             Long bodegaId = pk.getBodega().getId();
-            Long productoId = pk.getProducto().getId();
+            String productoId = pk.getProducto().getCodigoBarras();
             Integer totalExistencias = infoExtraBodega.getTotalExistencias();
             Float costoPromedio = infoExtraBodega.getCostoPromedio();
             Integer capacidadAlmacenamiento = infoExtraBodega.getCapacidadAlmacenamiento();

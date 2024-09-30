@@ -1,16 +1,18 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name="productos")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="PRODUCTO")
 public class Producto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long IDPRODUCTO;  // Cambiado de String a Long para ser clave primaria
 
-    private String codigoBarras;
+    @Id
+    private String codigoBarras;  
+
     private String nombre;
     private Float precioUnitarioVenta;
     private String presentacion;
@@ -18,27 +20,24 @@ public class Producto {
     private String unidadMedida;
     private String fechaExpiracion;
 
+    @ManyToOne
+    @JoinColumn(name = "IDESPECIFICACION", referencedColumnName = "IDESPECIFICACION")
+    private EspecificacionEmpacado idEspecificacion;
+
     public Producto() {}
 
-    public Producto(String codigoBarras, String nombre, Float precioUnitarioVenta, String presentacion, Integer cantidadPresentacion, String unidadMedida, String fechaExpiracion) {
-        this.codigoBarras = codigoBarras;
+    public Producto( String nombre, Float precioUnitarioVenta, String presentacion, Integer cantidadPresentacion, String unidadMedida, String fechaExpiracion, EspecificacionEmpacado idEspecificacion) {
+  
         this.nombre = nombre;
         this.precioUnitarioVenta = precioUnitarioVenta;
         this.presentacion = presentacion;
         this.cantidadPresentacion = cantidadPresentacion;
         this.unidadMedida = unidadMedida;
         this.fechaExpiracion = fechaExpiracion;
+        this.idEspecificacion = idEspecificacion;
     }
 
     // Getters y setters
-
-    public Long getId() {
-        return IDPRODUCTO;
-    }
-
-    public void setId(Long IDPRODUCTO) {
-        this.IDPRODUCTO = IDPRODUCTO;
-    }
 
     public String getCodigoBarras() {
         return codigoBarras;
@@ -96,6 +95,14 @@ public class Producto {
         this.fechaExpiracion = fechaExpiracion;
     }
 
+    public EspecificacionEmpacado getIdEspecificacion() {
+        return idEspecificacion;
+    }
+
+    public void setIdEspecificacion(EspecificacionEmpacado idEspecificacion) {
+        this.idEspecificacion = idEspecificacion;
+    }
+
     @Override
     public String toString() {
         return "Producto{" +
@@ -106,6 +113,7 @@ public class Producto {
                 ", cantidadPresentacion=" + cantidadPresentacion +
                 ", unidadMedida='" + unidadMedida + '\'' +
                 ", fechaExpiracion='" + fechaExpiracion + '\'' +
+                ", idEspecificacion=" + idEspecificacion +
                 '}';
     }
 }

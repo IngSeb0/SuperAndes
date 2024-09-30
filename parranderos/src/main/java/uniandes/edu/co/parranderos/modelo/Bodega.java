@@ -15,7 +15,7 @@ public class Bodega {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long IDBODEGA;
     @ManyToOne
-    @JoinColumn(name = "SUCURSAL_IDSUCURSAL", referencedColumnName = "SUCURSAL_IDSUCURSAL")
+    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
     private Sucursal sucursal;
 
     private String nombreBodega;

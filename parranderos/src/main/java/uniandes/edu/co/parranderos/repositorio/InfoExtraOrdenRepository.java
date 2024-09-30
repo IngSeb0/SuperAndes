@@ -16,18 +16,18 @@ public interface InfoExtraOrdenRepository extends JpaRepository<InfoExtraOrden, 
     Collection<InfoExtraOrden> obtenerTodaLaInfoExtraOrden();
 
     @Query(value = "SELECT * FROM infoextraorden WHERE ordencompra_idorden = :ordenId AND producto_codigobarras = :productoId", nativeQuery = true)
-    InfoExtraOrden obtenerInfoExtraOrdenPorId(@Param("ordenId") Long ordenId, @Param("productoId") Long productoId);
+    InfoExtraOrden obtenerInfoExtraOrdenPorId(@Param("ordenId") Long ordenId, @Param("productoId") String productoId);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM infoextraorden WHERE ordencompra_idorden = :ordenId AND producto_codigobarras = :productoId", nativeQuery = true)
-    void eliminarInfoExtraOrden(@Param("ordenId") Long ordenId, @Param("productoId") Long productoId);
+    void eliminarInfoExtraOrden(@Param("ordenId") Long ordenId, @Param("productoId") String productoId);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE infoextraorden SET cantidad = :cantidad, costounitario = :costoUnitario WHERE ordencompra_idorden = :ordenId AND producto_codigobarras = :productoId", nativeQuery = true)
     void actualizarInfoExtraOrden(@Param("ordenId") Long ordenId,
-                                  @Param("productoId") Long productoId,
+                                  @Param("productoId") String productoId,
                                   @Param("cantidad") Long cantidad,
                                   @Param("costoUnitario") Float costoUnitario);
 
@@ -35,7 +35,7 @@ public interface InfoExtraOrdenRepository extends JpaRepository<InfoExtraOrden, 
     @Transactional
     @Query(value = "INSERT INTO infoextraorden (ordencompra_idorden, producto_codigobarras, cantidad, costounitario) VALUES (:ordenId, :productoId, :cantidad, :costoUnitario)", nativeQuery = true)
     void insertarInfoExtraOrden(@Param("ordenId") Long ordenId,
-                                @Param("productoId") Long productoId,
+                                @Param("productoId") String productoId,
                                 @Param("cantidad") Long cantidad,
                                 @Param("costoUnitario") Float costoUnitario);
 }

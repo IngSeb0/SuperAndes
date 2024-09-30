@@ -35,7 +35,7 @@ public class InfoExtraOrdenController {
             }
 
             Long ordenId = pk.getOrdenCompra().getId();
-            Long productoId = pk.getProducto().getId();
+            String productoId = pk.getProducto().getCodigoBarras();
             Long cantidad = infoExtraOrden.getCantidad();
             Float costoUnitario = infoExtraOrden.getCostoUnitario();
 

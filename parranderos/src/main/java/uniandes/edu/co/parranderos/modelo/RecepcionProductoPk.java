@@ -7,33 +7,36 @@ import java.io.Serializable;
 @Embeddable
 public class RecepcionProductoPk implements Serializable {
 
-    @JoinColumn(name = "ID_RECEPCION", referencedColumnName = "IDRECEPCION")
-    private Long idRecepcion;
+    @JoinColumn(name = "IDRECEPCION", referencedColumnName = "IDRECEPCION")
+    private OrdenCompra ordenCompra;
 
-    @JoinColumn(name = "CODIGO_BARRAS", referencedColumnName = "CODIGOBARRAS")
-    private String codigoBarras;
+    @JoinColumn(name = "IDBODEGA", referencedColumnName = "IDBODEGA")
+    private Bodega bodega;
 
-    public RecepcionProductoPk() {}
+    public RecepcionProductoPk() {
+        super();
+    }
 
-    public RecepcionProductoPk(Long idRecepcion, String codigoBarras) {
-        this.idRecepcion = idRecepcion;
-        this.codigoBarras = codigoBarras;
+    public RecepcionProductoPk(OrdenCompra ordenCompra, Bodega bodega) {
+        super();
+        this.ordenCompra = ordenCompra;
+        this.bodega = bodega;
     }
 
     // Getters y Setters
-    public Long getIdRecepcion() {
-        return idRecepcion;
+    public OrdenCompra getIdRecepcion() {
+        return ordenCompra;
     }
 
-    public void setIdRecepcion(Long idRecepcion) {
-        this.idRecepcion = idRecepcion;
+    public void setIdRecepcion(OrdenCompra ordenCompra) {
+        this.ordenCompra = ordenCompra;
     }
 
-    public String getCodigoBarras() {
-        return codigoBarras;
+    public Bodega getBodega() {
+        return bodega;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+    public void setBodega(Bodega bodega) {
+        this.bodega = bodega;
     }
 }

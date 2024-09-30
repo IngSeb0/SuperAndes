@@ -9,7 +9,7 @@ public class Sucursal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long SUCURSAL_IDSUCURSAL;
+    private Long IDSUCURSAL;
 
     private String nombreSucursal;
 
@@ -32,11 +32,11 @@ public class Sucursal {
     }
 
     public Long getIdSucursal() {
-        return SUCURSAL_IDSUCURSAL;
+        return IDSUCURSAL;
     }
 
-    public void setIdSucursal(Long SUCURSAL_IDSUCURSAL) {
-        this.SUCURSAL_IDSUCURSAL = SUCURSAL_IDSUCURSAL;
+    public void setIdSucursal(Long IDSUCURSAL) {
+        this.IDSUCURSAL = IDSUCURSAL;
     }
 
     public String getNombreSucursal() {

@@ -22,8 +22,8 @@ public class Venta {
     private Long cantidadExistencia; // Corresponde a CANTIDADEXISTENCIA en la base de datos
 
     @ManyToOne
-    @JoinColumn(name = "SUCURSAL_IDSUCURSAL") // Relación con Sucursal
-    private Sucursal sucursal; // Corresponde a SUCURSAL_IDSUCURSAL en la base de datos
+    @JoinColumn(name = "IDSUCURSAL") 
+    private Sucursal sucursal;
 
     @ManyToOne
     @JoinColumn(name = "CLIENTE_CEDULA") // Relación con Cliente

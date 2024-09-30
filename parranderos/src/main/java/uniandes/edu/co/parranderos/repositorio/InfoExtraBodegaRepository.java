@@ -16,18 +16,18 @@ public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega
     Collection<InfoExtraBodega> obtenerTodaLaInfoExtraBodega();
 
     @Query(value = "SELECT * FROM infoextrabodega WHERE bodega_idbodega = :bodegaId AND producto_idproducto = :productoId", nativeQuery = true)
-    InfoExtraBodega obtenerInfoExtraBodegaPorId(@Param("bodegaId") Long bodegaId, @Param("productoId") Long productoId);
+    InfoExtraBodega obtenerInfoExtraBodegaPorId(@Param("bodegaId") Long bodegaId, @Param("productoId") String productoId);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM infoextrabodega WHERE bodega_idbodega = :bodegaId AND producto_idproducto = :productoId", nativeQuery = true)
-    void eliminarInfoExtraBodega(@Param("bodegaId") Long bodegaId, @Param("productoId") Long productoId);
+    void eliminarInfoExtraBodega(@Param("bodegaId") Long bodegaId, @Param("productoId") String productoId);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE infoextrabodega SET totalexistencias = :totalExistencias, costopromedio = :costoPromedio, capacidadalmacenamiento = :capacidadAlmacenamiento, nivelminimo = :nivelMinimo WHERE bodega_idbodega = :bodegaId AND producto_idproducto = :productoId", nativeQuery = true)
     void actualizarInfoExtraBodega(@Param("bodegaId") Long bodegaId,
-                                   @Param("productoId") Long productoId,
+                                   @Param("productoId") String productoId,
                                    @Param("totalExistencias") Integer totalExistencias,
                                    @Param("costoPromedio") Float costoPromedio,
                                    @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento,
@@ -37,7 +37,7 @@ public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega
     @Transactional
     @Query(value = "INSERT INTO infoextrabodega (bodega_idbodega, producto_idproducto, totalexistencias, costopromedio, capacidadalmacenamiento, nivelminimo) VALUES (:bodegaId, :productoId, :totalExistencias, :costoPromedio, :capacidadAlmacenamiento, :nivelMinimo)", nativeQuery = true)
     void insertarInfoExtraBodega(@Param("bodegaId") Long bodegaId,
-                                 @Param("productoId") Long productoId,
+                                 @Param("productoId") String productoId,
                                  @Param("totalExistencias") Integer totalExistencias,
                                  @Param("costoPromedio") Float costoPromedio,
                                  @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento,

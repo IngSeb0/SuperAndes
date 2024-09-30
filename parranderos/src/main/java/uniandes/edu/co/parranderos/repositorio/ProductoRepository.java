@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Producto;
-
+import java.lang.Long;
 import java.util.Collection;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {

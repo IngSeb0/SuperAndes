@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import java.util.Date;
@@ -26,17 +27,17 @@ public class OrdenCompra {
     @Column(name = "FECHAENTREGA")
     private Date fechaEntrega;
 
-    @Column(name = "SUCURSAL_IDSUCURSAL")
-    private Long sucursalId;
+    @JoinColumn(name = "IDSUCURSAL")
+    private Sucursal IDSUCURSAL;
 
     public OrdenCompra() {}
 
-    public OrdenCompra(Long id, Date fechaCreacion, String estado, Date fechaEntrega, Long sucursalId) {
+    public OrdenCompra(Long id, Date fechaCreacion, String estado, Date fechaEntrega, Sucursal IDSUCURSAL) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
         this.fechaEntrega = fechaEntrega;
-        this.sucursalId = sucursalId;
+        this.IDSUCURSAL = IDSUCURSAL;
     }
 
     public Long getId() {
@@ -71,12 +72,12 @@ public class OrdenCompra {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public Long getSucursalId() {
-        return sucursalId;
+    public Sucursal getSucursalId() {
+        return IDSUCURSAL;
     }
 
-    public void setSucursalId(Long sucursalId) {
-        this.sucursalId = sucursalId;
+    public void setSucursalId(Sucursal IDSUCURSAL) {
+        this.IDSUCURSAL = IDSUCURSAL;
     }
 
     @Override
@@ -86,7 +87,7 @@ public class OrdenCompra {
                 ", fechaCreacion=" + fechaCreacion +
                 ", estado='" + estado + '\'' +
                 ", fechaEntrega=" + fechaEntrega +
-                ", sucursalId=" + sucursalId +
+                ", IDSUCURSAL=" + IDSUCURSAL +
                 '}';
     }
 }

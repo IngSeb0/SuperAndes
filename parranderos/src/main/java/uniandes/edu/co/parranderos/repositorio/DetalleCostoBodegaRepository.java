@@ -19,7 +19,7 @@ public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCosto
     @Query("SELECT d FROM DetalleCostoBodega d WHERE d.pk.infoExtraBodega.pk.bodega.id = :idBodega AND d.pk.infoExtraBodega.pk.producto.id = :idProducto AND d.pk.idDetalleCosto = :idDetalleCosto")
     DetalleCostoBodega obtenerDetalleCostoBodegaPorId(
         @Param("idBodega") Long idBodega, 
-        @Param("idProducto") Long idProducto, 
+        @Param("idProducto") String idProducto, 
         @Param("idDetalleCosto") Long idDetalleCosto);
 
     // Insertar un nuevo detalle de costo de bodega
@@ -30,7 +30,7 @@ public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCosto
     void insertarDetalleCostoBodega(@Param("costoUnitarioBodega") Float costoUnitarioBodega, 
                                     @Param("cantidadExistencia") Integer cantidadExistencia, 
                                     @Param("bodegaId") Long idBodega,
-                                    @Param("productoId") Long idProducto,
+                                    @Param("productoId") String idProducto,
                                     @Param("idDetalleCosto") Long idDetalleCosto);
 
     // Actualizar un detalle de costo por su clave primaria compuesta
@@ -42,7 +42,7 @@ public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCosto
                                       @Param("costoUnitarioBodega") Float costoUnitarioBodega, 
                                       @Param("cantidadExistencia") Integer cantidadExistencia, 
                                       @Param("bodegaId") Long idBodega,
-                                    @Param("productoId") Long idProducto);
+                                    @Param("productoId") String idProducto);
 
     // Eliminar un detalle de costo por su clave primaria compuesta
     @Modifying
@@ -50,5 +50,5 @@ public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCosto
     @Query(value = "DELETE FROM DETALLECOSTOBODEGA WHERE INFOEXTRABODEGA_BODEGA_ID = :bodegaId AND INFOEXTRABODEGA_PRODUCTO_ID = :productoId AND IDDETALLECOSTO = :idDetalleCosto", nativeQuery = true)
     void eliminarDetalleCostoBodega(@Param("idDetalleCosto") Long idDetalleCosto, 
                                     @Param("bodegaId") Long bodegaId,
-                                    @Param("productoId") Long productoId);
+                                    @Param("productoId") String productoId);
 }

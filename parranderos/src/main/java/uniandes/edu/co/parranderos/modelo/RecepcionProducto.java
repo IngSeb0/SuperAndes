@@ -15,8 +15,9 @@ public class RecepcionProducto {
 
     public RecepcionProducto() {}
 
-    public RecepcionProducto(RecepcionProductoPk pk, String fechaRecepcion) {
-        this.pk = pk;
+    public RecepcionProducto(OrdenCompra ordenCompra, Bodega Bodega, String fechaRecepcion) {
+
+        this.pk = new RecepcionProductoPk(ordenCompra, Bodega);
         this.fechaRecepcion = fechaRecepcion;
     }
 

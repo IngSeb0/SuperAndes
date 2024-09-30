@@ -39,7 +39,7 @@ public class DetalleCostoBodegaController {
             }
 
             Long idBodega = pk.getInfoExtraBodega().getPk().getBodega().getId();
-            Long idProducto = pk.getInfoExtraBodega().getPk().getProducto().getId();
+            String idProducto = pk.getInfoExtraBodega().getPk().getProducto().getCodigoBarras();
             Long idDetalleCosto = pk.getIdDetalleCosto();
 
             detalleCostoBodegaRepository.insertarDetalleCostoBodega(
@@ -61,7 +61,7 @@ public class DetalleCostoBodegaController {
     @GetMapping("/detalles_costo_bodega/{bodegaId}/{productoId}/{idDetalle}")
     public ResponseEntity<DetalleCostoBodega> obtenerDetalleCostoBodegaPorId(
             @PathVariable("bodegaId") Long bodegaId,
-            @PathVariable("productoId") Long productoId,
+            @PathVariable("productoId") String productoId,
             @PathVariable("idDetalle") Long idDetalle) {
         try {
             DetalleCostoBodega detalle = detalleCostoBodegaRepository.obtenerDetalleCostoBodegaPorId(bodegaId, productoId, idDetalle);
@@ -79,7 +79,7 @@ public class DetalleCostoBodegaController {
     @PostMapping("/detalles_costo_bodega/{bodegaId}/{productoId}/{idDetalle}/edit/save")
     public ResponseEntity<String> actualizarDetalleCostoBodega(
             @PathVariable("bodegaId") Long bodegaId,
-            @PathVariable("productoId") Long productoId,
+            @PathVariable("productoId") String productoId,
             @PathVariable("idDetalle") Long idDetalle,
             @RequestBody DetalleCostoBodega detalleCostoBodega) {
         try {
@@ -100,7 +100,7 @@ public class DetalleCostoBodegaController {
     @PostMapping("/detalles_costo_bodega/{bodegaId}/{productoId}/{idDetalle}/delete")
     public ResponseEntity<String> eliminarDetalleCostoBodega(
             @PathVariable("bodegaId") Long bodegaId,
-            @PathVariable("productoId") Long productoId,
+            @PathVariable("productoId") String productoId,
             @PathVariable("idDetalle") Long idDetalle) {
         try {
             detalleCostoBodegaRepository.eliminarDetalleCostoBodega(idDetalle, bodegaId, productoId);

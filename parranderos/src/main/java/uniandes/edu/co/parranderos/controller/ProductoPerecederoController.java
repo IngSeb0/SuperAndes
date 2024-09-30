@@ -1,8 +1,6 @@
 package uniandes.edu.co.parranderos.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.ProductoPerecedero;
 import uniandes.edu.co.parranderos.repositorio.ProductoPerecederoRepository;
@@ -20,13 +18,18 @@ public class ProductoPerecederoController {
 
     // Obtener todos los productos perecederos
     @GetMapping
-    public Collection<ProductoPerecedero> obtenerProductosPerecederos() {
-        return productoPerecederoRepository.obtenerTodosLosProductosPerecederos();
+    public ResponseEntity<Collection<ProductoPerecedero>> obtenerProductosPerecederos() {
+        try {
+            Collection<ProductoPerecedero> productos = productoPerecederoRepository.obtenerTodosLosProductosPerecederos();
+            return new ResponseEntity<>(productos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Obtener un producto perecedero por su código de barras
     @GetMapping("/{codigoBarras}")
-    public ResponseEntity<ProductoPerecedero> obtenerProductoPerecederoPorCodigoBarras(@PathVariable("codigoBarras") Long codigoBarras) {
+    public ResponseEntity<ProductoPerecedero> obtenerProductoPerecederoPorCodigoBarras(@PathVariable("codigoBarras") String codigoBarras) {
         ProductoPerecedero producto = productoPerecederoRepository.obtenerProductoPerecederoPorCodigoDeBarras(codigoBarras);
         if (producto != null) {
             return new ResponseEntity<>(producto, HttpStatus.OK);
@@ -40,13 +43,7 @@ public class ProductoPerecederoController {
     public ResponseEntity<String> insertarProductoPerecedero(@RequestBody ProductoPerecedero productoPerecedero) {
         try {
             productoPerecederoRepository.insertarProductoPerecedero(
-                    productoPerecedero.getCodigoBarras(), 
-                    productoPerecedero.getNombre(), 
-                    productoPerecedero.getPrecioUnitarioVenta(), 
-                    productoPerecedero.getPresentacion(), 
-                    productoPerecedero.getCantidadPresentacion(), 
-                    productoPerecedero.getUnidadMedida(), 
-                    productoPerecedero.getFechaExpiracion(), 
+                    productoPerecedero.getCodigoBarras(),
                     productoPerecedero.getFechaVencimiento()
             );
             return new ResponseEntity<>("Producto perecedero creado exitosamente", HttpStatus.CREATED);
@@ -60,13 +57,7 @@ public class ProductoPerecederoController {
     public ResponseEntity<String> actualizarProductoPerecedero(@PathVariable("codigoBarras") String codigoBarras, @RequestBody ProductoPerecedero productoPerecedero) {
         try {
             productoPerecederoRepository.actualizarProductoPerecedero(
-                    codigoBarras, 
-                    productoPerecedero.getCodigoBarras(), 
-                    productoPerecedero.getPrecioUnitarioVenta(), 
-                    productoPerecedero.getPresentacion(), 
-                    productoPerecedero.getCantidadPresentacion(), 
-                    productoPerecedero.getUnidadMedida(), 
-                    productoPerecedero.getFechaExpiracion(), 
+                    codigoBarras,
                     productoPerecedero.getFechaVencimiento()
             );
             return new ResponseEntity<>("Producto perecedero actualizado exitosamente", HttpStatus.OK);

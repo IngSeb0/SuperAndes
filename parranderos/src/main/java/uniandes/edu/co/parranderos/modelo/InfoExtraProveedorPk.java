@@ -7,10 +7,10 @@ import java.io.Serializable;
 @Embeddable
 public class InfoExtraProveedorPk implements Serializable {
 
-    @Column(name = "PROVEEDOR_NIT")
+    @JoinColumn(name = "PROVEEDOR_NIT")
     private Proveedor proveedorNit;
 
-    @Column(name = "PRODUCTO_CODIGOBARRAS")
+    @JoinColumn(name = "PRODUCTO_CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
     private Producto productoCodigoBarras;
 
     public InfoExtraProveedorPk() {

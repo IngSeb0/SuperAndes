@@ -11,7 +11,7 @@
         private Bodega bodega;
 
         @ManyToOne
-        @JoinColumn(name = "IDPRODUCTO", referencedColumnName = "IDPRODUCTO")
+        @JoinColumn(name = "CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
         private Producto producto;
 
         public InfoExtraBodegaPk() {

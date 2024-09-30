@@ -38,8 +38,8 @@ public class InfoExtraProveedorController {
                 throw new RuntimeException("Faltan datos en la clave primaria");
             }
 
-            Long proveedorNit = pk.getProveedorNit();
-            String productoCodigoBarras = pk.getProductoCodigoBarras();
+            Long proveedorNit = pk.getProveedorNit().getNit();
+            String productoCodigoBarras = pk.getProductoCodigoBarras().getCodigoBarras();
 
             if (proveedorNit == null || productoCodigoBarras == null) {
                 throw new RuntimeException("Faltan datos en la clave primaria");

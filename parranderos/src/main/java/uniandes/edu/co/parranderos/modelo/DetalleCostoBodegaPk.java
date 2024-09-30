@@ -8,7 +8,7 @@ public class DetalleCostoBodegaPk implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "IDBODEGA", referencedColumnName = "IDBODEGA")
-    @JoinColumn(name = "IDPRODUCTO", referencedColumnName = "IDPRODUCTO")
+    @JoinColumn(name = "CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
     private InfoExtraBodega infoExtraBodega;
 
     private Long idDetalleCosto;
