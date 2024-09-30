@@ -9,7 +9,7 @@ import uniandes.edu.co.parranderos.modelo.InfoExtraBodega;
 import uniandes.edu.co.parranderos.modelo.InfoExtraBodegaPk;
 
 import java.util.Collection;
-import java.util.List;
+
 
 public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega, InfoExtraBodegaPk> {
 

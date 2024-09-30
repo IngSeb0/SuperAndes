@@ -7,10 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Producto;
 import java.lang.Long;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface ProductoRepository extends JpaRepository<Producto, Long> {
+public interface ProductoRepository extends JpaRepository<Producto, String> {
 
     // Consultar todos los productos
     @Query(value = "SELECT * FROM productos", nativeQuery = true)
@@ -33,7 +34,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
                           @Param("presentacion") String presentacion,
                           @Param("cantidadPresentacion") Integer cantidadPresentacion,
                           @Param("unidadMedida") String unidadMedida,
-                          @Param("fechaExpiracion") String fechaExpiracion);
+                          @Param("fechaExpiracion") Date fechaExpiracion);
 
     // Actualizar un producto por su código de barras
     @Modifying

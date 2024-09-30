@@ -3,7 +3,6 @@ package uniandes.edu.co.parranderos.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import uniandes.edu.co.parranderos.modelo.InfoExtraProveedorPk;
 import uniandes.edu.co.parranderos.modelo.InfoExtraVenta;
 import uniandes.edu.co.parranderos.modelo.InfoExtraVentaPk;
 import uniandes.edu.co.parranderos.repositorio.InfoExtraVentaRepository;

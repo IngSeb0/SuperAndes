@@ -19,7 +19,8 @@ public class EspecificacionEmpacado {
 
     public EspecificacionEmpacado() {}
 
-    public EspecificacionEmpacado(Float volumen, Float peso) {
+    public EspecificacionEmpacado(Long idEspecificacion, Float volumen, Float peso) {
+        this.idEspecificacion = idEspecificacion;
         this.volumen = volumen;
         this.peso = peso;
     }

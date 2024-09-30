@@ -6,12 +6,13 @@
     import org.springframework.data.repository.query.Param;
     import org.springframework.transaction.annotation.Transactional;
     import uniandes.edu.co.parranderos.modelo.RecepcionProducto;
+import uniandes.edu.co.parranderos.modelo.RecepcionProductoPk;
 
-    import java.util.Collection;
+import java.util.Collection;
 
 
 
-    public interface RecepcionProductoRepository extends JpaRepository<RecepcionProducto, Long> {
+    public interface RecepcionProductoRepository extends JpaRepository<RecepcionProducto, RecepcionProductoPk> {
 
         // Consultar todas las recepciones de productos
         @Query(value = "SELECT * FROM RECEPCIONPRODUCTOS", nativeQuery = true)

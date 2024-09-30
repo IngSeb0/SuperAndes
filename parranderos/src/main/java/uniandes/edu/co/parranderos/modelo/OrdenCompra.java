@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+
 import java.util.Date;
 
 @Entity
@@ -16,7 +16,7 @@ public class OrdenCompra {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private Long id;
+    private Long IDORDEN;
 
 
     private Date fechaCreacion;
@@ -31,8 +31,8 @@ public class OrdenCompra {
 
     public OrdenCompra() {}
 
-    public OrdenCompra(Long id, Date fechaCreacion, String estado, Date fechaEntrega, Sucursal IDSUCURSAL) {
-        this.id = id;
+    public OrdenCompra(Long IDORDEN, Date fechaCreacion, String estado, Date fechaEntrega, Sucursal IDSUCURSAL) {
+        this.IDORDEN = IDORDEN;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
         this.fechaEntrega = fechaEntrega;
@@ -40,11 +40,11 @@ public class OrdenCompra {
     }
 
     public Long getId() {
-        return id;
+        return IDORDEN;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long IDORDEN) {
+        this.IDORDEN = IDORDEN;
     }
 
     public Date getFechaCreacion() {
@@ -82,7 +82,7 @@ public class OrdenCompra {
     @Override
     public String toString() {
         return "OrdenCompra{" +
-                "id=" + id +
+                "IDORDEN=" + IDORDEN +
                 ", fechaCreacion=" + fechaCreacion +
                 ", estado='" + estado + '\'' +
                 ", fechaEntrega=" + fechaEntrega +

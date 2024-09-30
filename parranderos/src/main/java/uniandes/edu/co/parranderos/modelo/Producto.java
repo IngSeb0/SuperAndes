@@ -1,5 +1,7 @@
 package uniandes.edu.co.parranderos.modelo;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -18,15 +20,15 @@ public class Producto {
     private String presentacion;
     private Integer cantidadPresentacion;
     private String unidadMedida;
-    private String fechaExpiracion;
+    private Date fechaExpiracion;
 
     @ManyToOne
     @JoinColumn(name = "IDESPECIFICACION", referencedColumnName = "IDESPECIFICACION")
     private EspecificacionEmpacado idEspecificacion;
 
-    public Producto() {}
 
-    public Producto( String nombre, Float precioUnitarioVenta, String presentacion, Integer cantidadPresentacion, String unidadMedida, String fechaExpiracion, EspecificacionEmpacado idEspecificacion) {
+
+    public Producto( String nombre, Float precioUnitarioVenta, String presentacion, Integer cantidadPresentacion, String unidadMedida, Date fechaExpiracion, EspecificacionEmpacado idEspecificacion) {
   
         this.nombre = nombre;
         this.precioUnitarioVenta = precioUnitarioVenta;
@@ -87,11 +89,11 @@ public class Producto {
         this.unidadMedida = unidadMedida;
     }
 
-    public String getFechaExpiracion() {
+    public Date getFechaExpiracion() {
         return fechaExpiracion;
     }
 
-    public void setFechaExpiracion(String fechaExpiracion) {
+    public void setFechaExpiracion(Date fechaExpiracion) {
         this.fechaExpiracion = fechaExpiracion;
     }
 
