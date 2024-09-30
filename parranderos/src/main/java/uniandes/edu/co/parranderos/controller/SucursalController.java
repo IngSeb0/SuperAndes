@@ -16,7 +16,6 @@ public class SucursalController {
     @Autowired
     private SucursalRepository sucursalRepository;
 
-
     @GetMapping
     public ResponseEntity<Collection<Sucursal>> obtenerSucursales() {
         try {
@@ -42,15 +41,18 @@ public class SucursalController {
         }
     }
 
-
+    // Insertar una nueva sucursal con ciudad
     @PostMapping("/new/save")
     public ResponseEntity<String> insertarSucursal(@RequestBody Sucursal sucursal) {
         try {
             sucursalRepository.insertarSucursal(
+                sucursal.getIdSucursal(),
                     sucursal.getNombreSucursal(),
-                    sucursal.getTamañoBloque(),
+
+                    sucursal.getTamanioInstalacion(),
                     sucursal.getDireccion(),
-                    sucursal.getTelefono()
+                    sucursal.getTelefono(),
+                    sucursal.getCodigoCiudad().getCodigoCiudad()
             );
             return new ResponseEntity<>("Sucursal creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -58,16 +60,28 @@ public class SucursalController {
         }
     }
 
-    // Actualizar una sucursal por su ID
+    // Obtener sucursales con un producto específico
+    @GetMapping("/consulta")
+    public ResponseEntity<?> obtenerSucursalesConProducto(@PathVariable String codigoBarras) {
+        try {
+            Collection<Sucursal> sucursales = sucursalRepository.obtenerSucursalesConProducto(codigoBarras);
+            return new ResponseEntity<>(sucursales, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al obtener sucursales: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Actualizar una sucursal por su ID con ciudad
     @PostMapping("/{id}/edit/save")
     public ResponseEntity<String> actualizarSucursal(@PathVariable("id") Long id, @RequestBody Sucursal sucursal) {
         try {
             sucursalRepository.actualizarSucursal(
                     id,
                     sucursal.getNombreSucursal(),
-                    sucursal.getTamañoBloque(),
+                    sucursal.getTamanioInstalacion(),
                     sucursal.getDireccion(),
-                    sucursal.getTelefono()
+                    sucursal.getTelefono(),
+                    sucursal.getCodigoCiudad().getCodigoCiudad()
             );
             return new ResponseEntity<>("Sucursal actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {

@@ -1,5 +1,7 @@
-    package uniandes.edu.co.parranderos.modelo;
-    import jakarta.persistence.Entity;
+package uniandes.edu.co.parranderos.modelo;
+    import java.io.Serializable;
+
+import jakarta.persistence.Entity;
     import jakarta.persistence.GeneratedValue;
     import jakarta.persistence.GenerationType;
     import jakarta.persistence.Id;
@@ -7,7 +9,7 @@
 
     @Entity
     @Table(name="Proveedores")
-    public class Proveedor {
+    public class Proveedor implements Serializable{
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Long nit;

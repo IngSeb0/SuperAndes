@@ -11,11 +11,24 @@ import uniandes.edu.co.parranderos.modelo.InfoExtraBodegaPk;
 import uniandes.edu.co.parranderos.repositorio.InfoExtraBodegaRepository;
 
 @RestController
+@RequestMapping("/InfoExtraBodega")
 public class InfoExtraBodegaController {
 
     @Autowired
     private InfoExtraBodegaRepository infoExtraBodegaRepository;
+   
 
+    @GetMapping("/sucursal/{idSucursal}/bodega/{idBodega}")
+    public ResponseEntity<?> obtenerInventarioPorBodega(
+            @PathVariable Long idSucursal,
+            @PathVariable Long idBodega) {
+        try {
+            Collection<InfoExtraBodega> inventario = infoExtraBodegaRepository.obtenerInventarioPorBodega(idSucursal, idBodega);
+            return new ResponseEntity<>(inventario, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al obtener inventario: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/infoExtraBodega")
     public ResponseEntity<Collection<InfoExtraBodega>> obtenerInfoExtraBodega() {
         try {

@@ -1,25 +1,23 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.io.Serializable;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "CIUDAD")
-public class Ciudad {
+public class Ciudad implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long codigoCiudad;
+
     private String nombreCiudad;
 
-    public Ciudad() {
-    }
+    public Ciudad() {}
 
-    public Ciudad(Long codigoCiudad, String nombreCiudad) {
-        this.codigoCiudad = codigoCiudad;
+    public Ciudad(String nombreCiudad) {
         this.nombreCiudad = nombreCiudad;
     }
 
@@ -37,13 +35,5 @@ public class Ciudad {
 
     public void setNombreCiudad(String nombreCiudad) {
         this.nombreCiudad = nombreCiudad;
-    }
-
-    @Override
-    public String toString() {
-        return "Ciudad{" +
-                "codigoCiudad=" + codigoCiudad +
-                ", nombreCiudad='" + nombreCiudad + '\'' +
-                '}';
     }
 }

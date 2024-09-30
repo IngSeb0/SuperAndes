@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/especificaciones_empacado")
+@RequestMapping("/EspecificacionEmpacado")
 public class EspecificacionEmpacadoController {
 
     @Autowired

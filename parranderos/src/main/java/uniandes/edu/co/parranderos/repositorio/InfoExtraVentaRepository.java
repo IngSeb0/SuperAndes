@@ -16,14 +16,14 @@ public interface InfoExtraVentaRepository extends JpaRepository<InfoExtraVenta, 
     @Query("SELECT i FROM InfoExtraVenta i")
     List<InfoExtraVenta> obtenerTodaLaInfoExtraVenta();
 
-    // Obtener una información extra por clave primaria compuesta (ventaId y productoCodigoBarras)
+    // Obtener información extra por clave primaria compuesta (ventaId y productoCodigoBarras)
     @Query("SELECT i FROM InfoExtraVenta i WHERE i.pk.venta.id = :ventaId AND i.pk.producto.codigoBarras = :productoCodigoBarras")
     InfoExtraVenta obtenerInfoExtraVentaPorId(@Param("ventaId") Long ventaId, @Param("productoCodigoBarras") String productoCodigoBarras);
 
     // Insertar nueva información extra de venta
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO INFOEXTRAVENTA (CANTIDAD, PRECIO_UNITARIO, VENTA_IDVENTA, PRODUCTO_CODIGOBARRAS) " +
+    @Query(value = "INSERT INTO INFOEXTRAVENTA (CANTIDAD, PRECIO_UNITARIO, IDVENTA, CODIGOBARRAS) " +
             "VALUES (:cantidad, :precioUnitario, :ventaId, :productoCodigoBarras)", 
             nativeQuery = true)
     void insertarInfoExtraVenta(@Param("cantidad") Integer cantidad, 
@@ -31,21 +31,21 @@ public interface InfoExtraVentaRepository extends JpaRepository<InfoExtraVenta, 
                                 @Param("ventaId") Long ventaId,
                                 @Param("productoCodigoBarras") String productoCodigoBarras);
 
-    // Actualizar información extra por clave primaria compuesta (ventaId y productoCodigoBarras)
+    // Actualizar información extra por clave primaria compuesta
     @Modifying
     @Transactional
     @Query(value = "UPDATE INFOEXTRAVENTA SET CANTIDAD = :cantidad, PRECIO_UNITARIO = :precioUnitario " +
-            "WHERE VENTA_IDVENTA = :ventaId AND PRODUCTO_CODIGOBARRAS = :productoCodigoBarras", 
+            "WHERE IDVENTA = :ventaId AND CODIGOBARRAS = :productoCodigoBarras", 
             nativeQuery = true)
     void actualizarInfoExtraVenta(@Param("ventaId") Long ventaId, 
                                   @Param("productoCodigoBarras") String productoCodigoBarras,
                                   @Param("cantidad") Integer cantidad, 
                                   @Param("precioUnitario") Float precioUnitario);
 
-    // Eliminar información extra por clave primaria compuesta (ventaId y productoCodigoBarras)
+    // Eliminar información extra por clave primaria compuesta
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM INFOEXTRAVENTA WHERE VENTA_IDVENTA = :ventaId AND PRODUCTO_CODIGOBARRAS = :productoCodigoBarras", 
+    @Query(value = "DELETE FROM INFOEXTRAVENTA WHERE IDVENTA = :ventaId AND CODIGOBARRAS = :productoCodigoBarras", 
             nativeQuery = true)
     void eliminarInfoExtraVenta(@Param("ventaId") Long ventaId, @Param("productoCodigoBarras") String productoCodigoBarras);
 }

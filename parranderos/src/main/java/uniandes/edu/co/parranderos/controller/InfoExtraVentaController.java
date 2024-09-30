@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/info_extra_venta")
+@RequestMapping("/INFOEXTRAVENTA")
 public class InfoExtraVentaController {
 
     @Autowired

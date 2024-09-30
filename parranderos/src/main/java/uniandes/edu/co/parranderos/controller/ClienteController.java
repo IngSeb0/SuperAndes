@@ -7,22 +7,43 @@ import uniandes.edu.co.parranderos.repositorio.ClienteRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
 
     // Obtener todos los clientes
-    @GetMapping("/cliente")
-    public Collection<Cliente> obtenerClientes() {
-        return clienteRepository.obtenerTodosLosClientes();
+    @GetMapping
+    public ResponseEntity<List<Cliente>> obtenerClientes() {
+        try {
+            List<Cliente> clientes = clienteRepository.obtenerTodosLosClientes();
+            return new ResponseEntity<>(clientes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Obtener cliente por cédula
+    @GetMapping("/{cedula}")
+    public ResponseEntity<Cliente> obtenerClientePorCedula(@PathVariable("cedula") Long cedula) {
+        try {
+            Cliente cliente = clienteRepository.obtenerClientePorCedula(cedula);
+            if (cliente != null) {
+                return new ResponseEntity<>(cliente, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Insertar un nuevo cliente
-    @PostMapping("/cliente/new/save")
+    @PostMapping("/new/save")
     public ResponseEntity<String> insertarCliente(@RequestBody Cliente cliente) {
         try {
             clienteRepository.insertarCliente(cliente.getCedula(), cliente.getNombreCliente());
@@ -33,7 +54,7 @@ public class ClienteController {
     }
 
     // Actualizar un cliente
-    @PostMapping("/cliente/{cedula}/edit/save")
+    @PutMapping("/{cedula}/edit")
     public ResponseEntity<String> actualizarCliente(@PathVariable("cedula") Long cedula, @RequestBody Cliente cliente) {
         try {
             clienteRepository.actualizarCliente(cedula, cliente.getNombreCliente());
@@ -43,8 +64,8 @@ public class ClienteController {
         }
     }
 
-    // Eliminar un cliente
-    @PostMapping("/cliente/{cedula}/delete")
+    // Eliminar un cliente por cédula
+    @DeleteMapping("/{cedula}/delete")
     public ResponseEntity<String> eliminarCliente(@PathVariable("cedula") Long cedula) {
         try {
             clienteRepository.eliminarCliente(cedula);
@@ -54,4 +75,3 @@ public class ClienteController {
         }
     }
 }
- 

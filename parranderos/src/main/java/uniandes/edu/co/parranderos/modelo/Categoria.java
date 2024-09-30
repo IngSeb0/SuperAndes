@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,20 +14,25 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    
     private Long codigoCategoria;
+
     private String caracteristicasAlmacenamiento;
     private String nombreCategoria;
     private String descripcion;
 
-    public Categoria() {
-    }
+    // Relación ManyToOne con Producto a través del código de barras
+    @ManyToOne
+    @JoinColumn(name = "CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
+    private Producto producto;
 
-    public Categoria(Long codigoCategoria, String caracteristicasAlmacenamiento, String nombreCategoria, String descripcion) {
+    public Categoria() {}
+
+    public Categoria(Long codigoCategoria, String caracteristicasAlmacenamiento, String nombreCategoria, String descripcion, Producto producto) {
         this.codigoCategoria = codigoCategoria;
         this.caracteristicasAlmacenamiento = caracteristicasAlmacenamiento;
         this.nombreCategoria = nombreCategoria;
         this.descripcion = descripcion;
+        this.producto = producto;
     }
 
     public Long getCodigoCategoria() {
@@ -60,6 +67,14 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
     @Override
     public String toString() {
         return "Categoria{" +
@@ -67,6 +82,7 @@ public class Categoria {
                 ", caracteristicasAlmacenamiento='" + caracteristicasAlmacenamiento + '\'' +
                 ", nombreCategoria='" + nombreCategoria + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", producto=" + producto.getCodigoBarras() +
                 '}';
     }
 }

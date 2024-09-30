@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ProductoRepository extends JpaRepository<Producto, String> {
 
     // Consultar todos los productos
-    @Query(value = "SELECT * FROM productos", nativeQuery = true)
+    @Query(value = "SELECT * FROM producto", nativeQuery = true)
     Collection<Producto> obtenerTodosLosProductos();
 
     // Consultar un producto por su código de barras
@@ -26,7 +26,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     // Insertar un nuevo producto
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO productos (codigo_barras, nombre, precio_unitario_venta, presentacion, cantidad_presentacion, unidad_medida, fecha_expiracion) " +
+    @Query(value = "INSERT INTO producto (codigoBarras, nombre, precioUnitarioVenta, presentacion, cantidadPresentacion, unidadMedida, fechaExpiracion) " +
             "VALUES (:codigoBarras, :nombre, :precioUnitarioVenta, :presentacion, :cantidadPresentacion, :unidadMedida, :fechaExpiracion)", nativeQuery = true)
     void insertarProducto(@Param("codigoBarras") String codigoBarras,
                           @Param("nombre") String nombre,
@@ -39,7 +39,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     // Actualizar un producto por su código de barras
     @Modifying
     @Transactional
-    @Query(value = "UPDATE productos SET nombre = :nombre, precio_unitario_venta = :precioUnitarioVenta WHERE codigo_barras = :codigoBarras", nativeQuery = true)
+    @Query(value = "UPDATE producto SET nombre = :nombre, precioUnitarioVenta = :precioUnitarioVenta WHERE codigoBarras = :codigoBarras", nativeQuery = true)
     void actualizarProducto(@Param("codigoBarras") String codigoBarras,
                             @Param("nombre") String nombre,
                             @Param("precioUnitarioVenta") Float precioUnitarioVenta);
@@ -47,7 +47,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     // Eliminar un producto por su código de barras
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM productos WHERE codigo_barras = :codigoBarras", nativeQuery = true)
+    @Query(value = "DELETE FROM producto WHERE codigo_barras = :codigoBarras", nativeQuery = true)
     void eliminarProducto(@Param("codigoBarras") String codigoBarras);
     @Query(value = "SELECT p.* FROM PRODUCTO p " +
     "LEFT JOIN SUCURSAL s ON p.IDSUCURSAL = s.IDSUCURSAL " +

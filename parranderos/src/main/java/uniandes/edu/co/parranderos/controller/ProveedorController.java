@@ -43,16 +43,16 @@ public class ProveedorController {
         }
     }
 
-    // Actualizar un proveedor por NIT
-    @PostMapping("/{nit}/edit/save")
-    public ResponseEntity<String> actualizarProveedor(@PathVariable("nit") Long nit, @RequestBody Proveedor proveedor) {
-        try {
-            proveedorRepository.actualizarProveedor(nit, proveedor.getNombre(), proveedor.getDireccion(), proveedor.getNombreContacto(), proveedor.getTelefonoContacto());
-            return new ResponseEntity<>("Proveedor actualizado exitosamente", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error al actualizar el proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+// Actualizar un proveedor por NIT
+@PutMapping("/{nit}/edit")
+public ResponseEntity<String> actualizarProveedor(@PathVariable("nit") Long nit, @RequestBody Proveedor proveedor) {
+    try {
+        proveedorRepository.actualizarProveedor(nit, proveedor.getNombre(), proveedor.getDireccion(), proveedor.getNombreContacto(), proveedor.getTelefonoContacto());
+        return new ResponseEntity<>("Proveedor actualizado exitosamente", HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>("Error al actualizar el proveedor", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
 
     // Eliminar un proveedor por NIT
     @PostMapping("/{nit}/delete")

@@ -7,7 +7,7 @@ import uniandes.edu.co.parranderos.repositorio.CategoriaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/categorias")
@@ -16,31 +16,38 @@ public class CategoriaController {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    // Obtener todas las categorías
     @GetMapping
-    public Collection<Categoria> obtenerCategorias() {
-        return categoriaRepository.obtenerTodasLasCategorias();
-    }
-
-    // Obtener una categoría por su ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable("id") Long id) {
-        Categoria categoria = categoriaRepository.obtenerCategoriaPorId(id);
-        if (categoria != null) {
-            return new ResponseEntity<>(categoria, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<Categoria>> obtenerCategorias() {
+        try {
+            List<Categoria> categorias = categoriaRepository.obtenerTodasLasCategorias();
+            return new ResponseEntity<>(categorias, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Insertar una nueva categoría
+    @GetMapping("/{id}")
+    public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable("id") Long id) {
+        try {
+            Categoria categoria = categoriaRepository.obtenerCategoriaPorId(id);
+            if (categoria != null) {
+                return new ResponseEntity<>(categoria, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/new/save")
     public ResponseEntity<String> insertarCategoria(@RequestBody Categoria categoria) {
         try {
             categoriaRepository.insertarCategoria(
                     categoria.getCaracteristicasAlmacenamiento(),
                     categoria.getNombreCategoria(),
-                    categoria.getDescripcion()
+                    categoria.getDescripcion(),
+                    categoria.getProducto().getCodigoBarras()
             );
             return new ResponseEntity<>("Categoría creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -48,7 +55,6 @@ public class CategoriaController {
         }
     }
 
-    // Actualizar una categoría por su ID
     @PostMapping("/{id}/edit/save")
     public ResponseEntity<String> actualizarCategoria(@PathVariable("id") Long id, @RequestBody Categoria categoria) {
         try {
@@ -56,7 +62,8 @@ public class CategoriaController {
                     id,
                     categoria.getCaracteristicasAlmacenamiento(),
                     categoria.getNombreCategoria(),
-                    categoria.getDescripcion()
+                    categoria.getDescripcion(),
+                    categoria.getProducto().getCodigoBarras()
             );
             return new ResponseEntity<>("Categoría actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
@@ -64,7 +71,6 @@ public class CategoriaController {
         }
     }
 
-    // Eliminar una categoría por su ID
     @PostMapping("/{id}/delete")
     public ResponseEntity<String> eliminarCategoria(@PathVariable("id") Long id) {
         try {

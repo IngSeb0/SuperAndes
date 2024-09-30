@@ -7,36 +7,36 @@ import java.io.Serializable;
 @Embeddable
 public class InfoExtraProveedorPk implements Serializable {
 
-    @JoinColumn(name = "PROVEEDOR_NIT")
-    private Proveedor proveedorNit;
+    @JoinColumn(name = "NIT", referencedColumnName = "NIT")
+    private Proveedor nit;
 
-    @JoinColumn(name = "PRODUCTO_CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
-    private Producto productoCodigoBarras;
+    @JoinColumn(name = "CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
+    private Producto CodigoBarras;
 
     public InfoExtraProveedorPk() {
         super();
     }
 
-    public InfoExtraProveedorPk(Proveedor proveedorNit, Producto productoCodigoBarras) {
+    public InfoExtraProveedorPk(Proveedor nit, Producto CodigoBarras) {
         super();
-        this.proveedorNit = proveedorNit;
-        this.productoCodigoBarras = productoCodigoBarras;
+        this.nit = nit;
+        this.CodigoBarras = CodigoBarras;
     }
 
     public Proveedor getProveedorNit() {
-        return proveedorNit;
+        return nit;
     }
 
-    public void setProveedorNit(Proveedor proveedorNit) {
-        this.proveedorNit = proveedorNit;
+    public void setProveedorNit(Proveedor nit) {
+        this.nit = nit;
     }
 
     public Producto getProductoCodigoBarras() {
-        return productoCodigoBarras;
+        return CodigoBarras;
     }
 
-    public void setProductoCodigoBarras(Producto productoCodigoBarras) {
-        this.productoCodigoBarras = productoCodigoBarras;
+    public void setProductoCodigoBarras(Producto CodigoBarras) {
+        this.CodigoBarras = CodigoBarras;
     }
 
   

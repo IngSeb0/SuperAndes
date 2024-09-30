@@ -37,7 +37,7 @@ public class CiudadController {
     @PostMapping("/new/save")
     public ResponseEntity<String> insertarCiudad(@RequestBody Ciudad ciudad) {
         try {
-            ciudadRepository.insertarCiudad(ciudad.getNombreCiudad());
+            ciudadRepository.insertarCiudad(ciudad.getCodigoCiudad(),ciudad.getNombreCiudad());
             return new ResponseEntity<>("Ciudad creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al crear la ciudad", HttpStatus.INTERNAL_SERVER_ERROR);

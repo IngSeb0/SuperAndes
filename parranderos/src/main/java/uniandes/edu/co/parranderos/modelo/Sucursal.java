@@ -8,27 +8,28 @@ public class Sucursal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long IDSUCURSAL;
 
     private String nombreSucursal;
 
+    // Modificado para usar "tamanioInstalacion" en vez de "tamañoBloque"
+    private String tamanioInstalacion; 
 
-    private String tamañoBloque; 
-
-   
     private String direccion;
-
 
     private String telefono;
 
+    @JoinColumn(name = "CODIGOCIUDAD", referencedColumnName = "CODIGOCIUDAD")
+    Ciudad CODIGOCIUDAD;
+
     public Sucursal() {}
 
-    public Sucursal(String nombreSucursal, String tamañoBloque, String direccion, String telefono) {
+    public Sucursal(String nombreSucursal, String tamanioInstalacion, String direccion, String telefono, Ciudad CODIGOCIUDAD) {
         this.nombreSucursal = nombreSucursal;
-        this.tamañoBloque = tamañoBloque;
+        this.tamanioInstalacion = tamanioInstalacion;
         this.direccion = direccion;
         this.telefono = telefono;
+        this.CODIGOCIUDAD = CODIGOCIUDAD;
     }
 
     public Long getIdSucursal() {
@@ -39,6 +40,14 @@ public class Sucursal {
         this.IDSUCURSAL = IDSUCURSAL;
     }
 
+    public Ciudad getCodigoCiudad() {
+        return CODIGOCIUDAD;
+    }
+
+    public void setCodigoCiudad(Ciudad CODIGOCIUDAD) {
+        this.CODIGOCIUDAD = CODIGOCIUDAD;
+    }
+
     public String getNombreSucursal() {
         return nombreSucursal;
     }
@@ -47,12 +56,12 @@ public class Sucursal {
         this.nombreSucursal = nombreSucursal;
     }
 
-    public String getTamañoBloque() {
-        return tamañoBloque;
+    public String getTamanioInstalacion() {
+        return tamanioInstalacion;
     }
 
-    public void setTamañoBloque(String tamañoBloque) {
-        this.tamañoBloque = tamañoBloque;
+    public void setTamanioInstalacion(String tamanioInstalacion) {
+        this.tamanioInstalacion = tamanioInstalacion;
     }
 
     public String getDireccion() {

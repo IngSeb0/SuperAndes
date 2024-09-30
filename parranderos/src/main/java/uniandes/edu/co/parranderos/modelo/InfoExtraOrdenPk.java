@@ -7,11 +7,11 @@ import java.io.Serializable;
 public class InfoExtraOrdenPk implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "ORDENCOMPRA_IDORDEN", referencedColumnName = "IDORDEN")
+    @JoinColumn(name = "IDORDEN", referencedColumnName = "IDORDEN")
     private OrdenCompra ordenCompra;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCTO_CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
+    @JoinColumn(name = "CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
     private Producto producto;
 
     public InfoExtraOrdenPk() {

@@ -1,5 +1,6 @@
 package uniandes.edu.co.parranderos.modelo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
@@ -10,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="PRODUCTO")
-public class Producto {
+public class Producto implements Serializable {
 
     @Id
     private String codigoBarras;  

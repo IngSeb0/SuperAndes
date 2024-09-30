@@ -26,11 +26,11 @@ public class Venta {
     private Sucursal sucursal;
 
     @ManyToOne
-    @JoinColumn(name = "CLIENTE_CEDULA") // Relación con Cliente
-    private Cliente cliente; // Corresponde a CLIENTE_CEDULA en la base de datos
+    @JoinColumn(name = "CEDULA") 
+    private Cliente cliente; 
 
     @ManyToOne
-    @JoinColumn(name = "PROVEEDOR_NIT") // Relación con Proveedor
+    @JoinColumn(name = "NIT") // Relación con Proveedor
     private Proveedor proveedor; // Corresponde a PROVEEDOR_NIT en la base de datos
 
     

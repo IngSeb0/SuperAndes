@@ -19,24 +19,35 @@ public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Long> 
     @Query(value = "SELECT * FROM ORDENCOMPRA WHERE IDORDEN = :id", nativeQuery = true)
     OrdenCompra obtenerOrdenPorId(@Param("id") Long id);
 
+    // Obtener todas las órdenes de compra por NIT de Proveedor
+    @Query(value = "SELECT * FROM ORDENCOMPRA WHERE NIT = :nit", nativeQuery = true)
+    List<OrdenCompra> obtenerOrdenesPorProveedor(@Param("nit") String nit);
+
     // Insertar una nueva orden de compra
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO ORDENCOMPRA (FECHACREACION, ESTADO, FECHAENTREGA, SUCURSAL_IDSUCURSAL) VALUES (:fechaCreacion, :estado, :fechaEntrega, :sucursalId)", nativeQuery = true)
+    @Query(value = "INSERT INTO ORDENCOMPRA (FECHACREACION, ESTADO, FECHAENTREGA, IDSUCURSAL, NIT, CODIGOBARRAS) " +
+            "VALUES (:fechaCreacion, :estado, :fechaEntrega, :sucursalId, :nit, :codigoBarras)", nativeQuery = true)
     void insertarOrden(@Param("fechaCreacion") String fechaCreacion,
                        @Param("estado") String estado,
                        @Param("fechaEntrega") String fechaEntrega,
-                       @Param("sucursalId") Long sucursalId);
+                       @Param("sucursalId") Long sucursalId,
+                       @Param("nit") Long nit,
+                       @Param("codigoBarras") String codigoBarras);
 
     // Actualizar una orden de compra por su ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE ORDENCOMPRA SET FECHACREACION = :fechaCreacion, ESTADO = :estado, FECHAENTREGA = :fechaEntrega, SUCURSAL_IDSUCURSAL = :sucursalId WHERE IDORDEN = :id", nativeQuery = true)
+    @Query(value = "UPDATE ORDENCOMPRA SET FECHACREACION = :fechaCreacion, ESTADO = :estado, " +
+            "FECHAENTREGA = :fechaEntrega, IDSUCURSAL = :sucursalId, NIT = :nit, CODIGOBARRAS = :codigoBarras " +
+            "WHERE IDORDEN = :id", nativeQuery = true)
     void actualizarOrden(@Param("id") Long id,
                          @Param("fechaCreacion") String fechaCreacion,
                          @Param("estado") String estado,
                          @Param("fechaEntrega") String fechaEntrega,
-                         @Param("sucursalId") Long sucursalId);
+                         @Param("sucursalId") Long sucursalId,
+                         @Param("nit") Long nit,
+                         @Param("codigoBarras") String codigoBarras);
 
     // Eliminar una orden de compra por su ID
     @Modifying

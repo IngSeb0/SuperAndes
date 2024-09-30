@@ -22,8 +22,9 @@ public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
     // Insertar una nueva ciudad
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO CIUDAD (NOMBRECIUDAD) VALUES (:nombreCiudad)", nativeQuery = true)
-    void insertarCiudad(@Param("nombreCiudad") String nombreCiudad);
+    @Query(value = "INSERT INTO CIUDAD (CODIGOCIUDAD, NOMBRECIUDAD) VALUES (:codigoCiudad, :nombreCiudad)", nativeQuery = true)
+    void insertarCiudad(@Param("codigoCiudad") Long codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
+    
 
     // Actualizar una ciudad por ID
     @Modifying
