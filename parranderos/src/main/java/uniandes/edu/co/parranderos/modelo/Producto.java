@@ -2,7 +2,6 @@ package uniandes.edu.co.parranderos.modelo;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -10,11 +9,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="PRODUCTO")
+@Table(name = "PRODUCTO")
 public class Producto implements Serializable {
 
     @Id
-    private String codigoBarras;  
+    private String codigoBarras;
 
     private String nombre;
     private Float precioUnitarioVenta;
@@ -27,10 +26,13 @@ public class Producto implements Serializable {
     @JoinColumn(name = "IDESPECIFICACION", referencedColumnName = "IDESPECIFICACION")
     private EspecificacionEmpacado idEspecificacion;
 
+    // Constructor por defecto necesario para JPA/Hibernate
+    public Producto() {
+    }
 
-
-    public Producto( String nombre, Float precioUnitarioVenta, String presentacion, Integer cantidadPresentacion, String unidadMedida, Date fechaExpiracion, EspecificacionEmpacado idEspecificacion) {
-  
+    // Constructor con todos los argumentos
+    public Producto(String nombre, Float precioUnitarioVenta, String presentacion, Integer cantidadPresentacion,
+                    String unidadMedida, Date fechaExpiracion, EspecificacionEmpacado idEspecificacion) {
         this.nombre = nombre;
         this.precioUnitarioVenta = precioUnitarioVenta;
         this.presentacion = presentacion;
@@ -40,8 +42,7 @@ public class Producto implements Serializable {
         this.idEspecificacion = idEspecificacion;
     }
 
-    // Getters y setters
-
+    // Getters y Setters
     public String getCodigoBarras() {
         return codigoBarras;
     }

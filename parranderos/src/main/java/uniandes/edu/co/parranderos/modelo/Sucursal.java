@@ -1,10 +1,12 @@
 package uniandes.edu.co.parranderos.modelo;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "SUCURSAL")
-public class Sucursal {
+public class Sucursal implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

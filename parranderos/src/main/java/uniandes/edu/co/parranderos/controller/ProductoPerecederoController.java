@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/productos_perecederos")
+@RequestMapping("/ProductosPerecederos")
 public class ProductoPerecederoController {
 
     @Autowired
