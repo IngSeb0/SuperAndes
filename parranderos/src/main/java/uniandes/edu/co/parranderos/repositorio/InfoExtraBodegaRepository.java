@@ -9,6 +9,7 @@ import uniandes.edu.co.parranderos.modelo.InfoExtraBodega;
 import uniandes.edu.co.parranderos.modelo.InfoExtraBodegaPk;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega, InfoExtraBodegaPk> {
 
@@ -42,4 +43,6 @@ public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega
                                  @Param("costoPromedio") Float costoPromedio,
                                  @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento,
                                  @Param("nivelMinimo") Float nivelMinimo);
+
+   
 }

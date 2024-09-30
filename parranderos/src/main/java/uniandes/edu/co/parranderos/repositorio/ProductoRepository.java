@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Producto;
 import java.lang.Long;
 import java.util.Collection;
+import java.util.Optional;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
@@ -16,8 +17,10 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     Collection<Producto> obtenerTodosLosProductos();
 
     // Consultar un producto por su código de barras
-    @Query(value = "SELECT * FROM productos WHERE codigo_barras = :codigoBarras", nativeQuery = true)
-    Producto obtenerProductoPorCodigoBarras(@Param("codigoBarras") String codigoBarras);
+    @Query("SELECT p FROM Producto p WHERE p.codigoBarras = :codigoBarras")
+    Optional<Producto> obtenerProductoPorCodigoBarras(@Param("codigoBarras") String codigoBarras);
+    @Query("SELECT p FROM Producto p WHERE p.codigoBarras = :codigoBarras")
+    Producto obtenerProductoPorCodigoBarras1(@Param("codigoBarras") String codigoBarras);
 
     // Insertar un nuevo producto
     @Modifying
@@ -45,4 +48,18 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Transactional
     @Query(value = "DELETE FROM productos WHERE codigo_barras = :codigoBarras", nativeQuery = true)
     void eliminarProducto(@Param("codigoBarras") String codigoBarras);
+    @Query(value = "SELECT p.* FROM PRODUCTO p " +
+    "LEFT JOIN SUCURSAL s ON p.IDSUCURSAL = s.IDSUCURSAL " +
+    "LEFT JOIN CATEGORIA c ON p.IDCATEGORIA = c.IDCATEGORIA " +
+    "WHERE (:precioMin IS NULL OR p.precioUnitarioVenta >= :precioMin) " +
+    "AND (:precioMax IS NULL OR p.precioUnitarioVenta <= :precioMax) " +
+    "AND (:fechaVencimiento IS NULL OR p.fechaExpiracion <= :fechaVencimiento) " +
+    "AND (:idSucursal IS NULL OR s.IDSUCURSAL = :idSucursal) " +
+    "AND (:idCategoria IS NULL OR c.IDCATEGORIA = :idCategoria)", nativeQuery = true)
+Collection<Producto> filtrarProductos(@Param("precioMin") Float precioMin,
+                           @Param("precioMax") Float precioMax,
+                           @Param("fechaVencimiento") String fechaVencimiento,
+                           @Param("idSucursal") Long idSucursal,
+                           @Param("idCategoria") Long idCategoria);
 }
+

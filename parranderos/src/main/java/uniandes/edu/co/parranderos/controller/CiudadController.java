@@ -44,25 +44,4 @@ public class CiudadController {
         }
     }
 
-    // Actualizar una ciudad por su ID
-    @PostMapping("/{id}/edit/save")
-    public ResponseEntity<String> actualizarCiudad(@PathVariable("id") Long id, @RequestBody Ciudad ciudad) {
-        try {
-            ciudadRepository.actualizarCiudad(id, ciudad.getNombreCiudad());
-            return new ResponseEntity<>("Ciudad actualizada exitosamente", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error al actualizar la ciudad", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Eliminar una ciudad por su ID
-    @PostMapping("/{id}/delete")
-    public ResponseEntity<String> eliminarCiudad(@PathVariable("id") Long id) {
-        try {
-            ciudadRepository.eliminarCiudad(id);
-            return new ResponseEntity<>("Ciudad eliminada exitosamente", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error al eliminar la ciudad", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }

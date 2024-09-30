@@ -16,7 +16,7 @@ public class SucursalController {
     @Autowired
     private SucursalRepository sucursalRepository;
 
-    // Obtener todas las sucursales
+
     @GetMapping
     public ResponseEntity<Collection<Sucursal>> obtenerSucursales() {
         try {
@@ -42,7 +42,7 @@ public class SucursalController {
         }
     }
 
-    // Insertar una nueva sucursal
+
     @PostMapping("/new/save")
     public ResponseEntity<String> insertarSucursal(@RequestBody Sucursal sucursal) {
         try {

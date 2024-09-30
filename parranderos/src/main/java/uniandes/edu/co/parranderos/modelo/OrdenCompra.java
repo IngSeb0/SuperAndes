@@ -15,16 +15,15 @@ public class OrdenCompra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "IDORDEN")
+
     private Long id;
 
-    @Column(name = "FECHACREACION")
+
     private Date fechaCreacion;
 
-    @Column(name = "ESTADO")
     private String estado;
 
-    @Column(name = "FECHAENTREGA")
+
     private Date fechaEntrega;
 
     @JoinColumn(name = "IDSUCURSAL")

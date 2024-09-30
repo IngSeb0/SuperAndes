@@ -42,6 +42,18 @@ public class ParranderosApplication implements CommandLineRunner {
     @Autowired
     private InfoExtraVentaRepository infoExtraVentaRepository;
 
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    private OrdenCompraRepository ordenCompraRepository;
+
+    @Autowired
+    private ProveedorRepository proveedorRepository;
+
+    @Autowired
+    private SucursalRepository sucursalRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(ParranderosApplication.class, args);
     }
@@ -105,7 +117,7 @@ public class ParranderosApplication implements CommandLineRunner {
         }
 
         // Info Extra Proveedor
-        Collection<InfoExtraProveedor> infoExtraProveedores = infoExtraProveedorRepository. obtenerTodaInfoExtraProveedor();
+        Collection<InfoExtraProveedor> infoExtraProveedores = infoExtraProveedorRepository.obtenerTodaInfoExtraProveedor();
         System.out.println("\nInfo Extra Proveedores:");
         for (InfoExtraProveedor proveedor : infoExtraProveedores) {
             System.out.println(proveedor);
@@ -116,6 +128,34 @@ public class ParranderosApplication implements CommandLineRunner {
         System.out.println("\nInfo Extra Ventas:");
         for (InfoExtraVenta venta : infoExtraVentas) {
             System.out.println(venta);
+        }
+
+        // Productos
+        Collection<Producto> productos = productoRepository.obtenerTodosLosProductos();
+        System.out.println("\nProductos:");
+        for (Producto prod : productos) {
+            System.out.println(prod);
+        }
+
+        // Órdenes de Compra
+        Collection<OrdenCompra> ordenesCompra = ordenCompraRepository.obtenerTodasLasOrdenes();
+        System.out.println("\nÓrdenes de Compra:");
+        for (OrdenCompra ordenCompra : ordenesCompra) {
+            System.out.println(ordenCompra);
+        }
+
+        // Proveedores
+        Collection<Proveedor> proveedores = proveedorRepository.obtenerTodosLosProveedores();
+        System.out.println("\nProveedores:");
+        for (Proveedor prov : proveedores) {
+            System.out.println(prov);
+        }
+
+        // Sucursales
+        Collection<Sucursal> sucursales = sucursalRepository.obtenerTodasLasSucursales();
+        System.out.println("\nSucursales:");
+        for (Sucursal suc : sucursales) {
+            System.out.println(suc);
         }
     }
 }

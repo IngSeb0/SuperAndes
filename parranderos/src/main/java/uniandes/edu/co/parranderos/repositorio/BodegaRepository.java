@@ -23,4 +23,15 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
     @Transactional
     @Query(value = "DELETE FROM BODEGA WHERE IDSUCURSAL = :idSucursal", nativeQuery = true)
     void eliminarBodega(@Param("idSucursal") Long idSucursal);
+    @Query(value = "SELECT B.NOMBREBODEGA, " +
+            "       (SUM(IE.TOTALEXISTENCIAS * P.CANTIDADPRESENTACION) / B.TAMANIOBODEGA) * 100 AS porcentajeOcupacion " +
+            "FROM BODEGA B " +
+            "INNER JOIN INFOEXTRABODEGA IE ON B.IDBODEGA = IE.IDBODEGA " +
+            "INNER JOIN PRODUCTO P ON IE.CODIGOBARRAS = P.CODIGOBARRAS " +
+            "WHERE B.IDSUCURSAL = :idSucursal " +
+            "AND P.CODIGOBARRAS IN :productos " +
+            "GROUP BY B.NOMBREBODEGA, B.TAMANIOBODEGA", nativeQuery = true)
+    Collection<Object[]> obtenerIndiceOcupacionBodega(@Param("idSucursal") Long idSucursal, @Param("productos") Collection<String> productos);
 }
+
+

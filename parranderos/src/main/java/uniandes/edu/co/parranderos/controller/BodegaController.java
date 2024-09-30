@@ -9,6 +9,8 @@ import uniandes.edu.co.parranderos.modelo.Sucursal;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/bodegas")
@@ -26,7 +28,22 @@ public class BodegaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+ @GetMapping("/consulta")
+    public ResponseEntity<?> obtenerIndiceOcupacionBodegas(@RequestParam Long idSucursal, 
+                                                           @RequestParam(required = false) Collection<String> productos) {
+        try {
+            // Obtener el índice de ocupación para los productos y la sucursal
+            Collection<Object[]> ocupacionBodegas = bodegaRepository.obtenerIndiceOcupacionBodega(idSucursal, productos);
 
+            // Crear un mapa para almacenar los resultados y otros datos
+            Map<String, Object> response = new HashMap<>();
+            response.put("OcupacionBodegas", ocupacionBodegas);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     @PostMapping("/new/save")
     public ResponseEntity<?> crearBodega(@RequestBody Bodega bodega) {
         try {
