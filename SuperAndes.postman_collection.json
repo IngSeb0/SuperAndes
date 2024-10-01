@@ -1,0 +1,631 @@
+{
+	"info": {
+		"_postman_id": "5a23eaed-9263-4889-89c0-5ec98424c385",
+		"name": "SuperAndes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37612894"
+	},
+	"item": [
+		{
+			"name": "Bodega",
+			"item": [
+				{
+					"name": "NewBodega",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"idBodega\":1,\r\n    \"sucursal\": {\r\n    \"idSucursal\": 21\r\n},\r\n  \"nombreBodega\": \"Bodega Central\",\r\n  \"tamanioBodega\": 1500.0\r\n  \r\n  }\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/bodegas/new/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"bodegas",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerBodega",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parranderos/bodegas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"bodegas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Bodega",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parranderos/bodegas/1/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"bodegas",
+								"1",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Indice de ocupación",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "GET http://localhost:8080/bodegas/{idSucursal}/ocupacion\n",
+							"protocol": "GET http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bodegas",
+								"{idSucursal}",
+								"ocupacion\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inventario Bodega",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "GET http://localhost:8080/bodegas/{idBodega}/inventario\n",
+							"protocol": "GET http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bodegas",
+								"{idBodega}",
+								"inventario\n"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proveedor",
+			"item": [
+				{
+					"name": "NewProveedores",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nit\": 2,\r\n  \"nombre\": \"Proveedor ABC\",\r\n  \"direccion\": \"Calle 123 #45-67\",\r\n  \"nombreContacto\": \"Juan Perez\",\r\n  \"telefonoContacto\": \"3001234567\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/proveedores/new/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"proveedores",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarProveedor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \"nit\": 1234567383,\r\n  \"nombre\": \"Proveedor sZ\",\r\n  \"direccion\": \"Avenida 456 #89-10\",\r\n  \"nombreContacto\": \"Carlos Martinez\",\r\n  \"telefonoContacto\": \"3109876543\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/proveedores/1234567383/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"proveedores",
+								"1234567383",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Producto",
+			"item": [
+				{
+					"name": "New Producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoBarras\": \"2\",\r\n  \"nombre\": \"Leche Entera\",\r\n  \"precioUnitarioVenta\": 4500,\r\n  \"presentacion\": \"Litro\",\r\n  \"cantidadPresentacion\": 1,\r\n  \"unidadMedida\": \"Litro\",\r\n  \"fechaExpiracion\": \"2024-12-31\",\r\n  \"codigoCategoria\": \"C001\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/producto/new/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"producto",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"codigoBarras\": \"1\",\r\n  \"nombre\": \"Le\",\r\n  \"precioUnitarioVenta\": 4500\r\n\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/producto/1/edit/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"producto",
+								"1",
+								"edit",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Producto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/producto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Productos con orden de compra",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "GET http://localhost:8080/productos/ordenes-compra\n",
+							"protocol": "GET http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"productos",
+								"ordenes-compra\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar producto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/productos/buscar\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"productos",
+								"buscar\n"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "NewCategoria",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"codigoCategoria\":1,\r\n  \"caracteristicasAlmacenamiento\": \"Mantener refrigerado a 4°C\",\r\n  \"nombreCategoria\": \"Lácteos\",\r\n  \"descripcion\": \"Productos derivados de la leche, requieren refrigeración.\",\r\n  \"producto\":{\"codigoBarras\":1\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/categorias/new/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"categorias",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Categoria",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \"codigoCategoria\":1\r\n  \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/categorias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sucursal",
+			"item": [
+				{
+					"name": "NewSucursal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"idSucursal\":1,\r\n    \"nombreSucursal\": \"Sucursal Norte\",\r\n    \"tamanioInstalacion\": \"Grande\",\r\n    \"direccion\": \"Calle 123 #45-67\",\r\n    \"telefono\": \"1234567890\",\r\n    \"ciudad\": {\r\n        \"codigoCiudad\": 101\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/sucursales/new/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"sucursales",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sucursal con producto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "GET http://localhost:8080/sucursales/disponibilidad-producto\n",
+							"protocol": "GET http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sucursales",
+								"disponibilidad-producto\n"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orden Compra",
+			"item": [
+				{
+					"name": "NewOrdenCompra",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idSucursal\": 1,\r\n  \"idProveedor\": 1,\r\n  \"fechaEntrega\": \"2024-10-15\",\r\n  \"productos\": [\r\n    {\r\n      \"codigoBarras\": \"1\",\r\n      \"cantidad\": 100,\r\n      \"precioUnitario\": 4200\r\n    },\r\n    {\r\n      \"codigoBarras\": \"2\",\r\n      \"cantidad\": 50,\r\n      \"precioUnitario\": 1800\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/ordenes/new/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"ordenes",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener ordenes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "PUT http://localhost:8080/ordenes/\n",
+							"protocol": "PUT http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ordenes",
+								"\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Orden",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\":1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "PUT http://localhost:8080/ordenes/1/actualizar-estado?nuevoEstado=anulada\n",
+							"protocol": "PUT http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ordenes",
+								"1",
+								"actualizar-estado"
+							],
+							"query": [
+								{
+									"key": "nuevoEstado",
+									"value": "anulada\n"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NewCiudad",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigoCiudad\": 1,\r\n    \"nombreCiudad\": \"Nueva Ciudad\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parranderos/ciudades/new/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parranderos",
+						"ciudades",
+						"new",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NewCliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cedula\": 123456789,\r\n  \"nombreCliente\": \"Juan Perez\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parranderos/clientes/new/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parranderos",
+						"clientes",
+						"new",
+						"save"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
