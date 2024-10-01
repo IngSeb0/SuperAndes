@@ -82,5 +82,26 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                             @Transactional
                             @Query(value = "DELETE FROM producto WHERE codigo_barras = :codigoBarras", nativeQuery = true)
                             void eliminarProducto(@Param("codigoBarras") String codigoBarras);
+                            public interface ProductoOrdenCompraInfo {
+                                String getNombreProducto();
+                                String getCodigoBarras();
+                                String getNombreBodega();
+                                String getNombreSucursal();
+                                String getNombreProveedor();
+                                Integer getCantidadActual();
+                            }
+                        
+                            // Consulta para obtener todos los productos que requieren una nueva orden de compra
+                            @Query(value = "SELECT p.NOMBRE AS nombreProducto, p.CODIGOBARRAS AS codigoBarras, b.NOMBREBODEGA AS nombreBodega, " +
+                                    "s.NOMBRESUCURSAL AS nombreSucursal, pr.NOMBREPROVEEDOR AS nombreProveedor, " +
+                                    "ie.TOTALEXISTENCIAS AS cantidadActual " +
+                                    "FROM PRODUCTO p " +
+                                    "INNER JOIN INFOEXTRABODEGA ie ON p.CODIGOBARRAS = ie.CODIGOBARRAS " +
+                                    "INNER JOIN BODEGA b ON ie.IDBODEGA = b.IDBODEGA " +
+                                    "INNER JOIN SUCURSAL s ON b.IDSUCURSAL = s.IDSUCURSAL " +
+                                    "INNER JOIN INFOEXTRAPROVEEDOR ip ON p.CODIGOBARRAS = ip.CODIGOBARRAS " +
+                                    "INNER JOIN PROVEEDOR pr ON ip.NIT = pr.NIT " +
+                                    "WHERE ie.TOTALEXISTENCIAS < ie.MINEXISTENCIAS", nativeQuery = true)
+                            Collection<ProductoOrdenCompraInfo> obtenerProductosParaOrdenDeCompra();
 }
 

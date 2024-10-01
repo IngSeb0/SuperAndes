@@ -48,10 +48,5 @@ public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega
                                  @Param("capacidadAlmacenamiento") Integer capacidadAlmacenamiento,
                                  @Param("nivelMinimo") Float nivelMinimo);
 
-                                 @Query(value = "SELECT * FROM INFOEXTRABODEGA ie " +
-                                 "JOIN BODEGA b ON ie.IDBODEGA = b.IDBODEGA " +
-                                 "JOIN SUCURSAL s ON b.IDSUCURSAL = s.IDSUCURSAL " +
-                                 "WHERE s.IDSUCURSAL = :idSucursal AND b.IDBODEGA = :idBodega", nativeQuery = true)
-                  Collection<InfoExtraBodega> obtenerInventarioPorBodega(@Param("idSucursal") Long idSucursal,
-                                                                         @Param("idBodega") Long idBodega);
+                                
 }
