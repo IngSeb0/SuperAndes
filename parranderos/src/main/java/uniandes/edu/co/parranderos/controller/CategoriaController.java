@@ -44,6 +44,7 @@ public class CategoriaController {
     public ResponseEntity<String> insertarCategoria(@RequestBody Categoria categoria) {
         try {
             categoriaRepository.insertarCategoria(
+                categoria.getCodigoCategoria(),
                     categoria.getCaracteristicasAlmacenamiento(),
                     categoria.getNombreCategoria(),
                     categoria.getDescripcion(),

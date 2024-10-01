@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Producto;
 import uniandes.edu.co.parranderos.repositorio.ProductoRepository;
+import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoCaracteristicasInfo;
+import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoOrdenCompraInfo;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.Date;
 import java.util.Collection;
 
 @RestController
@@ -78,19 +82,30 @@ public class ProductoController {
             return new ResponseEntity<>("Error al eliminar el producto", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/filtrar")
-    public ResponseEntity<?> filtrarProductos(
+    @GetMapping("/ordenes-compra")
+    public ResponseEntity<Collection<ProductoOrdenCompraInfo>> obtenerProductosParaOrdenDeCompra() {
+        try {
+            Collection<ProductoOrdenCompraInfo> productosOrdenCompra = productoRepository.obtenerProductosParaOrdenDeCompra();
+            return new ResponseEntity<>(productosOrdenCompra, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+      @GetMapping("/buscar")
+    public ResponseEntity<Collection<ProductoCaracteristicasInfo>> obtenerProductosPorCaracteristicas(
             @RequestParam(required = false) Float precioMin,
             @RequestParam(required = false) Float precioMax,
-            @RequestParam(required = false) String fechaVencimiento,
+            @RequestParam(required = false) Date fechaExpiracion,
             @RequestParam(required = false) Long idSucursal,
             @RequestParam(required = false) Long idCategoria) {
 
         try {
-            Collection<Producto> productosFiltrados = productoRepository.filtrarProductos(precioMin, precioMax, fechaVencimiento, idSucursal, idCategoria);
-            return new ResponseEntity<>(productosFiltrados, HttpStatus.OK);
+            Collection<ProductoCaracteristicasInfo> productos = productoRepository.obtenerProductosPorCaracteristicas(
+                    precioMin, precioMax, fechaExpiracion, idSucursal, idCategoria);
+
+            return new ResponseEntity<>(productos, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al filtrar productos: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

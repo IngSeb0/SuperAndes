@@ -17,11 +17,13 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     @Query(value = "SELECT * FROM CATEGORIA WHERE CODIGOCATEGORIA = :id", nativeQuery = true)
     Categoria obtenerCategoriaPorId(@Param("id") Long id);
 
-    // Insertar una nueva categoría con relación al producto
+    // Insertar una nueva categoría con un código de categoría específico
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO CATEGORIA (CARACTERISTICASALMACENAMIENTO, NOMBRECATEGORIA, DESCRIPCION, CODIGOBARRAS) VALUES (:caracteristicasAlmacenamiento, :nombreCategoria, :descripcion, :codigoBarras)", nativeQuery = true)
-    void insertarCategoria(@Param("caracteristicasAlmacenamiento") String caracteristicasAlmacenamiento,
+    @Query(value = "INSERT INTO CATEGORIA (CODIGOCATEGORIA, CARACTERISTICASALMACENAMIENTO, NOMBRECATEGORIA, DESCRIPCION, CODIGOBARRAS) " +
+            "VALUES (:codigoCategoria, :caracteristicasAlmacenamiento, :nombreCategoria, :descripcion, :codigoBarras)", nativeQuery = true)
+    void insertarCategoria(@Param("codigoCategoria") Long codigoCategoria,
+                           @Param("caracteristicasAlmacenamiento") String caracteristicasAlmacenamiento,
                            @Param("nombreCategoria") String nombreCategoria,
                            @Param("descripcion") String descripcion,
                            @Param("codigoBarras") String codigoBarras);
@@ -29,7 +31,8 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     // Actualizar una categoría existente
     @Modifying
     @Transactional
-    @Query(value = "UPDATE CATEGORIA SET CARACTERISTICASALMACENAMIENTO = :caracteristicasAlmacenamiento, NOMBRECATEGORIA = :nombreCategoria, DESCRIPCION = :descripcion, CODIGOBARRAS = :codigoBarras WHERE CODIGOCATEGORIA = :id", nativeQuery = true)
+    @Query(value = "UPDATE CATEGORIA SET CARACTERISTICASALMACENAMIENTO = :caracteristicasAlmacenamiento, NOMBRECATEGORIA = :nombreCategoria, " +
+            "DESCRIPCION = :descripcion, CODIGOBARRAS = :codigoBarras WHERE CODIGOCATEGORIA = :id", nativeQuery = true)
     void actualizarCategoria(@Param("id") Long id,
                              @Param("caracteristicasAlmacenamiento") String caracteristicasAlmacenamiento,
                              @Param("nombreCategoria") String nombreCategoria,

@@ -44,23 +44,43 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                             @Param("nombre") String nombre,
                             @Param("precioUnitarioVenta") Float precioUnitarioVenta);
 
-    // Eliminar un producto por su código de barras
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM producto WHERE codigo_barras = :codigoBarras", nativeQuery = true)
-    void eliminarProducto(@Param("codigoBarras") String codigoBarras);
-    @Query(value = "SELECT p.* FROM PRODUCTO p " +
-    "LEFT JOIN SUCURSAL s ON p.IDSUCURSAL = s.IDSUCURSAL " +
-    "LEFT JOIN CATEGORIA c ON p.IDCATEGORIA = c.IDCATEGORIA " +
-    "WHERE (:precioMin IS NULL OR p.precioUnitarioVenta >= :precioMin) " +
-    "AND (:precioMax IS NULL OR p.precioUnitarioVenta <= :precioMax) " +
-    "AND (:fechaVencimiento IS NULL OR p.fechaExpiracion <= :fechaVencimiento) " +
-    "AND (:idSucursal IS NULL OR s.IDSUCURSAL = :idSucursal) " +
-    "AND (:idCategoria IS NULL OR c.IDCATEGORIA = :idCategoria)", nativeQuery = true)
-Collection<Producto> filtrarProductos(@Param("precioMin") Float precioMin,
-                           @Param("precioMax") Float precioMax,
-                           @Param("fechaVencimiento") String fechaVencimiento,
-                           @Param("idSucursal") Long idSucursal,
-                           @Param("idCategoria") Long idCategoria);
+                            public interface ProductoCaracteristicasInfo {
+                                String getCodigoBarras();
+                                String getNombre();
+                                Float getPrecioUnitarioVenta();
+                                String getPresentacion();
+                                Integer getCantidadPresentacion();
+                                String getUnidadMedida();
+                                Date getFechaExpiracion();
+                                String getCategoria();
+                                String getSucursal();
+                            }
+                        
+                            // Consulta para obtener productos por características específicas
+                            @Query(value = "SELECT p.CODIGOBARRAS AS codigoBarras, p.NOMBRE AS nombre, p.PRECIOUNITARIOVENTA AS precioUnitarioVenta, " +
+                                    "p.PRESENTACION AS presentacion, p.CANTIDADPRESENTACION AS cantidadPresentacion, " +
+                                    "p.UNIDADMEDIDA AS unidadMedida, p.FECHAEXPIRACION AS fechaExpiracion, " +
+                                    "c.NOMBRECATEGORIA AS categoria, s.NOMBRESUCURSAL AS sucursal " +
+                                    "FROM PRODUCTO p " +
+                                    "INNER JOIN CATEGORIA c ON p.CODIGOBARRAS = c.CODIGOBARRAS " +
+                                    "INNER JOIN INFOEXTRABODEGA ie ON p.CODIGOBARRAS = ie.CODIGOBARRAS " +
+                                    "INNER JOIN BODEGA b ON ie.IDBODEGA = b.IDBODEGA " +
+                                    "INNER JOIN SUCURSAL s ON b.IDSUCURSAL = s.IDSUCURSAL " +
+                                    "WHERE (:precioMin IS NULL OR p.PRECIOUNITARIOVENTA >= :precioMin) " +
+                                    "AND (:precioMax IS NULL OR p.PRECIOUNITARIOVENTA <= :precioMax) " +
+                                    "AND (:fechaExpiracion IS NULL OR p.FECHAEXPIRACION <= :fechaExpiracion) " +
+                                    "AND (:idSucursal IS NULL OR s.IDSUCURSAL = :idSucursal) " +
+                                    "AND (:idCategoria IS NULL OR c.CODIGOCATEGORIA = :idCategoria)", nativeQuery = true)
+                            Collection<ProductoCaracteristicasInfo> obtenerProductosPorCaracteristicas(
+                                    @Param("precioMin") Float precioMin,
+                                    @Param("precioMax") Float precioMax,
+                                    @Param("fechaExpiracion") Date fechaExpiracion,
+                                    @Param("idSucursal") Long idSucursal,
+                                    @Param("idCategoria") Long idCategoria
+                            );
+                            @Modifying
+                            @Transactional
+                            @Query(value = "DELETE FROM producto WHERE codigo_barras = :codigoBarras", nativeQuery = true)
+                            void eliminarProducto(@Param("codigoBarras") String codigoBarras);
 }
 

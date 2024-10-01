@@ -11,43 +11,41 @@ import java.util.Collection;
 
 public interface SucursalRepository extends JpaRepository<Sucursal, Long> {
 
-    // Obtener todas las sucursales
     @Query(value = "SELECT * FROM SUCURSAL", nativeQuery = true)
     Collection<Sucursal> obtenerTodasLasSucursales();
 
-    // Obtener sucursal por ID
     @Query(value = "SELECT * FROM SUCURSAL WHERE IDSUCURSAL = :id", nativeQuery = true)
     Sucursal obtenerSucursalPorId(@Param("id") Long id);
 
+    // Insertar una nueva sucursal con relación a la ciudad
     @Modifying
-@Transactional
-@Query(value = "INSERT INTO SUCURSAL (IDSUCURSAL, NOMBRESUCURSAL, TAMANIOINSTALACION, DIRECCION, TELEFONO, codigoCiudad) " +
-               "VALUES (:idSucursal, :nombre, :tamanioInstalacion, :direccion, :telefono, :codigoCiudad)", nativeQuery = true)
-void insertarSucursal(@Param("idSucursal") Long idSucursal, @Param("nombre") String nombre,
-                      @Param("tamanioInstalacion") String tamanioInstalacion, @Param("direccion") String direccion,
-                      @Param("telefono") String telefono, @Param("codigoCiudad") Long codigoCiudad);
+    @Transactional
+    @Query(value = "INSERT INTO SUCURSAL (IDSUCURSAL, NOMBRESUCURSAL, TAMANIOINSTALACION, DIRECCION, TELEFONO, CODIGOCIUDAD) " +
+                   "VALUES (:idSucursal, :nombreSucursal, :tamanioInstalacion, :direccion, :telefono, :codigoCiudad)", nativeQuery = true)
+    void insertarSucursal(@Param("idSucursal") Long idSucursal,
+                          @Param("nombreSucursal") String nombreSucursal,
+                          @Param("tamanioInstalacion") String tamanioInstalacion,
+                          @Param("direccion") String direccion,
+                          @Param("telefono") String telefono,
+                          @Param("codigoCiudad") Long codigoCiudad);
+    
 
     // Actualizar una sucursal existente
     @Modifying
     @Transactional
-    @Query(value = "UPDATE SUCURSAL SET NOMBRESUCURSAL = :nombre, TAMANIOINSTALACION = :tamanioInstalacion, " +
-                   "DIRECCION = :direccion, TELEFONO = :telefono, codigoCiudad = :codigoCiudad " +
-                   "WHERE IDSUCURSAL = :id", nativeQuery = true)
-    void actualizarSucursal(@Param("id") Long id, @Param("nombre") String nombre, @Param("tamanioInstalacion") String tamanioInstalacion,
-                            @Param("direccion") String direccion, @Param("telefono") String telefono,
+    @Query(value = "UPDATE SUCURSAL SET NOMBRESUCURSAL = :nombreSucursal, TAMANIOINSTALACION = :tamanioInstalacion, " +
+            "DIRECCION = :direccion, TELEFONO = :telefono, CODIGOCIUDAD = :codigoCiudad WHERE IDSUCURSAL = :id", nativeQuery = true)
+    void actualizarSucursal(@Param("id") Long id,
+                            @Param("nombreSucursal") String nombreSucursal,
+                            @Param("tamanioInstalacion") String tamanioInstalacion,
+                            @Param("direccion") String direccion,
+                            @Param("telefono") String telefono,
                             @Param("codigoCiudad") Long codigoCiudad);
-
-    // Eliminar una sucursal por ID
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM SUCURSAL WHERE IDSUCURSAL = :id", nativeQuery = true)
-    void eliminarSucursal(@Param("id") Long id);
-
-    // Obtener sucursales que tengan un producto específico por código de barras
+                                // Obtener sucursales que tengan un producto específico por código de barras
     @Query(value = "SELECT s.* FROM SUCURSAL s " +
-                   "JOIN BODEGA b ON s.IDSUCURSAL = b.IDSUCURSAL " +
-                   "JOIN INFOEXTRABODEGA ie ON b.IDBODEGA = ie.IDBODEGA " +
-                   "JOIN PRODUCTO p ON ie.IDPRODUCTO = p.IDPRODUCTO " +
-                   "WHERE p.CODIGOBARRAS = :codigoBarras", nativeQuery = true)
-    Collection<Sucursal> obtenerSucursalesConProducto(@Param("codigoBarras") String codigoBarras);
+    "INNER JOIN BODEGA b ON s.IDSUCURSAL = b.IDSUCURSAL " +
+    "INNER JOIN INFOEXTRABODEGA ie ON b.IDBODEGA = ie.IDBODEGA " +
+    "INNER JOIN PRODUCTO p ON ie.IDPRODUCTO = p.IDPRODUCTO " +
+    "WHERE p.CODIGOBARRAS = :codigoBarras", nativeQuery = true)
+Collection<Sucursal> obtenerSucursalesConProducto(@Param("codigoBarras") String codigoBarras);
 }

@@ -12,7 +12,11 @@ import java.util.Collection;
 
 
 public interface InfoExtraBodegaRepository extends JpaRepository<InfoExtraBodega, InfoExtraBodegaPk> {
-
+    public interface IndiceOcupacionBodegaInfo {
+        String getNombreBodega();
+        double getPorcentajeOcupacion();
+    }
+    
     @Query(value = "SELECT * FROM infoextrabodega", nativeQuery = true)
     Collection<InfoExtraBodega> obtenerTodaLaInfoExtraBodega();
 

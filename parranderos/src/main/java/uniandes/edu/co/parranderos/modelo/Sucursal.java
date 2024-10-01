@@ -1,53 +1,47 @@
 package uniandes.edu.co.parranderos.modelo;
 
-import java.io.Serializable;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SUCURSAL")
-public class Sucursal implements Serializable {
+public class Sucursal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long IDSUCURSAL;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long idSucursal;
 
     private String nombreSucursal;
-
-    // Modificado para usar "tamanioInstalacion" en vez de "tamañoBloque"
-    private String tamanioInstalacion; 
-
+    private String tamanioInstalacion;
     private String direccion;
-
     private String telefono;
 
+    // Relación ManyToOne con Ciudad a través del código de ciudad
+    @ManyToOne
     @JoinColumn(name = "CODIGOCIUDAD", referencedColumnName = "CODIGOCIUDAD")
-    Ciudad CODIGOCIUDAD;
+    private Ciudad ciudad;
 
     public Sucursal() {}
 
-    public Sucursal(String nombreSucursal, String tamanioInstalacion, String direccion, String telefono, Ciudad CODIGOCIUDAD) {
+    public Sucursal(String nombreSucursal, String tamanioInstalacion, String direccion, String telefono, Ciudad ciudad) {
         this.nombreSucursal = nombreSucursal;
         this.tamanioInstalacion = tamanioInstalacion;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.CODIGOCIUDAD = CODIGOCIUDAD;
+        this.ciudad = ciudad;
     }
 
     public Long getIdSucursal() {
-        return IDSUCURSAL;
+        return idSucursal;
     }
 
-    public void setIdSucursal(Long IDSUCURSAL) {
-        this.IDSUCURSAL = IDSUCURSAL;
-    }
-
-    public Ciudad getCodigoCiudad() {
-        return CODIGOCIUDAD;
-    }
-
-    public void setCodigoCiudad(Ciudad CODIGOCIUDAD) {
-        this.CODIGOCIUDAD = CODIGOCIUDAD;
+    public void setIdSucursal(Long idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     public String getNombreSucursal() {
@@ -80,5 +74,25 @@ public class Sucursal implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    @Override
+    public String toString() {
+        return "Sucursal{" +
+                "idSucursal=" + idSucursal +
+                ", nombreSucursal='" + nombreSucursal + '\'' +
+                ", tamanioInstalacion='" + tamanioInstalacion + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", ciudad=" + ciudad.getCodigoCiudad() +
+                '}';
     }
 }

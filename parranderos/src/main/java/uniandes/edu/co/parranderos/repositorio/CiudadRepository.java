@@ -22,14 +22,14 @@ public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
     // Insertar una nueva ciudad
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO CIUDAD (CODIGOCIUDAD, NOMBRECIUDAD) VALUES (:codigoCiudad, :nombreCiudad)", nativeQuery = true)
+    @Query(value = "INSERT INTO CIUDAD (codigoCiudad, NOMBRECIUDAD) VALUES (:codigoCiudad, :nombreCiudad)", nativeQuery = true)
     void insertarCiudad(@Param("codigoCiudad") Long codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
     
 
     // Actualizar una ciudad por ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE CIUDAD SET NOMBRECIUDAD = :nombreCiudad WHERE CODIGOCIUDAD = :codigoCiudad", nativeQuery = true)
+    @Query(value = "UPDATE CIUDAD SET NOMBRECIUDAD = :nombreCiudad WHERE codigoCiudad = :codigoCiudad", nativeQuery = true)
     void actualizarCiudad(@Param("codigoCiudad") Long codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
 
     // Eliminar una ciudad por ID

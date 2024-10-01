@@ -1,11 +1,11 @@
 package uniandes.edu.co.parranderos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Sucursal;
 import uniandes.edu.co.parranderos.repositorio.SucursalRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Collection;
 
@@ -20,13 +20,12 @@ public class SucursalController {
     public ResponseEntity<Collection<Sucursal>> obtenerSucursales() {
         try {
             Collection<Sucursal> sucursales = sucursalRepository.obtenerTodasLasSucursales();
-            return new ResponseEntity<>(sucursales, HttpStatus.OK);
+            return ResponseEntity.ok(sucursales);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    // Obtener una sucursal por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Sucursal> obtenerSucursalPorId(@PathVariable("id") Long id) {
         try {
@@ -41,18 +40,16 @@ public class SucursalController {
         }
     }
 
-    // Insertar una nueva sucursal con ciudad
     @PostMapping("/new/save")
     public ResponseEntity<String> insertarSucursal(@RequestBody Sucursal sucursal) {
         try {
             sucursalRepository.insertarSucursal(
-                sucursal.getIdSucursal(),
+                    sucursal.getIdSucursal(),
                     sucursal.getNombreSucursal(),
-
                     sucursal.getTamanioInstalacion(),
                     sucursal.getDireccion(),
                     sucursal.getTelefono(),
-                    sucursal.getCodigoCiudad().getCodigoCiudad()
+                    sucursal.getCiudad().getCodigoCiudad() // Obtener el código de la ciudad
             );
             return new ResponseEntity<>("Sucursal creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -60,18 +57,6 @@ public class SucursalController {
         }
     }
 
-    // Obtener sucursales con un producto específico
-    @GetMapping("/consulta")
-    public ResponseEntity<?> obtenerSucursalesConProducto(@PathVariable String codigoBarras) {
-        try {
-            Collection<Sucursal> sucursales = sucursalRepository.obtenerSucursalesConProducto(codigoBarras);
-            return new ResponseEntity<>(sucursales, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error al obtener sucursales: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Actualizar una sucursal por su ID con ciudad
     @PostMapping("/{id}/edit/save")
     public ResponseEntity<String> actualizarSucursal(@PathVariable("id") Long id, @RequestBody Sucursal sucursal) {
         try {
@@ -81,22 +66,11 @@ public class SucursalController {
                     sucursal.getTamanioInstalacion(),
                     sucursal.getDireccion(),
                     sucursal.getTelefono(),
-                    sucursal.getCodigoCiudad().getCodigoCiudad()
+                    sucursal.getCiudad().getCodigoCiudad() // Actualizar la ciudad
             );
             return new ResponseEntity<>("Sucursal actualizada exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al actualizar la sucursal", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Eliminar una sucursal por su ID
-    @PostMapping("/{id}/delete")
-    public ResponseEntity<String> eliminarSucursal(@PathVariable("id") Long id) {
-        try {
-            sucursalRepository.eliminarSucursal(id);
-            return new ResponseEntity<>("Sucursal eliminada exitosamente", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error al eliminar la sucursal", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
