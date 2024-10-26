@@ -20,7 +20,7 @@ public class Categoria {
     private String nombreCategoria;
     private String descripcion;
 
-    // Relación ManyToOne con Producto a través del código de barras
+
     @ManyToOne
     @JoinColumn(name = "CODIGOBARRAS", referencedColumnName = "CODIGOBARRAS")
     private Producto producto;
@@ -82,7 +82,7 @@ public class Categoria {
                 ", caracteristicasAlmacenamiento='" + caracteristicasAlmacenamiento + '\'' +
                 ", nombreCategoria='" + nombreCategoria + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", producto=" + producto.getCodigoBarras() +
+                ", producto=" + (producto != null ? producto.getCodigoBarras() : "null") +
                 '}';
     }
-}
+}    

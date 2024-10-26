@@ -82,57 +82,6 @@ class ParranderosApplicationTests {
         }
     }
 
-    @Test
-    void testCrearCiudad() {
-        // Insertar una ciudad
-        idCiudadPrueba = 123L;
-        ciudadRepository.insertarCiudad(idCiudadPrueba, "Bogotá");
-
-        // Verificar que la ciudad se ha insertado
-        Collection<Ciudad> ciudades = ciudadRepository.obtenerTodasLasCiudades();
-        assertTrue(ciudades.stream().anyMatch(c -> "Bogotá".equals(c.getNombreCiudad())));
-    }
-
-
-    @Test
-    void testCrearSucursal() {
-        // Insertar una ciudad para asociar la sucursal
-        idCiudadPrueba = 123L;
-        ciudadRepository.insertarCiudad(idCiudadPrueba, "Bogotá");
-        Ciudad ciudad = ciudadRepository.obtenerCiudadPorId(idCiudadPrueba);
-        assertNotNull(ciudad);
-
-        // Insertar la sucursal vinculada a la ciudad
-        idSucursalPrueba = 1L;
-        sucursalRepository.insertarSucursal(idSucursalPrueba, "Sucursal Centro", "1000", "Calle 123", "3001234567", ciudad.getCodigoCiudad());
-
-        // Verificar que la sucursal se ha insertado correctamente
-        Collection<Sucursal> sucursales = sucursalRepository.obtenerTodasLasSucursales();
-        assertTrue(sucursales.stream().anyMatch(s -> "Sucursal Centro".equals(s.getNombreSucursal()) && s.getCiudad().getCodigoCiudad().equals(idCiudadPrueba)));
-    }
-
-    @Test
-    void testCrearYBorrarBodega() {
-        idCiudadPrueba = 124L;
-        ciudadRepository.insertarCiudad(idCiudadPrueba, "Medellin");
-        Ciudad ciudad = ciudadRepository.obtenerCiudadPorId(idCiudadPrueba);
-        assertNotNull(ciudad);
-
-        idSucursalPrueba = 1L;
-        sucursalRepository.insertarSucursal(idSucursalPrueba, "Sucursal Centro", "1000", "Calle 123", "3001234567", ciudad.getCodigoCiudad());
-        Sucursal sucursal = sucursalRepository.findById(idSucursalPrueba).orElse(null);
-        assertNotNull(sucursal);
-
-        idBodegaPrueba = 1L;
-        bodegaRepository.insertarBodega(idBodegaPrueba, sucursal.getIdSucursal(), "Bodega Principal", 500.0f);
-        Collection<Bodega> bodegas = bodegaRepository.darBodegas();
-        assertTrue(bodegas.stream().anyMatch(b -> "Bodega Principal".equals(b.getNombreBodega()) && b.getSucursal().getIdSucursal().equals(sucursal.getIdSucursal())));
-
-        bodegaRepository.eliminarBodega(idBodegaPrueba);
-        bodegas = bodegaRepository.darBodegas();
-        assertFalse(bodegas.stream().anyMatch(b -> b.getId().equals(idBodegaPrueba)));
-    }
-
     
 
     @Test

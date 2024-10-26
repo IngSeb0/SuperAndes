@@ -69,7 +69,7 @@ public class SucursalController {
                     sucursal.getTamanioInstalacion(),
                     sucursal.getDireccion(),
                     sucursal.getTelefono(),
-                    sucursal.getCiudad().getCodigoCiudad() // Obtener el código de la ciudad
+                    sucursal.getCiudad().getCodigoCiudad() 
             );
             return new ResponseEntity<>("Sucursal creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {

@@ -17,24 +17,24 @@ public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
 
     // Obtener una ciudad por ID
     @Query("SELECT c FROM Ciudad c WHERE c.codigoCiudad = :codigoCiudad")
-    Ciudad obtenerCiudadPorId(@Param("codigoCiudad") Long codigoCiudad);
+    Ciudad obtenerCiudadPorId(@Param("codigoCiudad") Integer codigoCiudad);
 
     // Insertar una nueva ciudad
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO CIUDAD (codigoCiudad, NOMBRECIUDAD) VALUES (:codigoCiudad, :nombreCiudad)", nativeQuery = true)
-    void insertarCiudad(@Param("codigoCiudad") Long codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
+    void insertarCiudad(@Param("codigoCiudad") Integer codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
     
 
     // Actualizar una ciudad por ID
     @Modifying
     @Transactional
     @Query(value = "UPDATE CIUDAD SET NOMBRECIUDAD = :nombreCiudad WHERE codigoCiudad = :codigoCiudad", nativeQuery = true)
-    void actualizarCiudad(@Param("codigoCiudad") Long codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
+    void actualizarCiudad(@Param("codigoCiudad") Integer codigoCiudad, @Param("nombreCiudad") String nombreCiudad);
 
-    // Eliminar una ciudad por ID
+    
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM CIUDAD WHERE CODIGOCIUDAD = :codigoCiudad", nativeQuery = true)
-    void eliminarCiudad(@Param("codigoCiudad") Long codigoCiudad);
+    void eliminarCiudad(@Param("codigoCiudad") Integer codigoCiudad);
 }

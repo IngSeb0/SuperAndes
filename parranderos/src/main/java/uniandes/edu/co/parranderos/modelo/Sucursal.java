@@ -13,7 +13,6 @@ import jakarta.persistence.Table;
 public class Sucursal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idSucursal;
 
     private String nombreSucursal;

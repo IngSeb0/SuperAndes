@@ -24,7 +24,7 @@ public class CiudadController {
 
     // Obtener una ciudad por su ID
     @GetMapping("/{id}")
-    public ResponseEntity<Ciudad> obtenerCiudadPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Ciudad> obtenerCiudadPorId(@PathVariable("id") Integer id) {
         Ciudad ciudad = ciudadRepository.obtenerCiudadPorId(id);
         if (ciudad != null) {
             return new ResponseEntity<>(ciudad, HttpStatus.OK);

@@ -26,7 +26,6 @@ public class Producto implements Serializable {
     @JoinColumn(name = "IDESPECIFICACION", referencedColumnName = "IDESPECIFICACION")
     private EspecificacionEmpacado idEspecificacion;
 
-    // Constructor por defecto necesario para JPA/Hibernate
     public Producto() {
     }
 

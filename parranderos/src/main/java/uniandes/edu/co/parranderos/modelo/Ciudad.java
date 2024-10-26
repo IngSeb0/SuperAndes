@@ -9,9 +9,9 @@ import jakarta.persistence.*;
 public class Ciudad implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+  
 
-    private Long codigoCiudad;
+    private Integer codigoCiudad;
 
     private String nombreCiudad;
 
@@ -21,11 +21,11 @@ public class Ciudad implements Serializable {
         this.nombreCiudad = nombreCiudad;
     }
 
-    public Long getCodigoCiudad() {
+    public Integer getCodigoCiudad() {
         return codigoCiudad;
     }
 
-    public void setCodigoCiudad(Long codigoCiudad) {
+    public void setCodigoCiudad(Integer codigoCiudad) {
         this.codigoCiudad = codigoCiudad;
     }
 
