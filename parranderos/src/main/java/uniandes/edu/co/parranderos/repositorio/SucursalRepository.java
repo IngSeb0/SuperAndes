@@ -20,10 +20,10 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Long> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO SUCURSAL (IDSUCURSAL, NOMBRESUCURSAL, TAMANIOINSTALACION, DIRECCION, TELEFONO, CODIGOCIUDAD) " +
-           "VALUES (:idSucursal, :nombreSucursal, :tamanioInstalacion, :direccion, :telefono, :codigoCiudad)", nativeQuery = true)
+                   "VALUES (:idSucursal, :nombreSucursal, :tamanioInstalacion, :direccion, :telefono, :codigoCiudad)", nativeQuery = true)
     void insertarSucursal(@Param("idSucursal") Long idSucursal,
                           @Param("nombreSucursal") String nombreSucursal,
-                          @Param("tamanioInstalacion") String tamanioInstalacion,
+                          @Param("tamanioInstalacion") Float tamanioInstalacion,
                           @Param("direccion") String direccion,
                           @Param("telefono") String telefono,
                           @Param("codigoCiudad") Integer codigoCiudad);
@@ -34,7 +34,7 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Long> {
             "DIRECCION = :direccion, TELEFONO = :telefono, CODIGOCIUDAD = :codigoCiudad WHERE IDSUCURSAL = :id", nativeQuery = true)
     void actualizarSucursal(@Param("id") Long id,
                             @Param("nombreSucursal") String nombreSucursal,
-                            @Param("tamanioInstalacion") String tamanioInstalacion,
+                            @Param("tamanioInstalacion") Float tamanioInstalacion,
                             @Param("direccion") String direccion,
                             @Param("telefono") String telefono,
                             @Param("codigoCiudad") Integer codigoCiudad);

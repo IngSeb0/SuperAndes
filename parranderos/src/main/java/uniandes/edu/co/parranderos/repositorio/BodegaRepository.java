@@ -24,14 +24,16 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
         String getNombreBodega();
         double getPorcentajeOcupacion();
     }
-    
-    // Insertar una nueva bodega
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO BODEGA (IDBODEGA, IDSUCURSAL, NOMBREBODEGA, TAMANIOBODEGA) VALUES (:idBodega, :idSucursal, :nombre, :tamano)", nativeQuery = true)
-    void insertarBodega(@Param("idBodega") Long idBodega, @Param("idSucursal") Long idSucursal, @Param("nombre") String nombreBodega, @Param("tamano") Float tamanioBodega);
+    @Query(value = "INSERT INTO BODEGA (IDBODEGA, IDSUCURSAL, NOMBREBODEGA, TAMANIOBODEGA) " +
+                   "VALUES (:idBodega, :idSucursal, :nombre, :tamano)", nativeQuery = true)
+    void insertarBodega(@Param("idBodega") Long idBodega, 
+                        @Param("idSucursal") Long idSucursal, 
+                        @Param("nombre") String nombreBodega, 
+                        @Param("tamano") Float tamanioBodega);
 
-    // Eliminar una bodega por IDBODEGA
+                
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM BODEGA WHERE IDBODEGA = :idBodega", nativeQuery = true)

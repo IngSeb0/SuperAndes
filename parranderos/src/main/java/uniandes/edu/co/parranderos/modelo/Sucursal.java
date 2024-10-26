@@ -16,7 +16,7 @@ public class Sucursal {
     private Long idSucursal;
 
     private String nombreSucursal;
-    private String tamanioInstalacion;
+    private Float tamanioInstalacion;
     private String direccion;
     private String telefono;
 
@@ -27,7 +27,7 @@ public class Sucursal {
 
     public Sucursal() {}
 
-    public Sucursal(String nombreSucursal, String tamanioInstalacion, String direccion, String telefono, Ciudad ciudad) {
+    public Sucursal(String nombreSucursal, Float tamanioInstalacion, String direccion, String telefono, Ciudad ciudad) {
         this.nombreSucursal = nombreSucursal;
         this.tamanioInstalacion = tamanioInstalacion;
         this.direccion = direccion;
@@ -51,11 +51,11 @@ public class Sucursal {
         this.nombreSucursal = nombreSucursal;
     }
 
-    public String getTamanioInstalacion() {
+    public Float getTamanioInstalacion() {
         return tamanioInstalacion;
     }
 
-    public void setTamanioInstalacion(String tamanioInstalacion) {
+    public void setTamanioInstalacion(Float tamanioInstalacion) {
         this.tamanioInstalacion = tamanioInstalacion;
     }
 

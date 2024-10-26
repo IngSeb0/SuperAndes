@@ -63,20 +63,30 @@ public class SucursalController {
     @PostMapping("/new/save")
     public ResponseEntity<String> insertarSucursal(@RequestBody Sucursal sucursal) {
         try {
+            // Verificar si la ciudad es válida
+            if (sucursal.getCiudad() == null || sucursal.getCiudad().getCodigoCiudad() == null) {
+                return new ResponseEntity<>("Código de ciudad inválido", HttpStatus.BAD_REQUEST);
+            }
+    
+            // Convertir a int explícitamente
+            int codigoCiudad = sucursal.getCiudad().getCodigoCiudad().intValue();
+    
             sucursalRepository.insertarSucursal(
-                    sucursal.getIdSucursal(),
-                    sucursal.getNombreSucursal(),
-                    sucursal.getTamanioInstalacion(),
-                    sucursal.getDireccion(),
-                    sucursal.getTelefono(),
-                    sucursal.getCiudad().getCodigoCiudad() 
+                sucursal.getIdSucursal(),
+                sucursal.getNombreSucursal(),
+                sucursal.getTamanioInstalacion(),
+                sucursal.getDireccion(),
+                sucursal.getTelefono(),
+                codigoCiudad
             );
+    
             return new ResponseEntity<>("Sucursal creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>("Error al crear la sucursal", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @PostMapping("/{id}/edit/save")
     public ResponseEntity<String> actualizarSucursal(@PathVariable("id") Long id, @RequestBody Sucursal sucursal) {
         try {

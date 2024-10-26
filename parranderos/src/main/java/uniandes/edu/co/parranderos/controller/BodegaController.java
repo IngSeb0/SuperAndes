@@ -53,28 +53,39 @@ public class BodegaController {
         }
     }
 
-    // Crear una nueva bodega
     @PostMapping("/new/save")
-    public ResponseEntity<?> crearBodega(@RequestBody Bodega bodega) {
+    public ResponseEntity<String> crearBodega(@RequestBody Bodega bodega) {
         try {
-            Long idBodega = bodega.getId(); // Tomar el IDBODEGA
-            Long sucursalId = bodega.getSucursal().getIdSucursal();
+            // Verificar si la sucursal asociada es válida
+            if (bodega.getSucursal() == null || bodega.getSucursal().getIdSucursal() == null) {
+                return new ResponseEntity<>("ID de sucursal inválido", HttpStatus.BAD_REQUEST);
+            }
 
-            bodegaRepository.insertarBodega(idBodega, sucursalId, bodega.getNombreBodega(), bodega.getTamanioBodega());
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            // Obtener los datos de la bodega y la sucursal
+            Long idBodega = bodega.getId();
+            Long idSucursal = bodega.getSucursal().getIdSucursal();
+            String nombreBodega = bodega.getNombreBodega();
+            Float tamanioBodega = bodega.getTamanioBodega();
+
+            // Llamar al repositorio para insertar la bodega
+            bodegaRepository.insertarBodega(idBodega, idSucursal, nombreBodega, tamanioBodega);
+
+            return new ResponseEntity<>("Bodega creada exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la bodega");
+            e.printStackTrace();
+            return new ResponseEntity<>("Error al crear la bodega", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Eliminar una bodega por IDBODEGA
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> eliminarBodega(@RequestParam Long idBodega) {
+
+    @GetMapping("/{id}/delete")
+    public ResponseEntity<?> eliminarBodega(@PathVariable Long id) {
         try {
-            bodegaRepository.eliminarBodega(idBodega);
+            bodegaRepository.eliminarBodega(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la bodega");
         }
     }
+    
 }

@@ -14,7 +14,7 @@
     @Table(name = "BODEGA")
     public class Bodega implements Serializable {
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+      
         private Long IDBODEGA;
         @ManyToOne
         @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
