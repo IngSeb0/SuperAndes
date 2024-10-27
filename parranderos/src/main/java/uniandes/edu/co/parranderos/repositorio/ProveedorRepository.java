@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
 
-    // Obtener todos los proveedores
+
     @Query(value = "SELECT * FROM PROVEEDOR", nativeQuery = true)
     List<Proveedor> obtenerTodosLosProveedores();
 

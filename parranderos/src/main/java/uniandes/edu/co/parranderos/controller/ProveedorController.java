@@ -15,7 +15,6 @@ public class ProveedorController {
     @Autowired
     private ProveedorRepository proveedorRepository;
 
-    // Obtener todos los proveedores
     @GetMapping
     public Collection<Proveedor> obtenerProveedores() {
         return proveedorRepository.obtenerTodosLosProveedores();

@@ -1,5 +1,5 @@
 package uniandes.edu.co.parranderos.controller;
-
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,17 +7,18 @@ import uniandes.edu.co.parranderos.modelo.OrdenCompra;
 import uniandes.edu.co.parranderos.repositorio.OrdenCompraRepository;
 
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 @RestController
-@RequestMapping("/ordenes-compra")
+@RequestMapping("/ordenes")
 public class OrdenCompraController {
 
     @Autowired
     private OrdenCompraRepository ordenCompraRepository;
 
-    // Obtener todas las órdenes de compra
+    
     @GetMapping
-    public List<OrdenCompra> obtenerTodasLasOrdenes() {
+    public Collection<OrdenCompra> obtenerTodasLasOrdenes() {
         return ordenCompraRepository.obtenerTodasLasOrdenes();
     }
 
@@ -34,40 +35,46 @@ public class OrdenCompraController {
 
     // Obtener órdenes de compra por NIT del proveedor
     @GetMapping("/proveedor/{nit}")
-    public List<OrdenCompra> obtenerOrdenesPorProveedor(@PathVariable String nit) {
+    public Collection<OrdenCompra> obtenerOrdenesPorProveedor(@PathVariable String nit) {
         return ordenCompraRepository.obtenerOrdenesPorProveedor(nit);
     }
 
     // Insertar una nueva orden de compra
-    @PostMapping
-    public ResponseEntity<String> insertarOrden(@RequestBody OrdenCompra ordenCompra) {
-        try {
-            ordenCompraRepository.insertarOrden(
-                    ordenCompra.getFechaCreacion().toString(),
-                    ordenCompra.getEstado(),
-                    ordenCompra.getFechaEntrega().toString(),
-                    ordenCompra.getSucursalId().getIdSucursal(),
-                    ordenCompra.getProveedor().getNit(),
-                    ordenCompra.getProducto().getCodigoBarras()
-            );
-            return ResponseEntity.ok("Orden de compra creada exitosamente");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al crear la orden de compra");
-        }
+   @PostMapping("/new/save")
+public ResponseEntity<String> insertarOrden(@RequestBody OrdenCompra ordenCompra) {
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        ordenCompraRepository.insertarOrden(
+                ordenCompra.getId(),
+                dateFormat.format(ordenCompra.getFechaCreacion()),  // Formato correcto de fecha
+                ordenCompra.getEstado(),
+                dateFormat.format(ordenCompra.getFechaEntrega()),   // Formato correcto de fecha
+                ordenCompra.getSucursalId().getIdSucursal(),
+                ordenCompra.getProducto().getCodigoBarras(),
+                ordenCompra.getProveedor().getNit()
+        );
+
+        return ResponseEntity.ok("Orden de compra creada exitosamente");
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(500).body("Error al crear la orden de compra");
     }
+}
 
     // Actualizar una orden de compra por su ID
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarOrden(@PathVariable Long id, @RequestBody OrdenCompra ordenCompra) {
         try {
             ordenCompraRepository.actualizarOrden(
-                    id,
+                    ordenCompra.getId(),
                     ordenCompra.getFechaCreacion().toString(),
                     ordenCompra.getEstado(),
                     ordenCompra.getFechaEntrega().toString(),
                     ordenCompra.getSucursalId().getIdSucursal(),
-                    ordenCompra.getProveedor().getNit(),
-                    ordenCompra.getProducto().getCodigoBarras()
+                    ordenCompra.getProducto().getCodigoBarras(),
+                    ordenCompra.getProveedor().getNit()
+                    
             );
             return ResponseEntity.ok("Orden de compra actualizada exitosamente");
         } catch (Exception e) {

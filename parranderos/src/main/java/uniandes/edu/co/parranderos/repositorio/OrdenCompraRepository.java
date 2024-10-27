@@ -6,36 +6,39 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.OrdenCompra;
+import java.util.Collection;
 
-import java.util.List;
 
 public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Long> {
 
-    // Obtener todas las órdenes de compra
+    
     @Query(value = "SELECT * FROM ORDENCOMPRA", nativeQuery = true)
-    List<OrdenCompra> obtenerTodasLasOrdenes();
+    Collection<OrdenCompra> obtenerTodasLasOrdenes();
 
     // Obtener una orden de compra por su ID
     @Query(value = "SELECT * FROM ORDENCOMPRA WHERE IDORDEN = :id", nativeQuery = true)
     OrdenCompra obtenerOrdenPorId(@Param("id") Long id);
 
-    // Obtener todas las órdenes de compra por NIT de Proveedor
+ 
     @Query(value = "SELECT * FROM ORDENCOMPRA WHERE NIT = :nit", nativeQuery = true)
-    List<OrdenCompra> obtenerOrdenesPorProveedor(@Param("nit") String nit);
+    Collection<OrdenCompra> obtenerOrdenesPorProveedor(@Param("nit") String nit);
 
     // Insertar una nueva orden de compra
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO ORDENCOMPRA (FECHACREACION, ESTADO, FECHAENTREGA, IDSUCURSAL, NIT, CODIGOBARRAS) " +
-            "VALUES (:fechaCreacion, :estado, :fechaEntrega, :sucursalId, :nit, :codigoBarras)", nativeQuery = true)
-    void insertarOrden(@Param("fechaCreacion") String fechaCreacion,
+    @Query(value = "INSERT INTO ORDENCOMPRA (IDORDEN, FECHACREACION, ESTADO, FECHAENTREGA, IDSUCURSAL, NIT, CODIGOBARRAS) " +
+                   "VALUES (:idOrden, TO_DATE(:fechaCreacion, 'YYYY-MM-DD HH24:MI:SS'), :estado, " +
+                   "TO_DATE(:fechaEntrega, 'YYYY-MM-DD HH24:MI:SS'), :sucursalId, :nit, :codigoBarras)", 
+            nativeQuery = true)
+    void insertarOrden(@Param("idOrden") Long idOrden,
+                       @Param("fechaCreacion") String fechaCreacion,
                        @Param("estado") String estado,
                        @Param("fechaEntrega") String fechaEntrega,
                        @Param("sucursalId") Long sucursalId,
-                       @Param("nit") Long nit,
-                       @Param("codigoBarras") String codigoBarras);
+                       @Param("codigoBarras") String codigoBarras,
+                       @Param("nit") Long nit);
+    
 
-    // Actualizar una orden de compra por su ID
     @Modifying
     @Transactional
     @Query(value = "UPDATE ORDENCOMPRA SET FECHACREACION = :fechaCreacion, ESTADO = :estado, " +
@@ -46,10 +49,9 @@ public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Long> 
                          @Param("estado") String estado,
                          @Param("fechaEntrega") String fechaEntrega,
                          @Param("sucursalId") Long sucursalId,
-                         @Param("nit") Long nit,
-                         @Param("codigoBarras") String codigoBarras);
+                         
+                         @Param("codigoBarras") String codigoBarras, @Param("nit") Long nit);
 
-    // Eliminar una orden de compra por su ID
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM ORDENCOMPRA WHERE IDORDEN = :id", nativeQuery = true)

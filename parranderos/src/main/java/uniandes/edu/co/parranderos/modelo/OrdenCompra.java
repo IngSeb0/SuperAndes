@@ -12,11 +12,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "ORDENCOMPRA") // Asegúrate de que este sea el nombre correcto en tu base de datos
+@Table(name = "ORDENCOMPRA") 
 public class OrdenCompra implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long IDORDEN;
 
     private Date fechaCreacion;

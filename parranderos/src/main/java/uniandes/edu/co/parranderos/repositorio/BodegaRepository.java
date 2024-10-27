@@ -34,10 +34,10 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
                         @Param("tamano") Float tamanioBodega);
 
                 
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM BODEGA WHERE IDBODEGA = :idBodega", nativeQuery = true)
-    void eliminarBodega(@Param("idBodega") Long idBodega);
+                        @Modifying
+                        @Transactional
+                        @Query(value = "DELETE FROM BODEGA WHERE IDBODEGA = :id", nativeQuery = true)
+                        void eliminarBodega(@Param("id") Long id);
 
     @Query(value = "SELECT p.NOMBRE AS nombreProducto, " +
                    "ie.TOTALEXISTENCIAS AS cantidadActual, " +

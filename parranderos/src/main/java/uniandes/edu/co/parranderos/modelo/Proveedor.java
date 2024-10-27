@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
     import jakarta.persistence.Table;
 
     @Entity
-    @Table(name="Proveedores")
+    @Table(name="Proveedor")
     public class Proveedor implements Serializable{
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

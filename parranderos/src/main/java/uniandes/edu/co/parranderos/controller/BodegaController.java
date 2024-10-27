@@ -18,7 +18,7 @@ public class BodegaController {
     @Autowired
     private BodegaRepository bodegaRepository;
 
-    // Obtener todas las bodegas
+
     @GetMapping
     public ResponseEntity<Collection<Bodega>> obtenerBodegas() {
         try {
@@ -77,13 +77,13 @@ public class BodegaController {
         }
     }
 
-
-    @GetMapping("/{id}/delete")
-    public ResponseEntity<?> eliminarBodega(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarBodega(@PathVariable("id") Long id) {
         try {
             bodegaRepository.eliminarBodega(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.ok("Bodega eliminada exitosamente");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la bodega");
         }
     }
