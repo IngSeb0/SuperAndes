@@ -12,6 +12,7 @@ import uniandes.edu.co.parranderos.repositorio.BodegaRepository.IndiceOcupacionB
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/bodegas")
@@ -47,13 +48,24 @@ public class BodegaController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }
-    // Obtener el inventario de productos de una bodega
+   
     @GetMapping("/{idBodega}/inventario")
-    public ResponseEntity<Collection<InventarioBodegaInfo>> obtenerInventarioBodega(@PathVariable("idBodega") Long idBodega) {
+    public ResponseEntity<Collection<Map<String, Object>>> obtenerInventarioBodega(
+            @PathVariable("idBodega") Long idBodega) {
         try {
-            Collection<InventarioBodegaInfo> inventario = bodegaRepository.obtenerInventarioProductosBodega(idBodega);
+
+
+            Collection<Map<String, Object>> inventario = bodegaRepository.obtenerInventarioProductosBodega(idBodega);
+
+
+
+            if (inventario.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
             return new ResponseEntity<>(inventario, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

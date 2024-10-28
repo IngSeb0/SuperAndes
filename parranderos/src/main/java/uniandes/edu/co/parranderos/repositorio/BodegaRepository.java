@@ -9,6 +9,7 @@ import uniandes.edu.co.parranderos.modelo.Bodega;
 import uniandes.edu.co.parranderos.repositorio.InfoExtraBodegaRepository.IndiceOcupacionBodegaInfo;
 
 import java.util.Collection;
+import java.util.Map;
 
 public interface BodegaRepository extends JpaRepository<Bodega, Long> {
 
@@ -39,17 +40,16 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
                         @Query(value = "DELETE FROM BODEGA WHERE IDBODEGA = :id", nativeQuery = true)
                         void eliminarBodega(@Param("id") Long id);
 
-    @Query(value = "SELECT p.NOMBRE AS nombreProducto, " +
-                   "ie.TOTALEXISTENCIAS AS cantidadActual, " +
-                   "ie.CANTIDADMINIMA AS cantidadMinima, " +
-                   "AVG(ie.COSTOUNITARIO) AS costoPromedio " +
-                   "FROM INFOEXTRABODEGA ie " +
-                   "INNER JOIN PRODUCTO p ON ie.CODIGOBARRAS = p.CODIGOBARRAS " +
-                   "WHERE ie.IDBODEGA = :idBodega " +
-                   "GROUP BY p.NOMBRE, ie.TOTALEXISTENCIAS, ie.CANTIDADMINIMA", nativeQuery = true)
-    Collection<InventarioBodegaInfo> obtenerInventarioProductosBodega(@Param("idBodega") Long idBodega);
-
-
+                        @Query(value = "SELECT ie.CODIGOBARRAS AS codigoBarras, " +
+                        "ie.TOTALEXISTENCIAS AS totalExistencias, " +
+                       
+                        "ie.COSTOPROMEDIO AS costoPromedio, " +
+                        "ie.CAPACIDADALMACENAMIENTO AS capacidadAlmacenamiento, " +
+                        "ie.NIVELMINIMO AS nivelMinimo " +
+                        "FROM INFOEXTRABODEGA ie " +
+                        "WHERE ie.IDBODEGA = :idBodega", 
+                nativeQuery = true)
+         Collection<Map<String, Object>> obtenerInventarioProductosBodega(@Param("idBodega") Long idBodega);
     @Query(value = "SELECT b.NOMBREBODEGA AS nombreBodega, " +
                    "(SUM(p.CANTIDADPRESENTACION * ie.TOTALEXISTENCIAS) / b.TAMANIOBODEGA) * 100 AS porcentajeOcupacion " +
                    "FROM BODEGA b " +
