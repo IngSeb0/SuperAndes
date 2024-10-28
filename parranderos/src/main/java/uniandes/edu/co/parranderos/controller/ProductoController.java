@@ -2,9 +2,11 @@ package uniandes.edu.co.parranderos.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Producto;
 import uniandes.edu.co.parranderos.repositorio.ProductoRepository;
+import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoCaracteristicasInfo;
 import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoOrdenCompraInfo;
 
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -93,29 +96,38 @@ public class ProductoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Producto>> obtenerProductosPorCaracteristicas(
-        @RequestBody Map<String, Object> params) {
+    @PostMapping("/buscar")
+public ResponseEntity<List<Producto>> obtenerProductosPorCaracteristicas(
+        @RequestBody Map<String, Object> filtros) {
 
-    // Imprimir parámetros recibidos para depuración
-    System.out.println("Parámetros recibidos: " + params);
+    // Extracción de filtros con validación
+    Float precioMin = filtros.containsKey("precioMin") 
+            ? Float.parseFloat(filtros.get("precioMin").toString()) 
+            : null;
 
-    Float precioMin = params.get("precioMin") != null 
-            ? Float.parseFloat(params.get("precioMin").toString()) : null;
+    Float precioMax = filtros.containsKey("precioMax") 
+            ? Float.parseFloat(filtros.get("precioMax").toString()) 
+            : null;
 
-    Float precioMax = params.get("precioMax") != null 
-            ? Float.parseFloat(params.get("precioMax").toString()) : null;
+    Date fechaExpiracion = null;
+    if (filtros.containsKey("fechaExpiracion")) {
+        String fechaStr = filtros.get("fechaExpiracion").toString();
+        fechaExpiracion = Date.valueOf(LocalDate.parse(fechaStr));
+    }
 
-    Date fechaExpiracion = params.get("fechaExpiracion") != null 
-            ? Date.valueOf(params.get("fechaExpiracion").toString()) : null;
+    Long codigoCategoria = filtros.containsKey("codigoCategoria") 
+            ? Long.parseLong(filtros.get("codigoCategoria").toString()) 
+            : null;
 
+    // Llamada al repositorio
     List<Producto> productos = productoRepository.obtenerProductosPorCaracteristicas(
-            precioMin, precioMax, fechaExpiracion);
+            precioMin, precioMax, fechaExpiracion, codigoCategoria);
 
     return productos.isEmpty()
             ? ResponseEntity.status(HttpStatus.NOT_FOUND).build()
             : ResponseEntity.ok(productos);
 }
+
 
 
 }

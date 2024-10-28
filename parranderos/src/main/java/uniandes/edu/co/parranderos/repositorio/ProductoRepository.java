@@ -57,15 +57,16 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                                 String getCategoria();
                                 String getSucursal();
                             }
-                            @Query(value = "SELECT * FROM PRODUCTO p " +
-                            "WHERE (:precioMin IS NULL OR p.precio_unitario_venta >= :precioMin) " +
-                            "AND (:precioMax IS NULL OR p.precio_unitario_venta <= :precioMax) " +
-                            "AND (:fechaExpiracion IS NULL OR p.fecha_expiracion <= :fechaExpiracion)",
-                    nativeQuery = true)
-             List<Producto> obtenerProductosPorCaracteristicas(
-                     @Param("precioMin") Float precioMin,
-                     @Param("precioMax") Float precioMax,
-                     @Param("fechaExpiracion") Date fechaExpiracion);
+                            @Query("SELECT p FROM Producto p JOIN Categoria c ON p.codigoBarras = c.producto.codigoBarras  " +
+                            "WHERE (:precioMin IS NULL OR p.precioUnitarioVenta >= :precioMin) " +
+                            "AND (:precioMax IS NULL OR p.precioUnitarioVenta <= :precioMax) " +
+                            "AND (:fechaExpiracion IS NULL OR p.fechaExpiracion <= :fechaExpiracion) " +
+                            "AND (:codigoCategoria IS NULL OR c.codigoCategoria = :codigoCategoria)")
+                     List<Producto> obtenerProductosPorCaracteristicas(
+                             @Param("precioMin") Float precioMin,
+                             @Param("precioMax") Float precioMax,
+                             @Param("fechaExpiracion") Date fechaExpiracion,
+                             @Param("codigoCategoria") Long codigoCategoria);
              
 
 
