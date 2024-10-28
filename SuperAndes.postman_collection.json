@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 2,\r\n    \"sucursal\": {\r\n        \"idSucursal\": 1\r\n    },\r\n    \"nombreBodega\": \"Bodega Central\",\r\n    \"tamanioBodega\": 1500.0\r\n}\r\n",
+							"raw": "{\r\n    \"id\": 3,\r\n    \"sucursal\": {\r\n        \"idSucursal\": 1\r\n    },\r\n    \"nombreBodega\": \"Bodega Central\",\r\n    \"tamanioBodega\": 1500.0\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -100,7 +100,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\"2\", \"1\", \"1001\"]\r\n",
+							"raw": "[\"2\"]\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -130,7 +130,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/parranderos/bodegas/1/inventario\n",
+							"raw": "http://localhost:8080/parranderos/bodegas/1001/inventario",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -139,8 +139,8 @@
 							"path": [
 								"parranderos",
 								"bodegas",
-								"1",
-								"inventario\n"
+								"1001",
+								"inventario"
 							]
 						}
 					},
@@ -319,16 +319,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "GET http://localhost:8080/parranderos/productos/ordenes-compra\n",
-							"protocol": "GET http",
+							"raw": "http://localhost:8080/parranderos/producto/ordenes-compra",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"parranderos",
-								"productos",
-								"ordenes-compra\n"
+								"producto",
+								"ordenes-compra"
 							]
 						}
 					},
@@ -370,10 +370,19 @@
 				{
 					"name": "New Request",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoCategoria\": 100\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/parranderos/producto/buscarPorCategoria/100\n",
+							"raw": "http://localhost:8080/parranderos/producto/buscarPorCategoria\n",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -382,8 +391,7 @@
 							"path": [
 								"parranderos",
 								"producto",
-								"buscarPorCategoria",
-								"100\n"
+								"buscarPorCategoria\n"
 							]
 						}
 					},
