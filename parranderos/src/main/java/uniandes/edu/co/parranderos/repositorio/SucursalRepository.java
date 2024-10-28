@@ -38,12 +38,14 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Long> {
                             @Param("direccion") String direccion,
                             @Param("telefono") String telefono,
                             @Param("codigoCiudad") Integer codigoCiudad);
-    @Query(value = "SELECT s.* FROM SUCURSAL s " +
+                            @Query(value = "SELECT s.* FROM SUCURSAL s " +
                             "INNER JOIN BODEGA b ON s.IDSUCURSAL = b.IDSUCURSAL " +
                             "INNER JOIN INFOEXTRABODEGA ie ON b.IDBODEGA = ie.IDBODEGA " +
                             "INNER JOIN PRODUCTO p ON ie.CODIGOBARRAS = p.CODIGOBARRAS " +
-                            "WHERE p.CODIGOBARRAS = :productoId OR p.NOMBRE = :nombreProducto", nativeQuery = true)
-                    Collection<Sucursal> obtenerSucursalesConProductoDisponible(@Param("productoId") String productoId, 
-                                                                                @Param("nombreProducto") String nombreProducto);
-                }
+                            "WHERE p.CODIGOBARRAS = :productoId OR p.NOMBRE = :nombreProducto", 
+                    nativeQuery = true)
+             Collection<Sucursal> obtenerSucursalesConProductoDisponible(@Param("productoId") String productoId, 
+                                                                        @Param("nombreProducto") String nombreProducto);
+             
+}             
 

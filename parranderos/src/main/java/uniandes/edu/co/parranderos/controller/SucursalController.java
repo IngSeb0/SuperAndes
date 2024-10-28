@@ -8,6 +8,7 @@ import uniandes.edu.co.parranderos.modelo.Sucursal;
 import uniandes.edu.co.parranderos.repositorio.SucursalRepository;
 
 import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/sucursales")
@@ -39,27 +40,23 @@ public class SucursalController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/disponibilidad-producto")
-    public ResponseEntity<Collection<Sucursal>> obtenerSucursalesConProductoDisponible(
-            @RequestParam(required = false) String productoId,
-            @RequestParam(required = false) String nombreProducto) {
+    @GetMapping("/disponibilidad-producto/{productoId}")
+    public ResponseEntity<Collection<Sucursal>> obtenerSucursalesConProductoDisponiblePorId(
+            @PathVariable("productoId") Long productoId) {
         try {
-            if (productoId == null && nombreProducto == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-
-            // Llamada al repositorio para obtener las sucursales con disponibilidad del producto
-            Collection<Sucursal> sucursales = sucursalRepository.obtenerSucursalesConProductoDisponible(productoId, nombreProducto);
-
+            Collection<Sucursal> sucursales = sucursalRepository.obtenerSucursalesConProductoDisponible(String.valueOf(productoId), null);
+    
             if (sucursales.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-
+    
             return new ResponseEntity<>(sucursales, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    
     @PostMapping("/new/save")
     public ResponseEntity<String> insertarSucursal(@RequestBody Sucursal sucursal) {
         try {
