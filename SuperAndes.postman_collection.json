@@ -92,19 +92,32 @@
 				},
 				{
 					"name": "Indice de ocupación",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\"2\", \"1\", \"1001\"]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/bodegas/2/ocupacion",
+							"raw": "http://localhost:8080/parranderos/bodegas/1/ocupacion",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"parranderos",
 								"bodegas",
-								"2",
+								"1",
 								"ocupacion"
 							]
 						}
@@ -117,13 +130,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/bodegas/1/inventario\n",
+							"raw": "http://localhost:8080/parranderos/bodegas/1/inventario\n",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"parranderos",
 								"bodegas",
 								"1",
 								"inventario\n"
@@ -305,13 +319,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "GET http://localhost:8080/productos/ordenes-compra\n",
+							"raw": "GET http://localhost:8080/parranderos/productos/ordenes-compra\n",
 							"protocol": "GET http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"parranderos",
 								"productos",
 								"ordenes-compra\n"
 							]
@@ -321,19 +336,54 @@
 				},
 				{
 					"name": "Buscar producto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"precioMin\": 1000\r\n    \r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/productos/buscar\n",
+							"raw": "http://localhost:8080/parranderos/producto/buscar\n",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"productos",
+								"parranderos",
+								"producto",
 								"buscar\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parranderos/producto/buscarPorCategoria/100\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"producto",
+								"buscarPorCategoria",
+								"100\n"
 							]
 						}
 					},
