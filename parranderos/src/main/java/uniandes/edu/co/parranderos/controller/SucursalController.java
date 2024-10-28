@@ -8,7 +8,6 @@ import uniandes.edu.co.parranderos.modelo.Sucursal;
 import uniandes.edu.co.parranderos.repositorio.SucursalRepository;
 
 import java.util.Collection;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/sucursales")

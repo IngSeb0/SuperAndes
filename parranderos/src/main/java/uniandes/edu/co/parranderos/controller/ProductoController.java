@@ -2,19 +2,14 @@ package uniandes.edu.co.parranderos.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Producto;
 import uniandes.edu.co.parranderos.repositorio.ProductoRepository;
-import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoCaracteristicasInfo;
-import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoOrdenCompraInfo;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

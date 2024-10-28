@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Bodega;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository;
-import uniandes.edu.co.parranderos.repositorio.BodegaRepository.InventarioBodegaInfo;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository.IndiceOcupacionBodegaInfo;
 
 import java.util.Collection;
