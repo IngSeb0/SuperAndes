@@ -10,6 +10,8 @@ import uniandes.edu.co.parranderos.repositorio.BodegaRepository.InventarioBodega
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository.IndiceOcupacionBodegaInfo;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bodegas")
@@ -31,17 +33,20 @@ public class BodegaController {
 
     // Método para obtener el índice de ocupación de las bodegas de una sucursal
     @GetMapping("/{idSucursal}/ocupacion")
-    public ResponseEntity<Collection<IndiceOcupacionBodegaInfo>> obtenerIndiceOcupacionBodegas(@PathVariable("idSucursal") Long idSucursal,
-                                                                                               @RequestParam Collection<String> productos) {
-        try {
-            // Obtener el índice de ocupación para los productos y la sucursal
-            Collection<IndiceOcupacionBodegaInfo> ocupacionBodegas = bodegaRepository.obtenerIndiceOcupacionBodega(idSucursal, productos);
-            return new ResponseEntity<>(ocupacionBodegas, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Collection<IndiceOcupacionBodegaInfo>> obtenerIndiceOcupacionBodegas(
+        @PathVariable Long idSucursal,
+        @RequestBody List<String> productos) {
+    if (productos == null || productos.isEmpty()) {
+        return ResponseEntity.badRequest().body(Collections.emptyList());
     }
-
+    try {
+        Collection<IndiceOcupacionBodegaInfo> ocupacionBodegas =
+                bodegaRepository.obtenerIndiceOcupacionBodega(idSucursal, productos);
+        return ResponseEntity.ok(ocupacionBodegas);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}
     // Obtener el inventario de productos de una bodega
     @GetMapping("/{idBodega}/inventario")
     public ResponseEntity<Collection<InventarioBodegaInfo>> obtenerInventarioBodega(@PathVariable("idBodega") Long idBodega) {

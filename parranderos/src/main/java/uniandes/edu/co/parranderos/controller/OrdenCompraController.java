@@ -47,9 +47,9 @@ public ResponseEntity<String> insertarOrden(@RequestBody OrdenCompra ordenCompra
 
         ordenCompraRepository.insertarOrden(
                 ordenCompra.getId(),
-                dateFormat.format(ordenCompra.getFechaCreacion()),  // Formato correcto de fecha
+                dateFormat.format(ordenCompra.getFechaCreacion()), 
                 ordenCompra.getEstado(),
-                dateFormat.format(ordenCompra.getFechaEntrega()),   // Formato correcto de fecha
+                dateFormat.format(ordenCompra.getFechaEntrega()),   
                 ordenCompra.getSucursalId().getIdSucursal(),
                 ordenCompra.getProducto().getCodigoBarras(),
                 ordenCompra.getProveedor().getNit()

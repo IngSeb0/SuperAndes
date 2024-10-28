@@ -5,14 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Producto;
 import uniandes.edu.co.parranderos.repositorio.ProductoRepository;
-import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoCaracteristicasInfo;
 import uniandes.edu.co.parranderos.repositorio.ProductoRepository.ProductoOrdenCompraInfo;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/producto")
@@ -91,21 +93,32 @@ public class ProductoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-      @GetMapping("/buscar")
-    public ResponseEntity<Collection<ProductoCaracteristicasInfo>> obtenerProductosPorCaracteristicas(
-            @RequestParam(required = false) Float precioMin,
-            @RequestParam(required = false) Float precioMax,
-            @RequestParam(required = false) Date fechaExpiracion,
-            @RequestParam(required = false) Long idSucursal,
-            @RequestParam(required = false) Long idCategoria) {
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Producto>> obtenerProductosPorCaracteristicas(
+        @RequestBody Map<String, Object> params) {
 
-        try {
-            Collection<ProductoCaracteristicasInfo> productos = productoRepository.obtenerProductosPorCaracteristicas(
-                    precioMin, precioMax, fechaExpiracion, idSucursal, idCategoria);
+    // Imprimir parámetros recibidos para depuración
+    System.out.println("Parámetros recibidos: " + params);
 
-            return new ResponseEntity<>(productos, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    Float precioMin = params.get("precioMin") != null 
+            ? Float.parseFloat(params.get("precioMin").toString()) : null;
+
+    Float precioMax = params.get("precioMax") != null 
+            ? Float.parseFloat(params.get("precioMax").toString()) : null;
+
+    Date fechaExpiracion = params.get("fechaExpiracion") != null 
+            ? Date.valueOf(params.get("fechaExpiracion").toString()) : null;
+
+    List<Producto> productos = productoRepository.obtenerProductosPorCaracteristicas(
+            precioMin, precioMax, fechaExpiracion);
+
+    return productos.isEmpty()
+            ? ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+            : ResponseEntity.ok(productos);
 }
+
+
+}
+
+
+

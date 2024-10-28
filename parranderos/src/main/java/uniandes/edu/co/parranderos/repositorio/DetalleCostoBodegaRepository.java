@@ -26,11 +26,11 @@ public interface DetalleCostoBodegaRepository extends JpaRepository<DetalleCosto
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO DETALLECOSTOBODEGA (COSTOUNITARIOBODEGA, CANTIDADEXISTENCIA, IDBODEGA, IDPRODUCTO, IDDETALLECOSTO) " +
-                   "VALUES (:costoUnitarioBodega, :cantidadExistencia, :bodegaId, :productoId, :idDetalleCosto)", nativeQuery = true)
+                   "VALUES (:costoUnitarioBodega, :cantidadExistencia, :bodegaId, :CODIGOBARRAS, :idDetalleCosto)", nativeQuery = true)
     void insertarDetalleCostoBodega(@Param("costoUnitarioBodega") Float costoUnitarioBodega, 
                                     @Param("cantidadExistencia") Integer cantidadExistencia, 
                                     @Param("bodegaId") Long idBodega,
-                                    @Param("productoId") String idProducto,
+                                    @Param("CODIGOBARRAS") String CODIGOBARRAS,
                                     @Param("idDetalleCosto") Long idDetalleCosto);
 
     // Actualizar un detalle de costo por su clave primaria compuesta

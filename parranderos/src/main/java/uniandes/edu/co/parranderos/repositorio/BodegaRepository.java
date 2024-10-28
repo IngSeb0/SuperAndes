@@ -48,13 +48,18 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
                    "WHERE ie.IDBODEGA = :idBodega " +
                    "GROUP BY p.NOMBRE, ie.TOTALEXISTENCIAS, ie.CANTIDADMINIMA", nativeQuery = true)
     Collection<InventarioBodegaInfo> obtenerInventarioProductosBodega(@Param("idBodega") Long idBodega);
-  @Query(value = "SELECT b.NOMBREBODEGA AS nombreBodega, " +
+
+
+    @Query(value = "SELECT b.NOMBREBODEGA AS nombreBodega, " +
                    "(SUM(p.CANTIDADPRESENTACION * ie.TOTALEXISTENCIAS) / b.TAMANIOBODEGA) * 100 AS porcentajeOcupacion " +
                    "FROM BODEGA b " +
                    "INNER JOIN INFOEXTRABODEGA ie ON b.IDBODEGA = ie.IDBODEGA " +
-                   "INNER JOIN PRODUCTO p ON ie.CODIGOBARRAS = p.CODIGOBARRAS " +
+                   "INNER JOIN PRODUCTO p ON p.CODIGOBARRAS = ie.CODIGOBARRAS " +
                    "WHERE b.IDSUCURSAL = :idSucursal " +
-                   "AND p.CODIGOBARRAS IN :productos " +
-                   "GROUP BY b.NOMBREBODEGA, b.TAMANIOBODEGA", nativeQuery = true)
-    Collection<IndiceOcupacionBodegaInfo> obtenerIndiceOcupacionBodega(@Param("idSucursal") Long idSucursal, @Param("productos") Collection<String> productos);
+                   "AND p.CODIGOBARRAS IN (:productos) " +
+                   "GROUP BY b.NOMBREBODEGA, b.TAMANIOBODEGA",
+           nativeQuery = true)
+    Collection<IndiceOcupacionBodegaInfo> obtenerIndiceOcupacionBodega(
+            @Param("idSucursal") Long idSucursal,
+            @Param("productos") Collection<String> productos);
 }

@@ -4,11 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Producto;
 import java.lang.Long;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductoRepository extends JpaRepository<Producto, String> {
@@ -55,29 +57,20 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                                 String getCategoria();
                                 String getSucursal();
                             }
-                        
-                            // Consulta para obtener productos por características específicas
-                            @Query(value = "SELECT p.CODIGOBARRAS AS codigoBarras, p.NOMBRE AS nombre, p.PRECIOUNITARIOVENTA AS precioUnitarioVenta, " +
-                                    "p.PRESENTACION AS presentacion, p.CANTIDADPRESENTACION AS cantidadPresentacion, " +
-                                    "p.UNIDADMEDIDA AS unidadMedida, p.FECHAEXPIRACION AS fechaExpiracion, " +
-                                    "c.NOMBRECATEGORIA AS categoria, s.NOMBRESUCURSAL AS sucursal " +
-                                    "FROM PRODUCTO p " +
-                                    "INNER JOIN CATEGORIA c ON p.CODIGOBARRAS = c.CODIGOBARRAS " +
-                                    "INNER JOIN INFOEXTRABODEGA ie ON p.CODIGOBARRAS = ie.CODIGOBARRAS " +
-                                    "INNER JOIN BODEGA b ON ie.IDBODEGA = b.IDBODEGA " +
-                                    "INNER JOIN SUCURSAL s ON b.IDSUCURSAL = s.IDSUCURSAL " +
-                                    "WHERE (:precioMin IS NULL OR p.PRECIOUNITARIOVENTA >= :precioMin) " +
-                                    "AND (:precioMax IS NULL OR p.PRECIOUNITARIOVENTA <= :precioMax) " +
-                                    "AND (:fechaExpiracion IS NULL OR p.FECHAEXPIRACION <= :fechaExpiracion) " +
-                                    "AND (:idSucursal IS NULL OR s.IDSUCURSAL = :idSucursal) " +
-                                    "AND (:idCategoria IS NULL OR c.CODIGOCATEGORIA = :idCategoria)", nativeQuery = true)
-                            Collection<ProductoCaracteristicasInfo> obtenerProductosPorCaracteristicas(
-                                    @Param("precioMin") Float precioMin,
-                                    @Param("precioMax") Float precioMax,
-                                    @Param("fechaExpiracion") Date fechaExpiracion,
-                                    @Param("idSucursal") Long idSucursal,
-                                    @Param("idCategoria") Long idCategoria
-                            );
+                            @Query(value = "SELECT * FROM PRODUCTO p " +
+                            "WHERE (:precioMin IS NULL OR p.precio_unitario_venta >= :precioMin) " +
+                            "AND (:precioMax IS NULL OR p.precio_unitario_venta <= :precioMax) " +
+                            "AND (:fechaExpiracion IS NULL OR p.fecha_expiracion <= :fechaExpiracion)",
+                    nativeQuery = true)
+             List<Producto> obtenerProductosPorCaracteristicas(
+                     @Param("precioMin") Float precioMin,
+                     @Param("precioMax") Float precioMax,
+                     @Param("fechaExpiracion") Date fechaExpiracion);
+             
+
+
+
+
                             @Modifying
                             @Transactional
                             @Query(value = "DELETE FROM producto WHERE codigo_barras = :codigoBarras", nativeQuery = true)
@@ -103,5 +96,12 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                                     "INNER JOIN PROVEEDOR pr ON ip.NIT = pr.NIT " +
                                     "WHERE ie.TOTALEXISTENCIAS < ie.MINEXISTENCIAS", nativeQuery = true)
                             Collection<ProductoOrdenCompraInfo> obtenerProductosParaOrdenDeCompra();
-}
+
+                            @Query("SELECT p FROM Producto p JOIN Categoria c ON p.codigoBarras = c.producto.codigoBarras " +
+                            "WHERE c.codigoCategoria = :codigoCategoria")
+                     List<Producto> obtenerProductosPorCategoria(@Param("codigoCategoria") Long codigoCategoria);
+                 }
+
+
+                        
 
