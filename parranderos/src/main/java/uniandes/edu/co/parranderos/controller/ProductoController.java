@@ -88,9 +88,13 @@ public class ProductoController {
         }
     }
     @GetMapping("/ordenes-compra")
-    public ResponseEntity<Collection<ProductoOrdenCompraInfo>> obtenerProductosParaOrdenDeCompra() {
+    public ResponseEntity<Collection<ProductoRepository.ProductoOrdenCompraInfo>> obtenerProductosParaOrdenDeCompra() {
         try {
-            Collection<ProductoOrdenCompraInfo> productosOrdenCompra = productoRepository.obtenerProductosParaOrdenDeCompra();
+            Collection<ProductoRepository.ProductoOrdenCompraInfo> productosOrdenCompra =
+                    productoRepository.obtenerProductosParaOrdenDeCompra();
+            if (productosOrdenCompra.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(productosOrdenCompra, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

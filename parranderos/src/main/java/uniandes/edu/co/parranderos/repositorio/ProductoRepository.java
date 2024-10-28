@@ -84,20 +84,21 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                                 String getNombreProveedor();
                                 Integer getCantidadActual();
                             }
-                        
-                            // Consulta para obtener todos los productos que requieren una nueva orden de compra
-                            @Query(value = "SELECT p.NOMBRE AS nombreProducto, p.CODIGOBARRAS AS codigoBarras, b.NOMBREBODEGA AS nombreBodega, " +
-                                    "s.NOMBRESUCURSAL AS nombreSucursal, pr.NOMBREPROVEEDOR AS nombreProveedor, " +
-                                    "ie.TOTALEXISTENCIAS AS cantidadActual " +
-                                    "FROM PRODUCTO p " +
-                                    "INNER JOIN INFOEXTRABODEGA ie ON p.CODIGOBARRAS = ie.CODIGOBARRAS " +
-                                    "INNER JOIN BODEGA b ON ie.IDBODEGA = b.IDBODEGA " +
-                                    "INNER JOIN SUCURSAL s ON b.IDSUCURSAL = s.IDSUCURSAL " +
-                                    "INNER JOIN INFOEXTRAPROVEEDOR ip ON p.CODIGOBARRAS = ip.CODIGOBARRAS " +
-                                    "INNER JOIN PROVEEDOR pr ON ip.NIT = pr.NIT " +
-                                    "WHERE ie.TOTALEXISTENCIAS < ie.MINEXISTENCIAS", nativeQuery = true)
-                            Collection<ProductoOrdenCompraInfo> obtenerProductosParaOrdenDeCompra();
-
+                            @Query(value = "SELECT p.NOMBRE AS nombreProducto, p.CODIGOBARRAS AS codigoBarras, " +
+                            "b.NOMBREBODEGA AS nombreBodega, s.NOMBRESUCURSAL AS nombreSucursal, " +
+                            "pr.NOMBRE AS nombreProveedor, ie.TOTALEXISTENCIAS AS cantidadActual " +
+                            "FROM PRODUCTO p " +
+                            "INNER JOIN INFOEXTRABODEGA ie ON p.CODIGOBARRAS = ie.CODIGOBARRAS " +
+                            "INNER JOIN BODEGA b ON ie.IDBODEGA = b.IDBODEGA " +
+                            "INNER JOIN SUCURSAL s ON b.IDSUCURSAL = s.IDSUCURSAL " +
+                            "INNER JOIN INFOEXTRAPROVEEDOR ip ON p.CODIGOBARRAS = ip.CODIGOBARRAS " +
+                            "INNER JOIN PROVEEDOR pr ON ip.NIT = pr.NIT " +
+                            "WHERE ie.TOTALEXISTENCIAS < ie.NIVELMINIMO", 
+                    nativeQuery = true)
+             Collection<ProductoOrdenCompraInfo> obtenerProductosParaOrdenDeCompra();
+         
+          
+         
                             @Query("SELECT p FROM Producto p JOIN Categoria c ON p.codigoBarras = c.producto.codigoBarras " +
                             "WHERE c.codigoCategoria = :codigoCategoria")
                      List<Producto> obtenerProductosPorCategoria(@Param("codigoCategoria") Long codigoCategoria);
