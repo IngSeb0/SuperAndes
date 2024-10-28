@@ -496,19 +496,33 @@
 				},
 				{
 					"name": "Sucursal con producto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "GET http://localhost:8080/sucursales/disponibilidad-producto\n",
-							"protocol": "GET http",
+							"raw": "http://localhost:8080/parranderos/sucursales/disponibilidad-producto/2\n",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"parranderos",
 								"sucursales",
-								"disponibilidad-producto\n"
+								"disponibilidad-producto",
+								"2\n"
 							]
 						}
 					},
