@@ -38,7 +38,6 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                           @Param("unidadMedida") String unidadMedida,
                           @Param("fechaExpiracion") Date fechaExpiracion);
 
-    // Actualizar un producto por su código de barras
     @Modifying
     @Transactional
     @Query(value = "UPDATE producto SET nombre = :nombre, precioUnitarioVenta = :precioUnitarioVenta WHERE codigoBarras = :codigoBarras", nativeQuery = true)
@@ -102,7 +101,19 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                             @Query("SELECT p FROM Producto p JOIN Categoria c ON p.codigoBarras = c.producto.codigoBarras " +
                             "WHERE c.codigoCategoria = :codigoCategoria")
                      List<Producto> obtenerProductosPorCategoria(@Param("codigoCategoria") Long codigoCategoria);
-                 }
+    
+    
+    
+                     @Modifying
+    @Transactional
+    @Query(value = "UPDATE INFOEXTRABODEGA SET TOTALEXISTENCIAS = TOTALEXISTENCIAS + :cantidad, " +
+                   "COSTOUNITARIO = :precio WHERE IDBODEGA = :idBodega AND CODIGOBARRAS = :codigoBarras", 
+           nativeQuery = true)
+    void actualizarInventarioYCostos(@Param("idBodega") Long idBodega, 
+                                     @Param("codigoBarras") String codigoBarras, 
+                                     @Param("cantidad") Integer cantidad, 
+                                     @Param("precio") Float precio);
+                    }
 
 
                         

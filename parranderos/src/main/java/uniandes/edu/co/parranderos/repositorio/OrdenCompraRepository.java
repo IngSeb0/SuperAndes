@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.OrdenCompra;
 import java.util.Collection;
+import java.util.Map;
 
 
 public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Long> {
@@ -51,9 +52,21 @@ public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Long> 
                          @Param("sucursalId") Long sucursalId,
                          
                          @Param("codigoBarras") String codigoBarras, @Param("nit") Long nit);
-
+@Modifying
+@Transactional
+                         @Query("UPDATE OrdenCompra o SET o.estado = 'ENTREGADA' WHERE o.IDORDEN = :idOrden")
+                         void marcarComoEntregada(@Param("idOrden") Long idOrden);
+                         
+                         
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM ORDENCOMPRA WHERE IDORDEN = :id", nativeQuery = true)
     void eliminarOrden(@Param("id") Long id);
+    @Query(value = "SELECT o.*, p.*, pr.*, s.* " +
+                   "FROM ORDENCOMPRA o " +
+                   "INNER JOIN PRODUCTO p ON o.CODIGOBARRAS = p.CODIGOBARRAS " +
+                   "INNER JOIN PROVEEDOR pr ON o.NIT = pr.NIT " +
+                   "INNER JOIN SUCURSAL s ON o.IDSUCURSAL = s.IDSUCURSAL " +
+                   "WHERE o.IDORDEN = :idOrden", nativeQuery = true)
+    Map<String, Object> obtenerOrdenCompraConDetalles(@Param("idOrden") Long idOrden);  
 }
