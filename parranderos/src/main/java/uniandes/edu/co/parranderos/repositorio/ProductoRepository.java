@@ -107,7 +107,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                      @Modifying
     @Transactional
     @Query(value = "UPDATE INFOEXTRABODEGA SET TOTALEXISTENCIAS = TOTALEXISTENCIAS + :cantidad, " +
-                   "COSTOUNITARIO = :precio WHERE IDBODEGA = :idBodega AND CODIGOBARRAS = :codigoBarras", 
+                   "COSTOPROMEDIO = :precio WHERE IDBODEGA = :idBodega AND CODIGOBARRAS = :codigoBarras", 
            nativeQuery = true)
     void actualizarInventarioYCostos(@Param("idBodega") Long idBodega, 
                                      @Param("codigoBarras") String codigoBarras, 

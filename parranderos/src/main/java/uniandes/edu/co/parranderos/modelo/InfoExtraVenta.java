@@ -12,10 +12,8 @@ public class InfoExtraVenta {
     private Integer cantidad;
     private Float precioUnitario;
 
-    // Constructor vacío
     public InfoExtraVenta() {;}
 
-    // Constructor con parámetros
     public InfoExtraVenta(Venta idVenta, Producto idProducto, Integer cantidad, Float precioUnitario) {
         this.pk = new InfoExtraVentaPk(idVenta, idProducto);
         this.cantidad = cantidad;

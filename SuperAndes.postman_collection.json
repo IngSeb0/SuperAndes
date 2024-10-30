@@ -637,6 +637,41 @@
 			]
 		},
 		{
+			"name": "RecepcionProductos",
+			"item": [
+				{
+					"name": "Nueva recepción",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idOrden\": 1,\r\n    \"idBodega\": 1001,\r\n    \"cantidad\": 50\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/parranderos/recepciones/registrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"recepciones",
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "NewCiudad",
 			"request": {
 				"method": "POST",
