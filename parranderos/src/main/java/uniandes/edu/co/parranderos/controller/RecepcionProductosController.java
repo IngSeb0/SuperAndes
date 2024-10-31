@@ -1,5 +1,6 @@
 package uniandes.edu.co.parranderos.controller;
 
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,6 +70,10 @@ public class RecepcionProductosController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al registrar la recepción: " + e.getMessage());
         }
+    }
+     @GetMapping
+    public Collection<OrdenCompra> obtenerTodasLasOrdenes() {
+        return ordenCompraRepository.obtenerTodasLasOrdenes();
     }
 
 }

@@ -95,7 +95,7 @@ public class ProductoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping("/buscar")
+    @GetMapping("/buscar")
 public ResponseEntity<List<Producto>> obtenerProductosPorCaracteristicas(
         @RequestBody Map<String, Object> filtros) {
 
@@ -118,7 +118,6 @@ public ResponseEntity<List<Producto>> obtenerProductosPorCaracteristicas(
             ? Long.parseLong(filtros.get("codigoCategoria").toString()) 
             : null;
 
-    // Llamada al repositorio
     List<Producto> productos = productoRepository.obtenerProductosPorCaracteristicas(
             precioMin, precioMax, fechaExpiracion, codigoCategoria);
 

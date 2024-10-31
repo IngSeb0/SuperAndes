@@ -1,5 +1,8 @@
 package uniandes.edu.co.parranderos.repositorio;
 
+import java.util.Collection;
+import org.hibernate.mapping.List;
+import org.hibernate.mapping.Map;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +24,6 @@ public interface RecepcionProductoRepository extends JpaRepository<RecepcionProd
     void registrarRecepcionProducto(@Param("fechaRecepcion") String fechaRecepcion, 
                                     @Param("idBodega") Long idBodega, 
                                     @Param("idOrden") Long idOrden);
+    @Query(value = "SELECT * FROM RECEPCIONPRODUCTOS", nativeQuery = true)
+    RecepcionProducto obtenerTodasLasRecepciones();
 }    
