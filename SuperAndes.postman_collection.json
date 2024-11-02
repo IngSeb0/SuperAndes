@@ -344,7 +344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"precioMin\": 1000\r\n    \r\n\r\n}\r\n",
+							"raw": "{\r\n    \"precioMin\":1\r\n    \r\n\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -352,7 +352,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/parranderos/producto/buscar\n",
+							"raw": "http://localhost:8080/parranderos/producto/buscar",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -361,7 +361,7 @@
 							"path": [
 								"parranderos",
 								"producto",
-								"buscar\n"
+								"buscar"
 							]
 						}
 					},
@@ -590,7 +590,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/parranderos/ordenes\n",
+							"raw": "http://localhost:8080/parranderos/ordenes",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -598,7 +598,7 @@
 							"port": "8080",
 							"path": [
 								"parranderos",
-								"ordenes\n"
+								"ordenes"
 							]
 						}
 					},
@@ -664,6 +664,26 @@
 								"parranderos",
 								"recepciones",
 								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver recepciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parranderos/recepciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"recepciones"
 							]
 						}
 					},

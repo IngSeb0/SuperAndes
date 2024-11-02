@@ -64,7 +64,6 @@ public class SucursalController {
                 return new ResponseEntity<>("Código de ciudad inválido", HttpStatus.BAD_REQUEST);
             }
     
-            // Convertir a int explícitamente
             int codigoCiudad = sucursal.getCiudad().getCodigoCiudad().intValue();
     
             sucursalRepository.insertarSucursal(

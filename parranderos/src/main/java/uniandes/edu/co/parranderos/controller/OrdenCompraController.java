@@ -16,10 +16,10 @@ public class OrdenCompraController {
     private OrdenCompraRepository ordenCompraRepository;
 
     
-    @GetMapping
-    public Collection<OrdenCompra> obtenerTodasLasOrdenes() {
-        return ordenCompraRepository.obtenerTodasLasOrdenes();
-    }
+        @GetMapping
+        public Collection<OrdenCompra> obtenerTodasLasOrdenes() {
+            return ordenCompraRepository.obtenerTodasLasOrdenes();
+        }
 
     // Obtener una orden de compra por su ID
     @GetMapping("/{id}")
