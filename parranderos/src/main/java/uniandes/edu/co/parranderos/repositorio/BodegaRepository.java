@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Bodega;
+import uniandes.edu.co.parranderos.modelo.RecepcionProducto;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -26,28 +28,27 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO BODEGA (IDBODEGA, IDSUCURSAL, NOMBREBODEGA, TAMANIOBODEGA) " +
-                   "VALUES (:idBodega, :idSucursal, :nombre, :tamano)", nativeQuery = true)
+            "VALUES (:idBodega, :idSucursal, :nombre, :tamano)", nativeQuery = true)
     void insertarBodega(@Param("idBodega") Long idBodega, 
                         @Param("idSucursal") Long idSucursal, 
                         @Param("nombre") String nombreBodega, 
                         @Param("tamano") Float tamanioBodega);
 
-                
-                        @Modifying
-                        @Transactional
-                        @Query(value = "DELETE FROM BODEGA WHERE IDBODEGA = :id", nativeQuery = true)
-                        void eliminarBodega(@Param("id") Long id);
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM BODEGA WHERE IDBODEGA = :id", nativeQuery = true)
+    void eliminarBodega(@Param("id") Long id);
 
-                        @Query(value = "SELECT ie.CODIGOBARRAS AS codigoBarras, " +
-                        "ie.TOTALEXISTENCIAS AS totalExistencias, " +
-                       
-                        "ie.COSTOPROMEDIO AS costoPromedio, " +
-                        "ie.CAPACIDADALMACENAMIENTO AS capacidadAlmacenamiento, " +
-                        "ie.NIVELMINIMO AS nivelMinimo " +
-                        "FROM INFOEXTRABODEGA ie " +
-                        "WHERE ie.IDBODEGA = :idBodega", 
+    @Query(value = "SELECT ie.CODIGOBARRAS AS codigoBarras, " +
+                "ie.TOTALEXISTENCIAS AS totalExistencias, " +
+                "ie.COSTOPROMEDIO AS costoPromedio, " +
+                "ie.CAPACIDADALMACENAMIENTO AS capacidadAlmacenamiento, " +
+                "ie.NIVELMINIMO AS nivelMinimo " +
+                "FROM INFOEXTRABODEGA ie " +
+                "WHERE ie.IDBODEGA = :idBodega", 
                 nativeQuery = true)
-         Collection<Map<String, Object>> obtenerInventarioProductosBodega(@Param("idBodega") Long idBodega);
+    Collection<Map<String, Object>> obtenerInventarioProductosBodega(@Param("idBodega") Long idBodega);
+
     @Query(value = "SELECT b.NOMBREBODEGA AS nombreBodega, " +
                    "(SUM(p.CANTIDADPRESENTACION * ie.TOTALEXISTENCIAS) / b.TAMANIOBODEGA) * 100 AS porcentajeOcupacion " +
                    "FROM BODEGA b " +
@@ -60,4 +61,15 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
     Collection<IndiceOcupacionBodegaInfo> obtenerIndiceOcupacionBodega(
             @Param("idSucursal") Long idSucursal,
             @Param("productos") Collection<String> productos);
+
+    @Query(value = "SELECT bod.nombreBodega, suc.nombreSucursal, rpro.idorden, inOr.cantidad, pro.nombre, rpro.fecharecepcion\n" + //
+                "FROM Sucursal suc\n" + //
+                "INNER JOIN Bodega bod ON bod.idSucursal = suc.idSucursal\n" + //
+                "INNER JOIN RecepcionProductos rPro ON rpro.idbodega = bod.idbodega\n" + //
+                "INNER JOIN OrdenCompra ord ON rpro.idorden = ord.idorden\n" + //
+                "INNER JOIN Proveedor pro ON pro.nit = ord.nit\n" + //
+                "INNER JOIN InfoExtraOrden inOr ON inor.idorden = ord.idorden\n" + //
+                "WHERE suc.idSucursal = :idSucursal AND bod.idBodega = :idBodega", nativeQuery = true)
+    Collection<RecepcionProducto> obtenerDocumentosIngresoProductos(@Param("idSucursal") Long idSucursal,
+                                                                @Param("idBodega") Long idBodega);
 }
