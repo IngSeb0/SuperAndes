@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "dc9142c9-c7e0-42e3-a525-85cc9246519a",
+		"_postman_id": "1077263d-1d93-438a-8d28-8f5059799a93",
 		"name": "Consultas-Avanzadas",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "19767625",
-		"_collection_link": "https://solar-spaceship-244943.postman.co/workspace/aaa~ed20b85b-f663-45c4-851e-143e241a0f31/collection/19767625-dc9142c9-c7e0-42e3-a525-85cc9246519a?action=share&source=collection_link&creator=19767625"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37823648"
 	},
 	"item": [
 		{
@@ -131,6 +130,14 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Docs recepcion productos",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
