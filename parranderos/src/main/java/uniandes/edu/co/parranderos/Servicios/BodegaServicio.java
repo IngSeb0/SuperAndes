@@ -26,5 +26,13 @@ public class BodegaServicio {
         obj = bodegaRepository.obtenerDocumentosIngresoProductos(idSucursal, idBodegaLong);
         return obj;
     }
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public Collection<Map<String, Object>> obtenerDocumentosIngresoProductos2(Long idSucursal, Long idBodegaLong) throws InterruptedException {
+        Collection<Map<String, Object>> obj = bodegaRepository.obtenerDocumentosIngresoProductos(idSucursal, idBodegaLong);
+        System.out.println(obj.size());
+        Thread.sleep(30000);
+        obj = bodegaRepository.obtenerDocumentosIngresoProductos(idSucursal, idBodegaLong);
+        return obj;
+    }
 
 }

@@ -120,4 +120,16 @@ public class BodegaController {
         }
 
     }
+    @GetMapping("/{idSucursal}/{idBodega}/docIngreso")
+    public  ResponseEntity<Collection<Map<String, Object>>> obtenerDocIngreso2(@PathVariable("idSucursal") Long idSucursal,
+                                                        @PathVariable("idBodega") Long idBodega) {
+        try{
+            Collection<Map<String, Object>> ob = bodegaServicio.obtenerDocumentosIngresoProductos2(idSucursal, idBodega);
+            return new ResponseEntity<>(ob, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error durante la consulta: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
