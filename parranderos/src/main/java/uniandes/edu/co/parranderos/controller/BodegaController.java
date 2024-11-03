@@ -124,5 +124,21 @@ public class BodegaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/{idSucursal}/{idBodega}/docIngreso2")
+    public  ResponseEntity<Collection<Map<String, Object>>> obtenerDocIngreso2(@PathVariable("idSucursal") Long idSucursal,
+                                                        @PathVariable("idBodega") Long idBodega) {
+        try{
+            
+            Connection connection = jdbcTemplate.getDataSource().getConnection();
+            PreparedStatement serializacion = connection.prepareStatement("SET TRANSACTION ISOLATION LEVEL READ COMMITTED");
+            serializacion.executeQuery();
+            Thread.sleep(30000);
+            Collection<Map<String, Object>> recep = bodegaRepository.obtenerDocumentosIngresoProductos(idSucursal, idBodega);
+            return new ResponseEntity<>(recep, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }

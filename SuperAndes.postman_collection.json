@@ -145,6 +145,52 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Docs recepcion productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parranderos/bodegas/1/1001/docIngreso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"bodegas",
+								"1",
+								"1001",
+								"docIngreso"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Docs recepcion productos 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parranderos/bodegas/1/1001/docIngreso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"bodegas",
+								"1",
+								"1001",
+								"docIngreso"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
