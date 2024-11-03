@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Bodega;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository.IndiceOcupacionBodegaInfo;
+import uniandes.edu.servicios.BodegaServicio;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class BodegaController {
 
     @Autowired
     private BodegaRepository bodegaRepository;
+    private BodegaServicio bodegaServicio;
 
 
     @GetMapping
@@ -103,5 +105,24 @@ public class BodegaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la bodega");
         }
     }
+
+
+    @GetMapping("/{idSucursal}/{idBodega}/documentos")
+    public ResponseEntity<Collection<Map<String, Object>>> obtenerDocumentosIngresoProductos(
+            @PathVariable Long idSucursal, 
+            @PathVariable Long idBodega) {
+        try {
+            Collection<Map<String, Object>> documentos = bodegaServicio.obtenerDocumentosIngresoProductos(idSucursal, idBodega);
+            return ResponseEntity.ok(documentos);
+        } catch (InterruptedException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    
+
     
 }
