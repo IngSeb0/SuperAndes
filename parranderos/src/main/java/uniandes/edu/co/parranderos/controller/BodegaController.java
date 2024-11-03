@@ -4,18 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import uniandes.edu.co.parranderos.Servicios.BodegaServicio;
 import uniandes.edu.co.parranderos.modelo.Bodega;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository.IndiceOcupacionBodegaInfo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class BodegaController {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private BodegaRepository bodegaRepository;
 
     @Autowired
-    private BodegaRepository bodegaRepository;
+    private BodegaServicio bodegaServicio;
 
 
     @GetMapping
@@ -112,33 +112,12 @@ public class BodegaController {
     public  ResponseEntity<Collection<Map<String, Object>>> obtenerDocIngreso(@PathVariable("idSucursal") Long idSucursal,
                                                         @PathVariable("idBodega") Long idBodega) {
         try{
-            
-            Connection connection = jdbcTemplate.getDataSource().getConnection();
-            PreparedStatement serializacion = connection.prepareStatement("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-            serializacion.executeQuery();
-            Thread.sleep(30000);
-            Collection<Map<String, Object>> recep = bodegaRepository.obtenerDocumentosIngresoProductos(idSucursal, idBodega);
-            return new ResponseEntity<>(recep, HttpStatus.OK);
+            Collection<Map<String, Object>> ob = bodegaServicio.obtenerDocumentosIngresoProductos(idSucursal, idBodega);
+            return new ResponseEntity<>(ob, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error durante la consulta: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
-    @GetMapping("/{idSucursal}/{idBodega}/docIngreso2")
-    public  ResponseEntity<Collection<Map<String, Object>>> obtenerDocIngreso2(@PathVariable("idSucursal") Long idSucursal,
-                                                        @PathVariable("idBodega") Long idBodega) {
-        try{
-            
-            Connection connection = jdbcTemplate.getDataSource().getConnection();
-            PreparedStatement serializacion = connection.prepareStatement("SET TRANSACTION ISOLATION LEVEL READ COMMITTED");
-            serializacion.executeQuery();
-            Thread.sleep(30000);
-            Collection<Map<String, Object>> recep = bodegaRepository.obtenerDocumentosIngresoProductos(idSucursal, idBodega);
-            return new ResponseEntity<>(recep, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
 }

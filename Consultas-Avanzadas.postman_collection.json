@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1077263d-1d93-438a-8d28-8f5059799a93",
+		"_postman_id": "257b8f68-e6cb-4e5c-8879-34af02d3aa17",
 		"name": "Consultas-Avanzadas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "37823648"
@@ -137,7 +137,22 @@
 					"name": "Docs recepcion productos",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parranderos/bodegas/1/1001/docIngreso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parranderos",
+								"bodegas",
+								"1",
+								"1001",
+								"docIngreso"
+							]
+						}
 					},
 					"response": []
 				}
