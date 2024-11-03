@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import uniandes.edu.co.parranderos.modelo.Bodega;
-import uniandes.edu.co.parranderos.modelo.RecepcionProducto;
 
 import java.util.Collection;
 import java.util.Map;
@@ -62,14 +61,15 @@ public interface BodegaRepository extends JpaRepository<Bodega, Long> {
             @Param("idSucursal") Long idSucursal,
             @Param("productos") Collection<String> productos);
 
-    @Query(value = "SELECT bod.nombreBodega, suc.nombreSucursal, rpro.idorden, inOr.cantidad, pro.nombre, rpro.fecharecepcion\n" + //
-                "FROM Sucursal suc\n" + //
-                "INNER JOIN Bodega bod ON bod.idSucursal = suc.idSucursal\n" + //
-                "INNER JOIN RecepcionProductos rPro ON rpro.idbodega = bod.idbodega\n" + //
-                "INNER JOIN OrdenCompra ord ON rpro.idorden = ord.idorden\n" + //
-                "INNER JOIN Proveedor pro ON pro.nit = ord.nit\n" + //
-                "INNER JOIN InfoExtraOrden inOr ON inor.idorden = ord.idorden\n" + //
-                "WHERE suc.idSucursal = :idSucursal AND bod.idBodega = :idBodega", nativeQuery = true)
-    Collection<RecepcionProducto> obtenerDocumentosIngresoProductos(@Param("idSucursal") Long idSucursal,
+    @Query(value = "SELECT bod.nombreBodega, suc.nombreSucursal, rpro.idorden, inOr.cantidad, pro.nombre, rpro.fecharecepcion " + //
+                "FROM Sucursal suc " + //
+                "INNER JOIN Bodega bod ON bod.idSucursal = suc.idSucursal " + //
+                "INNER JOIN RecepcionProductos rPro ON rpro.idbodega = bod.idbodega " + //
+                "INNER JOIN OrdenCompra ord ON rpro.idorden = ord.idorden " + //
+                "INNER JOIN Proveedor pro ON pro.nit = ord.nit " + //
+                "INNER JOIN InfoExtraOrden inOr ON inor.idorden = ord.idorden " + //
+                "WHERE suc.idSucursal = :idSucursal AND bod.idBodega = :idBodega ", 
+                nativeQuery = true)
+    Collection<Map<String, Object>> obtenerDocumentosIngresoProductos(@Param("idSucursal") Long idSucursal,
                                                                 @Param("idBodega") Long idBodega);
 }

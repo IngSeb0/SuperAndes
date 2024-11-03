@@ -3,19 +3,27 @@ package uniandes.edu.co.parranderos.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.parranderos.modelo.Bodega;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository;
 import uniandes.edu.co.parranderos.repositorio.BodegaRepository.IndiceOcupacionBodegaInfo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/bodegas")
 public class BodegaController {
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Autowired
     private BodegaRepository bodegaRepository;
@@ -53,15 +61,11 @@ public class BodegaController {
             @PathVariable("idBodega") Long idBodega) {
         try {
 
-
             Collection<Map<String, Object>> inventario = bodegaRepository.obtenerInventarioProductosBodega(idBodega);
-
-
 
             if (inventario.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-
             return new ResponseEntity<>(inventario, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +105,23 @@ public class BodegaController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la bodega");
+        }
+    }
+    
+    @GetMapping("/{idSucursal}/{idBodega}/docIngreso")
+    public  ResponseEntity<Collection<Map<String, Object>>> obtenerDocIngreso(@PathVariable("idSucursal") Long idSucursal,
+                                                        @PathVariable("idBodega") Long idBodega) {
+        try{
+            
+            Connection connection = jdbcTemplate.getDataSource().getConnection();
+            PreparedStatement serializacion = connection.prepareStatement("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+            serializacion.executeQuery();
+            Thread.sleep(30000);
+            Collection<Map<String, Object>> recep = bodegaRepository.obtenerDocumentosIngresoProductos(idSucursal, idBodega);
+            return new ResponseEntity<>(recep, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
